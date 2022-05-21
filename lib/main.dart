@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:najikkopasal/constants.dart';
+
 import 'package:najikkopasal/routes.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
+import 'package:najikkopasal/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,16 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          fontFamily: "Muli",
-          textTheme: const TextTheme(
-            bodyText1: TextStyle(color: kTextColor),
-            bodyText2: TextStyle(color: kTextColor),
-          ),
-          primarySwatch: Colors.blue,
-        ),
+        theme: theme(),
         initialRoute: SplashScreen.routeName,
         routes: routes);
   }
 }
+
+// themedata function
+
