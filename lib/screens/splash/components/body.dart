@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/constants.dart';
+import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/screens/splash/components/splash_content.dart';
 
 import '../../../size_config.dart';
@@ -51,7 +52,6 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-
             Expanded(
                 flex: 2,
                 child: Padding(
@@ -59,7 +59,7 @@ class _BodyState extends State<Body> {
                       horizontal: getProportionateScreenWidth(20)),
                   child: Column(
                     children: <Widget>[
-                      Spacer(),
+                      const Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
@@ -74,28 +74,14 @@ class _BodyState extends State<Body> {
                       ),
                       DefaultButton(
                         text: "Continue",
-                        press: () {},
+                        press: () {
+                          Navigator.pushNamed(context, SignInScreen.routeName);
+                        },
                       ),
                       const Spacer(),
                     ],
                   ),
                 ))
-            // Expanded(
-            //   flex: 2,
-            //   child: Column(
-            //     children: [
-            //       Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: List.generate(
-            //             splashData.length,
-            //             (index) => buildDot(index: index),
-            //           )
-            //           ),
-
-            //     ],
-
-            //   ),
-            // )
           ],
         ),
       ),
