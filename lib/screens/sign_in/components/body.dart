@@ -64,9 +64,12 @@ class Body extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: getProportionateScreenHeight(15),
+                height: getProportionateScreenHeight(20),
               ),
-              const NotAccountYetText()
+              const NotAccountYetText(),
+              SizedBox(
+                height: getProportionateScreenHeight(40),
+              ),
             ],
           )),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/constants.dart';
+import 'package:najikkopasal/screens/sign_up/sign_up_screen.dart';
 
 import '../screens/forget_password/forget_password_screen.dart';
 import '../size_config.dart';
@@ -19,8 +20,7 @@ class NotAccountYetText extends StatelessWidget {
           style: TextStyle(fontSize: getProportionateScreenWidth(18)),
         ),
         GestureDetector(
-          onTap: () =>
-              Navigator.pushNamed(context, ForgetPasswordScreen.routeName),
+          onTap: () => Navigator.pushNamed(context, SignUpScreen.routeName),
           child: Text(
             "Sign Up",
             style: TextStyle(

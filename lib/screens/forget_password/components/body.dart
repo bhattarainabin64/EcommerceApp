@@ -59,7 +59,7 @@ class ForgetPasswordForm extends StatefulWidget {
 
 class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
   String? email;
-  List<String> erros = [];
+  final List<String> erros = [];
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {

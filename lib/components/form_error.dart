@@ -4,8 +4,8 @@ import 'package:najikkopasal/size_config.dart';
 
 class FormError extends StatelessWidget {
   const FormError({
-    Key? key, required this.erros,
-     
+    Key? key,
+    required this.erros,
   }) : super(key: key);
 
   final List<String> erros;
