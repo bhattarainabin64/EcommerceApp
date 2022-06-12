@@ -3,11 +3,13 @@ import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
 
+
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 
 import '../../../components/custom_suffix-icon.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../home/components/botton-nav.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -66,10 +68,11 @@ class _SignInFormState extends State<SignInForm> {
           DefaultButton(
             text: "Login",
             press: () {
-              if (_formKey.currentState!.validate()) {
-                // _formKey.currentState!.save();
-                // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-              }
+              // if (_formKey.currentState!.validate()) {
+              //   _formKey.currentState!.save();
+
+              // }
+              Navigator.pushNamed(context, BottomNavBar.routeName);
             },
           )
         ],
