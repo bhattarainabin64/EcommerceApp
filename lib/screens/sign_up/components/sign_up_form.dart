@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/constants.dart';
+import 'package:najikkopasal/model/user.dart';
+import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/size_config.dart';
 
 import '../../../components/custom_suffix-icon.dart';
@@ -14,11 +17,37 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+ _registerUser(User user) async {
+    bool isLogin = await UserRepository().registerUser(user);
+    if (isLogin) {
+      _displayMessage(true);
+      
+    } else {
+      _displayMessage(false);
+    }
+  }
+
+  _displayMessage(msg) {
+    if (msg) {
+      MotionToast.success(description: const Text('success register'))
+          .show(context);
+    } else {
+      MotionToast.warning(description: const Text('error rergister'))
+          .show(context);
+    }
+  }
+
   String? fullname;
   String? email;
   String? password;
-  String? confirmpassword;
+  // String? confirmpassword;
+
   final List<String> errors = [];
+
   final _formKey = GlobalKey<FormState>();
 
   // void addError({String? error}) {
@@ -49,13 +78,22 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          buildConfirmPasswordFormFiled(),
+          // buildConfirmPasswordFormFiled(),
           FormError(erros: errors),
           SizedBox(height: getProportionateScreenHeight(25)),
           DefaultButton(
             text: "Sign Up",
             press: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate()) {
+                User user = User(
+                  name: _nameController.text,
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                 
+                );
+
+                _registerUser(user);
+              }
             },
           )
         ],
@@ -66,6 +104,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
+      controller: _passwordController,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty && errors.contains(kPassNullError)) {
@@ -102,52 +141,53 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  TextFormField buildConfirmPasswordFormFiled() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => confirmpassword = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kConfirmPassNullError)) {
-          setState(() {
-            errors.remove(kConfirmPassNullError);
-          });
-        } else if (password == confirmpassword &&
-            errors.contains(kMatchPassError)) {
-          setState(() {
-            errors.remove(kMatchPassError);
-          });
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty && !errors.contains(kConfirmPassNullError)) {
-          setState(() {
-            errors.add(kConfirmPassNullError);
-          });
+  // TextFormField buildConfirmPasswordFormFiled() {
+  //   return TextFormField(
+  //     obscureText: true,
+  //     // onSaved: (newValue) => confirmpassword = newValue,
+  //     onChanged: (value) {
+  //       if (value.isNotEmpty && errors.contains(kConfirmPassNullError)) {
+  //         setState(() {
+  //           errors.remove(kConfirmPassNullError);
+  //         });
+  //       } else if (password == confirmpassword &&
+  //           errors.contains(kMatchPassError)) {
+  //         setState(() {
+  //           errors.remove(kMatchPassError);
+  //         });
+  //       }
+  //       return null;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty && !errors.contains(kConfirmPassNullError)) {
+  //         setState(() {
+  //           errors.add(kConfirmPassNullError);
+  //         });
 
-          confirmpassword = value;
-          print(value);
+  //         confirmpassword = value;
+  //         print(value);
 
-          return "";
-        } else if (password != value && !errors.contains(kMatchPassError)) {
-          setState(() {
-            errors.add(kMatchPassError);
-          });
-          return "";
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
-        labelText: " Confirm Password",
-        hintText: "Re-Enter Your Password",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-      ),
-    );
-  }
+  //         return "";
+  //       } else if (password != value && !errors.contains(kMatchPassError)) {
+  //         setState(() {
+  //           errors.add(kMatchPassError);
+  //         });
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: const InputDecoration(
+  //       suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
+  //       labelText: " Confirm Password",
+  //       hintText: "Re-Enter Your Password",
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //     ),
+  //   );
+  // }
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      controller: _emailController,
       onSaved: (newValue) => email = newValue,
       keyboardType: TextInputType.emailAddress,
       onChanged: (value) {
@@ -189,6 +229,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildNameFormFild() {
     return TextFormField(
+      controller: _nameController,
       onSaved: (newValue) => fullname = newValue,
       onChanged: (value) {
         if (value.isNotEmpty && errors.contains(kNameNullError)) {

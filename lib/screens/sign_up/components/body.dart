@@ -1,3 +1,6 @@
+
+import 'package:path/path.dart';
+
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/constants.dart';
@@ -28,8 +31,20 @@ class Body extends StatelessWidget {
               "Complete your details or continue\n with social media",
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: SizeConfig.screenHeight * 0.05),
-            SignUpForm(),
+            SizedBox(height: SizeConfig.screenHeight * 0.019),
+
+            // SizedBox(
+            //   child: CircleAvatar(
+            //     backgroundColor: Colors.greenAccent[400],
+            //     radius: 40,
+            //     child: const Text(
+            //       'GeeksForGeeks',
+            //       style: TextStyle(fontSize: 25, color: Colors.white),
+            //     ), //Text
+            //   ), //,
+            // ),
+            SizedBox(height: SizeConfig.screenHeight * 0.019),
+            const SignUpForm(),
             SizedBox(height: SizeConfig.screenHeight * 0.08),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

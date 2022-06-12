@@ -4,4 +4,9 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- camerca access permission -->
+    <uses-permisson android:name="android.permission.CAMERA"/>
+    
+
 </manifest>
