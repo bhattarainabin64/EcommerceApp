@@ -177,6 +177,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         children: [
           imageProfile(),
+
           SizedBox(
             height: getProportionateScreenHeight(20),
           ),
@@ -185,7 +186,7 @@ class _SignUpFormState extends State<SignUpForm> {
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
           buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(20)),
+          SizedBox(height: getProportionateScreenHeight(10)),
           // buildConfirmPasswordFormFiled(),
           FormError(erros: errors),
           SizedBox(height: getProportionateScreenHeight(25)),
@@ -194,10 +195,11 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 User user = User(
-                  name: _nameController.text,
-                  email: _emailController.text,
-                  password: _passwordController.text,
-                );
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    image: base64
+                    );
 
                 _registerUser(user);
               }

@@ -9,36 +9,27 @@ import 'package:najikkopasal/utils/url.dart';
 import '../model/user.dart';
 
 class UserAPI {
-  Future<bool> registerUser(User user) async {
-    bool isLogin = false;
-    Response response;
-    var url = baseUrl + registerUrl;
-    if (kDebugMode) {
-      print("aayo");
-    }
-    var dio = HttpServices().getDioInstance();
+   Future<bool> registerUser(User user) async {
     try {
-      response = await dio.post(
-        url,
-        data: user.toJson(),
-      );
+      var url = baseUrl + registerUrl;
+      var dio = HttpServices().getDioInstance();
+
+      var formData = FormData.fromMap({
+        "name": user.name,
+        "email": user.email,
+        "password": user.password,
+        "image": user.image
+      });
+
+      var response = await dio.post(url, data: formData);
       if (response.statusCode == 201) {
         return true;
       }
-    } on DioError catch (e) {
-      if (e.type == DioErrorType.response) {
-        var response = e.response!.data.toString();
-        Fluttertoast.showToast(
-            msg: "${response}",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP_LEFT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Color.fromARGB(255, 205, 22, 22),
-            fontSize: 30.0);
-      }
+    } catch (e) {
+      throw Exception(e);
     }
-    return isLogin;
+
+    return false;
   }
 
   Future<bool> login(String email, String password) async {
