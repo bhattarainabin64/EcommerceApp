@@ -1,4 +1,3 @@
-
 import 'package:path/path.dart';
 
 import 'package:flutter/material.dart';
@@ -31,7 +30,6 @@ class Body extends StatelessWidget {
               "Complete your details or continue\n with social media",
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: SizeConfig.screenHeight * 0.019),
 
             // SizedBox(
             //   child: CircleAvatar(
@@ -45,7 +43,7 @@ class Body extends StatelessWidget {
             // ),
             SizedBox(height: SizeConfig.screenHeight * 0.019),
             const SignUpForm(),
-            SizedBox(height: SizeConfig.screenHeight * 0.08),
+            SizedBox(height: SizeConfig.screenHeight * 0.04),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -63,7 +61,7 @@ class Body extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: SizeConfig.screenHeight * 0.04),
+            SizedBox(height: SizeConfig.screenHeight * 0.02),
             const Text(
               "You Can also Sign Up through Above Medium ",
               textAlign: TextAlign.center,

@@ -27,8 +27,9 @@ class UserAPI {
       }
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
+        var response = e.response!.data.toString();
         Fluttertoast.showToast(
-            msg: "Duplicate Email Entered",
+            msg: "${response}",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.TOP_LEFT,
             timeInSecForIosWeb: 1,
@@ -40,7 +41,7 @@ class UserAPI {
     return isLogin;
   }
 
-   Future<bool> login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
     bool isLogin = false;
 
     try {
@@ -48,8 +49,8 @@ class UserAPI {
 
       var dio = HttpServices().getDioInstance();
 
-      var response = await dio
-          .post(url, data: {"email": email, "password": password});
+      var response =
+          await dio.post(url, data: {"email": email, "password": password});
 
       if (response.statusCode == 200) {
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
@@ -64,8 +65,4 @@ class UserAPI {
 
     return isLogin;
   }
-
-
-
-
 }
