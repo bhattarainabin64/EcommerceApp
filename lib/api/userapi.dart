@@ -9,7 +9,7 @@ import 'package:najikkopasal/utils/url.dart';
 import '../model/user.dart';
 
 class UserAPI {
-   Future<bool> registerUser(User user) async {
+  Future<bool> registerUser(User user) async {
     try {
       var url = baseUrl + registerUrl;
       var dio = HttpServices().getDioInstance();

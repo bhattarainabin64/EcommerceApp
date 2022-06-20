@@ -4,6 +4,7 @@ import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
+import 'package:najikkopasal/screens/home/components/nav.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 
@@ -11,6 +12,8 @@ import '../../../components/custom_suffix-icon.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../home/components/botton-nav.dart';
+
+
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -22,7 +25,7 @@ class SignInForm extends StatefulWidget {
 class _SignInFormState extends State<SignInForm> {
   _navigateToScreen(bool isLogin) {
     if (isLogin) {
-      Navigator.pushNamed(context, BottomNavBar.routeName);
+      Navigator.pushNamed(context, Navbar.routeName);
     } else {
       MotionToast.error(
         description: const Text("Either username or password is not correct"),
@@ -59,6 +62,8 @@ class _SignInFormState extends State<SignInForm> {
   String? email;
   String? password;
   bool? remember = false;
+
+  
 
   final List<String> erros = [];
   @override
@@ -197,4 +202,5 @@ class _SignInFormState extends State<SignInForm> {
       ),
     );
   }
+
 }

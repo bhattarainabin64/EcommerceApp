@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
@@ -54,6 +56,8 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   File? img;
   String? base64;
+  String? nbase64;
+
 
   Future _loadImage(ImageSource imageSource) async {
     try {
@@ -191,20 +195,27 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(erros: errors),
           SizedBox(height: getProportionateScreenHeight(25)),
           DefaultButton(
-            text: "Sign Up",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                User user = User(
-                    name: _nameController.text,
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    image: base64
-                    );
+              text: "Sign Up",
+              press: () {
+                if (_formKey.currentState!.validate() &&
+                    base64.toString() != null) {
+                  User user = User(
+                      name: _nameController.text,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      image: base64);
 
-                _registerUser(user);
-              }
-            },
-          )
+                  _registerUser(user);
+                } else {
+                  User user = User(
+                      name: _nameController.text,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      image: base64);
+
+                  _registerUser(user);
+                }
+              })
         ],
       ),
     );

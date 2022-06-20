@@ -54,7 +54,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   List<Widget> child = [
-      HomePage(),
+    HomePage(),
     Container(
       color: Colors.white,
     ),
