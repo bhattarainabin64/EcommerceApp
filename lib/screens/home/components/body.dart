@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/data/productData.dart';
 
-import 'package:najikkopasal/widget/productCard';
+import '../../../widget/productCard.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -218,16 +218,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                               left: 0.0,
                               right: 0.0,
                               child: Container(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      // Color.fromARGB(197, 255, 255, 255),
-                                      // Color.fromARGB(0, 0, 0, 0)
-                                    ],
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
-                                  ),
-                                ),
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 20.0),
                                 child: const Text(

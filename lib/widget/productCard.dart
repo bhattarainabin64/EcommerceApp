@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:najikkopasal/constants.dart';
-
 
 class SingleProductWidget extends StatefulWidget {
   final String? productImage;
@@ -20,6 +20,7 @@ class SingleProductWidget extends StatefulWidget {
   @override
   _SingleProductWidgetState createState() => _SingleProductWidgetState();
 }
+
 class _SingleProductWidgetState extends State<SingleProductWidget> {
   bool isFave = false;
   @override
@@ -28,7 +29,7 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
       onTap: widget.onPressed,
       child: Container(
         height: 250,
-        margin: EdgeInsets.all(10.0),
+        margin: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(5),
@@ -53,34 +54,50 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
                     widget.productName!,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                
-                 
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  
                   Text(
                     widget.productModel!,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: kPrimaryColor,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  RatingBar.builder(
+                    initialRating: 2.2,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemSize: 22,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  ),
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
@@ -88,20 +105,25 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
                       Text(
                         "\$ ${widget.productPrice}",
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
-                    
-                       ElevatedButton(
-                              child: const Icon(Icons.add,color: Colors.white,),
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(30)))),
-                              onPressed: () {})
+                      ElevatedButton(
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.black87),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30)))),
+                          onPressed: () {}),
                     ],
                   )
                 ],
