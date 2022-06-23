@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/constants.dart';
-import 'package:najikkopasal/data/productData.dart';
 
-import '../../../widget/productCard.dart';
+import 'package:najikkopasal/repository/productRepository.dart';
+import 'package:najikkopasal/response/product_response.dart';
+import 'package:najikkopasal/widget/productCard.dart';
+
+import '../../../model/product_model.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -22,7 +25,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   ];
 
   static const List<Tab> _tabs = [
-    Tab(child: Text('All')),
+    Tab(child: Icon(Icons.home)),
     Tab(text: 'Clothes'),
     Tab(text: 'Shoes'),
     Tab(text: 'Men'),
@@ -141,28 +144,59 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                     tabs: _tabs),
               ),
             ),
+            const SizedBox(height: 10),
             Expanded(
               child: TabBarView(controller: _tabController, children: [
-                GridView.builder(
-                    shrinkWrap: true,
-                    primary: true,
-                    itemCount: sigleProductData.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
-                    ),
-                    itemBuilder: (context, index) {
-                      var data = sigleProductData[index];
-                      return SingleProductWidget(
-                        onPressed: () {},
-                        productImage: data.productImage,
-                        productModel: data.productModel,
-                        productName: data.productName,
-                        productOldPrice: data.productOldPrice,
-                        productPrice: data.productPrice,
-                      );
+                // grod build method  start
+                FutureBuilder<ProductResponse?>(
+                    future: ProductRepository().getproducts(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          List<Product> lstproducts = snapshot.data!.data!;
+                          print(lstproducts.length);
+
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Color(0XFFEDECF2),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: GridView.builder(
+                                shrinkWrap: true,
+                                primary: true,
+                                itemCount: lstproducts.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.7,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return SingleProductWidget(
+                                    // onPressed: () {},
+                                    productImage: lstproducts[index]
+                                        .images![0]
+                                        .url
+                                        .toString(),
+                                    productRating:
+                                        lstproducts[index].ratings!.toDouble(),
+                                    productModel:
+                                        lstproducts[index].description,
+                                    productName: lstproducts[index].name,
+                                    productOldPrice:
+                                        lstproducts[index].price!.toString(),
+                                    productPrice:
+                                        lstproducts[index].price!.toString(),
+                                  );
+                                }),
+                          );
+                        }
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return const Center(child: CircularProgressIndicator());
                     }),
+                // future builder end
+
                 const Center(
                   child: Text(
                     "Welcome to the second Page",

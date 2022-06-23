@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/login.dart';
 import 'package:najikkopasal/utils/url.dart';
@@ -47,6 +47,7 @@ class UserAPI {
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
 
         token = loginResponse.token;
+        // print("Tokengfdgdfgdfgdfg :${token}");
 
         isLogin = true;
       }
