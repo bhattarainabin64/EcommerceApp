@@ -6,3 +6,4 @@ class ProductRepository {
     return ProductAPI().getproduct();
   }
 }
+ 

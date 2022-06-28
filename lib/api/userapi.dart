@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/login.dart';
 import 'package:najikkopasal/utils/url.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/user.dart';
 
 class UserAPI {
+
   Future<bool> registerUser(User user) async {
     try {
       var url = baseUrl + registerUrl;
@@ -34,6 +36,7 @@ class UserAPI {
 
   Future<bool> login(String email, String password) async {
     bool isLogin = false;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     try {
       var url = baseUrl + loginUrl;
@@ -47,6 +50,7 @@ class UserAPI {
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
 
         token = loginResponse.token;
+        sharedPreferences.setString('token', '$token');
         // print("Tokengfdgdfgdfgdfg :${token}");
 
         isLogin = true;

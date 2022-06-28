@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
@@ -5,15 +7,16 @@ import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
+import 'package:najikkopasal/screens/home/home_screen.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
+import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/custom_suffix-icon.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../home/components/botton-nav.dart';
-
-
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -63,9 +66,23 @@ class _SignInFormState extends State<SignInForm> {
   String? password;
   bool? remember = false;
 
-  
-
   final List<String> erros = [];
+
+  @override
+  void initState() {
+    super.initState();
+    autoLogin();
+  }
+
+  void autoLogin() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString('token').toString();
+    print(token);
+    if (token != null && token.isNotEmpty) {
+      _navigateToScreen(true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -202,5 +219,4 @@ class _SignInFormState extends State<SignInForm> {
       ),
     );
   }
-
 }

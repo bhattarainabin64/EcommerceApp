@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:najikkopasal/model/product_model.dart';
 part 'product_response.g.dart';
@@ -13,3 +12,4 @@ class ProductResponse {
   }
   Map<String, dynamic> toJson() => _$ProductResponseToJson(this);
 }
+              

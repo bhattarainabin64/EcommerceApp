@@ -45,25 +45,25 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        MaterialPageRoute(builder: (context) => Body()),
-                      );
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 2),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.of(context).pop(
+                  //       MaterialPageRoute(builder: (context) => Body()),
+                  //     );
+                  //   },
+                  //   child: const Padding(
+                  //     padding: EdgeInsets.symmetric(horizontal: 2),
+                  //     child: Icon(
+                  //       Icons.arrow_back,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     child: SizedBox(
                       width: 10,
                     ),
@@ -177,11 +177,13 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                                         .images![0]
                                         .url
                                         .toString(),
+                                   
                                     productRating:
                                         lstproducts[index].ratings!.toDouble(),
                                     productModel:
                                         lstproducts[index].description,
-                                    productName: lstproducts[index].name,
+                                    productName:
+                                        lstproducts[index].name.toString(),
                                     productOldPrice:
                                         lstproducts[index].price!.toString(),
                                     productPrice:
