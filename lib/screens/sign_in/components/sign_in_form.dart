@@ -76,10 +76,13 @@ class _SignInFormState extends State<SignInForm> {
 
   void autoLogin() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String token = sharedPreferences.getString('token').toString();
+    String? token = sharedPreferences.getString('token');
+    print("Token aaayena ta ke vo");
     print(token);
-    if (token != null && token.isNotEmpty) {
+    if (token!.isNotEmpty) {
       _navigateToScreen(true);
+    } else {
+      _navigateToScreen(false);
     }
   }
 

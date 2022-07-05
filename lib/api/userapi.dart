@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 
 class UserAPI {
-
   Future<bool> registerUser(User user) async {
     try {
       var url = baseUrl + registerUrl;
@@ -51,6 +50,9 @@ class UserAPI {
 
         token = loginResponse.token;
         sharedPreferences.setString('token', '$token');
+        // print shareprefercenced get token
+        // print("Token t aaayo ta");
+        // print(sharedPreferences.getString('token'));
         // print("Tokengfdgdfgdfgdfg :${token}");
 
         isLogin = true;
