@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:najikkopasal/model/image.dart';
+import 'package:najikkopasal/model/review.dart';
 
-import 'image.dart';
+
 
 part 'product_model.g.dart';
 
@@ -13,12 +15,14 @@ class Product {
   int? price;
   double? ratings;
   List<Image>? images;
+  List<Review>? reviews;
   Product(
       {this.name,
       this.description,
       this.price,
       this.ratings,
       this.images,
+      this.reviews,
       this.id});
   factory Product.fromJson(Map<String, dynamic> json) {
     return _$ProductFromJson(json);

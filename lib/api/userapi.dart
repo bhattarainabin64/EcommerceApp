@@ -33,6 +33,7 @@ class UserAPI {
     return false;
   }
 
+// User login Function
   Future<bool> login(String email, String password) async {
     bool isLogin = false;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -50,11 +51,6 @@ class UserAPI {
 
         token = loginResponse.token;
         sharedPreferences.setString('token', '$token');
-        // print shareprefercenced get token
-        // print("Token t aaayo ta");
-        // print(sharedPreferences.getString('token'));
-        // print("Tokengfdgdfgdfgdfg :${token}");
-
         isLogin = true;
       }
     } catch (e) {

@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/constants.dart';
 
 import 'package:najikkopasal/repository/productRepository.dart';
 import 'package:najikkopasal/response/product_response.dart';
+import 'package:najikkopasal/screens/product_details/product_details.dart';
 import 'package:najikkopasal/widget/productCard.dart';
 
 import '../../../model/product_model.dart';
@@ -99,7 +101,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                         ),
                         Image.asset(
                           'assets/icons/search.png',
-                          height: 27,
                         )
                       ],
                     ),
@@ -154,7 +155,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                       if (snapshot.hasData) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           List<Product> lstproducts = snapshot.data!.data!;
-                          print(lstproducts.length);
+                          // print(lstproducts[0].reviews![0].name);
 
                           return Container(
                             decoration: BoxDecoration(
@@ -172,16 +173,31 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                                 ),
                                 itemBuilder: (context, index) {
                                   return SingleProductWidget(
-                                    // onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, ProductDetails.routeName,
+                                          arguments: {
+                                            "id": lstproducts[index].id,
+                                            "name": lstproducts[index].name,
+                                            "image": lstproducts[index]
+                                                .images![0]
+                                                .url
+                                                .toString(),
+                                            "ratings":
+                                                lstproducts[index].ratings,
+                                            "description":
+                                                lstproducts[index].description,
+                                            "price": lstproducts[index].price,
+                                            "reviews":
+                                                lstproducts[index].reviews,
+                                          });
+                                    },
                                     productImage: lstproducts[index]
                                         .images![0]
                                         .url
                                         .toString(),
-                                   
                                     productRating:
                                         lstproducts[index].ratings!.toDouble(),
-                                    productModel:
-                                        lstproducts[index].description,
                                     productName:
                                         lstproducts[index].name.toString(),
                                     productOldPrice:
@@ -195,7 +211,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                       } else if (snapshot.hasError) {
                         return Text("${snapshot.error}");
                       }
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(child: CupertinoActivityIndicator());
                     }),
                 // future builder end
 
