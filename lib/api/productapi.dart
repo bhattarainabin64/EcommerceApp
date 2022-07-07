@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/product_response.dart';
 import 'package:najikkopasal/utils/url.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductAPI {
   Future<ProductResponse?> getproduct() async {
@@ -11,14 +15,51 @@ class ProductAPI {
       var dio = HttpServices().getDioInstance();
       var url = baseUrl + productUrl;
       Response response = await dio.get(url);
-      // print(response);
+     
       if (response.statusCode == 200) {
         productResponse = ProductResponse.fromJson(response.data);
-        var a = 1;
+       
       }
     } catch (e) {
       throw Exception(e);
     }
     return productResponse;
   }
+
+// give product review
+  Future<bool> giveproductreview(String productId, String comment, int rating) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? userlogintoken = sharedPreferences.getString('token');
+
+    bool isReview = false;
+   
+    try {
+      var url = baseUrl + reviewUrl;
+
+      var dio = HttpServices().getDioInstance();
+
+      var response =
+          await dio.put(url, 
+          data: {"productId": productId, "comment": comment,"rating":rating},
+          options: Options(
+            headers: {
+              HttpHeaders.authorizationHeader:"Bearer $userlogintoken"
+            }
+          )
+          );
+
+      if (response.statusCode == 200) {
+
+         isReview = true;
+          
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    return isReview;
+  }
 }
+
+
+
