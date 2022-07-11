@@ -69,7 +69,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                   bool isReview = await review.givereview(
                       productId!, response.comment, rating!.toInt());
-
+                   // product
                   print("sdaksjdhaksjdhskajdhjksadhkasdkjasdskajjkasdj");
                 });
           });

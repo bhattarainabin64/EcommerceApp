@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,9 @@ class UserAPI {
           await dio.post(url, data: {"email": email, "password": password});
 
       if (response.statusCode == 200) {
+        String userdata = jsonEncode(response.data['user']);
+        sharedPreferences.setString('userdata', userdata);
+
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
 
         token = loginResponse.token;

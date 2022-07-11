@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/components/form_error.dart';
+import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
@@ -77,6 +79,25 @@ class _SignInFormState extends State<SignInForm> {
   void autoLogin() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
+    String? userdate = sharedPreferences.getString('userdata');
+    // convert usedta to map and get email and password
+    Map<String, dynamic> userdata =
+        jsonDecode(userdate.toString()) as Map<String, dynamic>;
+    User user = User(
+      name: userdata['name'],
+      email: userdata['email'],
+      image: userdata['image']['url'],
+    );
+    // print(user.image);
+
+    // Map<String, dynamic> userdata =
+    //     jsonDecode(userdate.toString()) as Map<String, dynamic>;
+    // for (dynamic type in userdata.keys) {
+    //   print(type);
+    // }
+
+    // convert userdate to string dynamic
+
     print("Token aaayena ta ke vo");
     print(token);
     if (token!.isNotEmpty) {
