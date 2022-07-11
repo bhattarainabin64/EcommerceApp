@@ -5,6 +5,7 @@ import 'package:najikkopasal/constants.dart';
 
 import 'package:najikkopasal/repository/productRepository.dart';
 import 'package:najikkopasal/response/product_response.dart';
+import 'package:najikkopasal/screens/home/components/category_model.dart';
 import 'package:najikkopasal/screens/product_details/product_details.dart';
 import 'package:najikkopasal/widget/productCard.dart';
 
@@ -20,6 +21,9 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   int selectId = 0;
   int activePage = 0;
   int _current = 0;
+  String query = '';
+  List<Product> lstproducts = [];
+
   final CarouselController _controller = CarouselController();
   final List<String> imgList = [
     'https://www.opalwebdesign.com/wp-content/uploads/2014/03/ecommerce-SLIDER.jpg',
@@ -32,6 +36,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
     Tab(text: 'Shoes'),
     Tab(text: 'Men'),
   ];
+
   @override
   Widget build(BuildContext context) {
     Widget caresoel() {
@@ -87,7 +92,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                     ),
                     child: Row(
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           height: 60,
                           width: 250,
                           child: TextField(
@@ -97,6 +102,11 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                               focusedBorder: InputBorder.none,
                               hintText: 'Search',
                             ),
+                            onChanged: (text) {
+                              setState(() {
+                                query = text;
+                              });
+                            },
                           ),
                         ),
                         Image.asset(
@@ -150,11 +160,11 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
               child: TabBarView(controller: _tabController, children: [
                 // grod build method  start
                 FutureBuilder<ProductResponse?>(
-                    future: ProductRepository().getproducts(),
+                    future: ProductRepository().getproducts(categories: query),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          List<Product> lstproducts = snapshot.data!.data!;
+                          lstproducts = snapshot.data!.data!;
                           // print(lstproducts[0].reviews![0].name);
 
                           return Container(
