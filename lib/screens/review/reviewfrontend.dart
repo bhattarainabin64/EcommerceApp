@@ -11,9 +11,11 @@ class ReviewUIScreen extends StatelessWidget {
     final reviewsData = ModalRoute.of(context)!.settings.arguments as Map;
     print(reviewsData.runtimeType);
     // converted _InternalLinkedHashMap<String, List<Review>?> to dynamic
-    final reviews = reviewsData['reviews'] as List<dynamic>;
+
+    final review = reviewsData['reviews'] as List<Review>;
+    final ratings = reviewsData['ratings'];
     print("Review ko UI ma aayo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    print(reviews.length);
+    print(review.length);
 
     return Scaffold(
         appBar: AppBar(
@@ -26,6 +28,9 @@ class ReviewUIScreen extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: Body());
+        body: Body(
+          reviews: review,
+          ratings: ratings,
+        ));
   }
 }

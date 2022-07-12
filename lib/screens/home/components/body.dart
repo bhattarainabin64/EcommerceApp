@@ -188,6 +188,10 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
       ),
     );
   }
+  // make autorefresh for the product data from api uisng future builder
+  
+ 
+
 
   FutureBuilder<ProductResponse?> getproductfromapi(String? paramst) {
     return FutureBuilder<ProductResponse?>(
