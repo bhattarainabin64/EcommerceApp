@@ -79,16 +79,8 @@ class _SignInFormState extends State<SignInForm> {
   void autoLogin() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
-    String? userdate = sharedPreferences.getString('userdata');
-    // convert usedta to map and get email and password
-    Map<String, dynamic> userdata =
-        jsonDecode(userdate.toString()) as Map<String, dynamic>;
-    User user = User(
-      name: userdata['name'],
-      email: userdata['email'],
-      image: userdata['image']['url'],
-    );
-    // print(user.image);
+    String? userdate = sharedPreferences.getString('profile');
+    print(userdate);
 
     // Map<String, dynamic> userdata =
     //     jsonDecode(userdate.toString()) as Map<String, dynamic>;

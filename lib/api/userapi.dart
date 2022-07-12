@@ -50,7 +50,17 @@ class UserAPI {
 
       if (response.statusCode == 200) {
         String userdata = jsonEncode(response.data['user']);
-        sharedPreferences.setString('userdata', userdata);
+        Map<String, dynamic> userdat = jsonDecode(userdata.toString());
+        User user = User(
+          name: userdat['name'],
+          email: userdat['email'],
+          image: userdat['image']['url'],
+        );
+        String profile = jsonEncode(user);
+        sharedPreferences.setString('profile', profile);
+        // get sharepreference userdata
+        // String? userdata2 = sharedPreferences.getString('profile');
+        // print(userdata2);
 
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
 
