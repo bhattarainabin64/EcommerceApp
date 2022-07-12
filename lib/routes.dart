@@ -5,6 +5,7 @@ import 'package:najikkopasal/screens/home/components/nav.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 import 'package:najikkopasal/screens/product_details/product_details.dart';
+import 'package:najikkopasal/screens/profile/profile.dart';
 import 'package:najikkopasal/screens/review/reviewfrontend.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/screens/sign_up/sign_up_screen.dart';
@@ -21,4 +22,6 @@ final Map<String, WidgetBuilder> routes = {
   Navbar.routeName: (context) => Navbar(),
   ProductDetails.routeName: (context) => const ProductDetails(),
   ReviewUIScreen.routeName: (context) => const ReviewUIScreen(),
+  ProfilePage.routeName: (context) => const ProfilePage(),
+
 };
