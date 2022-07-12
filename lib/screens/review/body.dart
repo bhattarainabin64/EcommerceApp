@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/constants.dart';
+import 'package:najikkopasal/model/review.dart';
 import 'package:najikkopasal/screens/review/reviewUI.dart';
 
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class Body extends StatefulWidget {
-  Body({Key? key}) : super(key: key);
+  List<Review>? reviews;
+  double? ratings;
+  Body({Key? key, this.reviews, this.ratings}) : super(key: key);
 
   @override
   State<Body> createState() => _BodyState();
@@ -35,10 +38,10 @@ class _BodyState extends State<Body> {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: "4.5",
+                          text: widget.ratings!.toStringAsFixed(1),
                           style: TextStyle(fontSize: 48.0),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: "/5",
                           style: TextStyle(
                             fontSize: 24.0,
@@ -50,15 +53,15 @@ class _BodyState extends State<Body> {
                   ),
                   SmoothStarRating(
                     starCount: 5,
-                    rating: 4.5,
+                    rating: widget.ratings!,
                     size: 28.0,
                     color: Colors.orange,
                     borderColor: Colors.orange,
                   ),
                   SizedBox(height: 16.0),
                   Text(
-                    "12 Reviews",
-                    style: TextStyle(
+                    widget.reviews!.length.toString(),
+                    style: const TextStyle(
                       fontSize: 20.0,
                       color: kPrimaryColor,
                     ),
@@ -101,15 +104,14 @@ class _BodyState extends State<Body> {
         Expanded(
           child: ListView.separated(
             padding: const EdgeInsets.only(bottom: 10.0, top: 10),
-            itemCount: 4,
+            itemCount: widget.reviews!.length,
             itemBuilder: ((context, index) {
               return ReviewUI(
                 image: 'assets/images/profile.jpg',
-                name: "Username",
-                date: "2020-01-01",
-                rating: 3.1,
-                comment:
-                    "This is the se comment Section data This is the comment Section data This is the comment Section data This is the comment Section dataThis is the comment Section data",
+                name: widget.reviews![index].name,
+                date: widget.reviews?[index].time.toString().split("T")[0],
+                rating: widget.reviews![index].rating!.toDouble(),
+                comment: widget.reviews![index].comment,
                 onTap: () {
                   setState(() {
                     isMore = !isMore;
@@ -121,7 +123,7 @@ class _BodyState extends State<Body> {
             separatorBuilder: (BuildContext context, int index) {
               return Divider(
                 thickness: 3.0,
-                color: kPrimaryColor,
+                color: Color.fromARGB(255, 239, 236, 236),
               );
             },
           ),

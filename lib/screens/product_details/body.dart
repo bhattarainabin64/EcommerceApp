@@ -224,6 +224,7 @@ class _BodyState extends State<Body> {
                                         context, ReviewUIScreen.routeName,
                                         arguments: {
                                           "reviews": widget.reviews,
+                                          "ratings": widget.ratings,
                                         });
                                   },
                                   child: const Padding(
@@ -254,7 +255,7 @@ class _BodyState extends State<Body> {
                                     rating: widget.reviews?[index].rating!
                                         .toDouble(),
                                     comment:
-                                        "This is the se comment Section data This is the comment Section data This is the comment Section data This is the comment Section dataThis is the comment Section data",
+                                        "${widget.reviews?[index].comment}",
                                     onTap: () {
                                       setState(() {
                                         isMore = !isMore;
