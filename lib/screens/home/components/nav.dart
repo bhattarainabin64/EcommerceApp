@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/screens/home/home_screen.dart';
+import 'package:najikkopasal/screens/profile/profile.dart';
 
 class Navbar extends StatefulWidget {
   Navbar({Key? key}) : super(key: key);
@@ -17,7 +18,9 @@ class _NavbarState extends State<Navbar> {
     HomePage(),
     Container(color: Colors.white),
     Container(color: Colors.white),
-    Container(color: Colors.white)
+   
+    Container(color: Colors.white),
+     ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -40,8 +43,8 @@ class _NavbarState extends State<Navbar> {
           ),
           Icon(Icons.settings),
           Icon(Icons.shopping_cart),
-          Icon(Icons.person),
           Icon(Icons.add),
+          Icon(Icons.person),
         ],
       ),
       body: pages[_page],
