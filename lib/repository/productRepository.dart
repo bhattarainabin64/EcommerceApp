@@ -2,8 +2,8 @@ import 'package:najikkopasal/api/productapi.dart';
 import 'package:najikkopasal/response/product_response.dart';
 
 class ProductRepository {
-  Future<ProductResponse?> getproducts({String? categories}) async {
-    return ProductAPI().getproduct(categories: categories);
+  Future<ProductResponse?> getproducts({String? keyword, String? category}) async {
+    return ProductAPI().getproduct(keywords: keyword, category: category);
   }
   
    Future<bool> givereview(String productId, String comment, int rating) {

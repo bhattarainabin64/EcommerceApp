@@ -21,8 +21,11 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   int selectId = 0;
   int activePage = 0;
   int _current = 0;
+
   String query = '';
+  String? category;
   List<Product> lstproducts = [];
+  List categtegories = [];
 
   final CarouselController _controller = CarouselController();
   final List<String> imgList = [
@@ -31,7 +34,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   ];
 
   static const List<Tab> _tabs = [
-    Tab(child: Icon(Icons.home)),
+    Tab(text: 'All'),
     Tab(text: 'Clothes'),
     Tab(text: 'Shoes'),
     Tab(text: 'Men'),
@@ -46,6 +49,15 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
     TabController _tabController =
         TabController(length: _tabs.length, vsync: this);
 
+    // _tabController.addListener(() {
+    //   setState(() {
+    //     if (_tabController.index == 1) {
+    //       // switch tabs to second tab and setstate the category
+    //       category = 'Man';
+    //     }
+    //   });
+    // });
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -55,20 +67,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Row(
                 children: [
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.of(context).pop(
-                  //       MaterialPageRoute(builder: (context) => Body()),
-                  //     );
-                  //   },
-                  //   child: const Padding(
-                  //     padding: EdgeInsets.symmetric(horizontal: 2),
-                  //     child: Icon(
-                  //       Icons.arrow_back,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: SizedBox(
@@ -147,7 +145,8 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: TabBar(
-                    indicatorColor: Color(0xffF15C22),
+                    splashBorderRadius: BorderRadius.circular(10),
+                    indicatorColor: const Color(0xffF15C22),
                     controller: _tabController,
                     labelColor: kPrimaryColor,
                     labelPadding: const EdgeInsets.only(left: 4, right: 4),
@@ -159,95 +158,93 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
             Expanded(
               child: TabBarView(controller: _tabController, children: [
                 // grod build method  start
-                FutureBuilder<ProductResponse?>(
-                    future: ProductRepository().getproducts(categories: query),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          lstproducts = snapshot.data!.data!;
-                          // print(lstproducts[0].reviews![0].name);
-
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Color(0XFFEDECF2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: GridView.builder(
-                                shrinkWrap: true,
-                                primary: true,
-                                itemCount: lstproducts.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.7,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return SingleProductWidget(
-                                    onPressed: () {
-                                      Navigator.pushNamed(
-                                          context, ProductDetails.routeName,
-                                          arguments: {
-                                            "id": lstproducts[index].id,
-                                            "name": lstproducts[index].name,
-                                            "image": lstproducts[index]
-                                                .images![0]
-                                                .url
-                                                .toString(),
-                                            "ratings":
-                                                lstproducts[index].ratings,
-                                            "description":
-                                                lstproducts[index].description,
-                                            "price": lstproducts[index].price,
-                                            "reviews":
-                                                lstproducts[index].reviews,
-                                          });
-                                    },
-                                    productImage: lstproducts[index]
-                                        .images![0]
-                                        .url
-                                        .toString(),
-                                    productRating:
-                                        lstproducts[index].ratings!.toDouble(),
-                                    productName:
-                                        lstproducts[index].name.toString(),
-                                    productOldPrice:
-                                        lstproducts[index].price!.toString(),
-                                    productPrice:
-                                        lstproducts[index].price!.toString(),
-                                  );
-                                }),
-                          );
-                        }
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
-                      return const Center(child: CupertinoActivityIndicator());
-                    }),
+                getproductfromapi(''),
+                getproductfromapi("Man"),
+                getproductfromapi("Nike"),
+                getproductfromapi("Nike"),
                 // future builder end
 
-                const Center(
-                  child: Text(
-                    "Welcome to the second Page",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const Text(
-                  "Welcome to Third Page",
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 40,
-                  child: Text(
-                    "I am four",
-                    textAlign: TextAlign.center,
-                  ),
-                )
+                // const Center(
+                //   child: Text(
+                //     "Welcome to the second Page",
+                //     textAlign: TextAlign.center,
+                //   ),
+                // ),
+                // const Text(
+                //   "Welcome to Third Page",
+                //   textAlign: TextAlign.center,
+                // ),
+                // const SizedBox(
+                //   height: 40,
+                //   child: Text(
+                //     "I am four",
+                //     textAlign: TextAlign.center,
+                //   ),
+                // )
               ]),
             )
           ],
         ),
       ),
     );
+  }
+
+  FutureBuilder<ProductResponse?> getproductfromapi(String? paramst) {
+    return FutureBuilder<ProductResponse?>(
+        future:
+            ProductRepository().getproducts(keyword: query, category: paramst),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              lstproducts = snapshot.data!.data!;
+              // print(lstproducts[0].reviews![0].name);
+
+              return Container(
+                decoration: BoxDecoration(
+                  color: Color(0XFFEDECF2),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    primary: true,
+                    itemCount: lstproducts.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.7,
+                    ),
+                    itemBuilder: (context, index) {
+                      return SingleProductWidget(
+                        onPressed: () {
+                          Navigator.pushNamed(context, ProductDetails.routeName,
+                              arguments: {
+                                "id": lstproducts[index].id,
+                                "name": lstproducts[index].name,
+                                "image": lstproducts[index]
+                                    .images![0]
+                                    .url
+                                    .toString(),
+                                "ratings": lstproducts[index].ratings,
+                                "description": lstproducts[index].description,
+                                "price": lstproducts[index].price,
+                                "reviews": lstproducts[index].reviews,
+                              });
+                        },
+                        productImage:
+                            lstproducts[index].images![0].url.toString(),
+                        productRating: lstproducts[index].ratings!.toDouble(),
+                        productName: lstproducts[index].name.toString(),
+                        productOldPrice: lstproducts[index].price!.toString(),
+                        productPrice: lstproducts[index].price!.toString(),
+                      );
+                    }),
+              );
+            }
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return const Center(child: CupertinoActivityIndicator());
+        });
   }
 
 // caresoul Slider method

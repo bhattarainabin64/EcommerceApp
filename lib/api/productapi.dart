@@ -8,15 +8,20 @@ import 'package:najikkopasal/utils/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductAPI {
-  // take optional parameter for getproduct function
-
-  Future<ProductResponse?> getproduct({String? categories}) async {
+  Future<ProductResponse?> getproduct(
+      {String? keywords, String? category}) async {
     Future.delayed(const Duration(seconds: 2), () {});
     ProductResponse? productResponse;
+    Response? response;
     try {
       var dio = HttpServices().getDioInstance();
-      var url = baseUrl + '${productUrl}/?keyword=${categories}';
-      Response response = await dio.get(url);
+      var url = baseUrl + productUrl;
+      if (category!.isNotEmpty) {
+        response = await dio.get(url,
+            queryParameters: {'category': category, 'keywords': keywords});
+      } else {
+        response = await dio.get(url, queryParameters: {'keyword': keywords});
+      }
 
       if (response.statusCode == 200) {
         productResponse = ProductResponse.fromJson(response.data);
