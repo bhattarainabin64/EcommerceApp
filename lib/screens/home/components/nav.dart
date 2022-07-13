@@ -18,9 +18,8 @@ class _NavbarState extends State<Navbar> {
     HomePage(),
     Container(color: Colors.white),
     Container(color: Colors.white),
-   
     Container(color: Colors.white),
-     ProfilePage(),
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {

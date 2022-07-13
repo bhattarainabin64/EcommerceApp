@@ -1,13 +1,46 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:najikkopasal/constants.dart';
-import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
+
+import 'package:najikkopasal/model/user.dart';
+
+import 'package:najikkopasal/screens/profile/edit_profile.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/widget/profile_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   static String routeName = '/profile';
   const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String? name;
+  String? email;
+  String? image;
+
+  Future preferences() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var data = sharedPreferences.getString('profile');
+
+    Map<String, dynamic> encodedData =
+        jsonDecode(sharedPreferences.getString('profile')!);
+    User user = User.fromJson(encodedData);
+    setState(() {
+      name = user.name;
+      email = user.email;
+      image = user.image;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    preferences();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +64,8 @@ class ProfilePage extends StatelessWidget {
           centerTitle: true,
         ),
         body: SingleChildScrollView(
+          // future builder class
+
           child: Container(
             padding: const EdgeInsets.all(16),
             height: size.height,
@@ -38,18 +73,14 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 120,
-                  child: const CircleAvatar(
+                  height: 120,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
                     radius: 60,
-                    backgroundImage:
-                        ExactAssetImage('assets/images/profile.jpg'),
-                  ),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: kPrimaryColor.withOpacity(.5),
-                      width: 5.0,
+                    backgroundImage: NetworkImage(
+                      image.toString(),
                     ),
                   ),
                 ),
@@ -62,16 +93,16 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Nabin Bhattarai',
+                        name.toString(),
                         style: TextStyle(
-                          color: Colors.black38,
+                          color: Colors.black.withOpacity(.9),
                           fontSize: 20,
                         ),
                       ),
                       const SizedBox(
                         width: 6,
                       ),
-                      SizedBox(
+                      const SizedBox(
                           height: 24,
                           child: Icon(
                             Icons.verified,
@@ -81,9 +112,9 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'bhattarainabin64@gmail.com',
+                  email.toString(),
                   style: TextStyle(
-                    color: Colors.black.withOpacity(.3),
+                    color: Colors.black.withOpacity(.9),
                   ),
                 ),
                 const SizedBox(
@@ -96,7 +127,10 @@ class ProfilePage extends StatelessWidget {
                       ProfileWidget(
                         icon: Icons.person,
                         title: 'Edit Profile',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, EditProfilePage.routeName);
+                        },
                       ),
                       ProfileWidget(
                         icon: Icons.settings,

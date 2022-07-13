@@ -9,4 +9,8 @@ class UserRepository {
   Future<bool> login(String email, String password) {
     return UserAPI().login(email, password);
   }
+
+  Future<bool> updateprofile(String name, String email, String image) {
+    return UserAPI().updateprofile(name, email, image);
+  }
 }

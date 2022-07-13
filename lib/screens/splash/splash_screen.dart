@@ -15,6 +15,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return const Scaffold(
+      // future delay
+      
+
+
+
       body: Body(),
     );
   }

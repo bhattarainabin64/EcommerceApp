@@ -49,7 +49,7 @@ class ProfileWidget extends StatelessWidget {
                       ),
                       Text(
                         title!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -57,10 +57,13 @@ class ProfileWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.black,
-                    size: 16,
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.black,
+                      size: 18,
+                    ),
                   )
                 ],
               )),
