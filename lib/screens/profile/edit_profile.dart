@@ -31,6 +31,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   File? img;
   String? base64;
   String? nbase64;
+  String? name;
+  String? email;
 
   Future _loadImage(ImageSource imageSource) async {
     try {
@@ -51,42 +53,39 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-  Future preferences() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var data = sharedPreferences.getString('profile');
+  // Future preferences() async {
+  //   // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   // var data = sharedPreferences.getString('profile');
 
-    Map<String, dynamic> encodedData =
-        jsonDecode(sharedPreferences.getString('profile')!);
-    User user = User.fromJson(encodedData);
-    setState(() {
-      image = user.image;
-    });
+  //   // Map<String, dynamic> encodedData =
+  //   //     jsonDecode(sharedPreferences.getString('profile')!);
+  //   // User user = User.fromJson(encodedData);
+  //   // setState(() {
+  //   //   image = user.image;
+  //   // });
 
-    _nameController.text = user.name!;
-    _emailController.text = user.email!;
-  }
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    preferences();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   preferences();
+  // }
 
   _updateUser() async {
     try {
       UserRepository userRepository = UserRepository();
       bool isUpdate = await userRepository.updateprofile(
           _nameController.text, _emailController.text, base64.toString());
-
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.remove('profile');
-      User user = User(
-          name: _nameController.text,
-          email: _emailController.text,
-          image: base64!.toString());
-      print(user.name);
-      String userdata = jsonEncode(user);
-      preferences.setString('profile', userdata);
+      // SharedPreferences preferences = await SharedPreferences.getInstance();
+      // preferences.remove('profile');
+      // User user = User(
+      //     name: _nameController.text,
+      //     email: _emailController.text,
+      //     image: base64!.toString());
+      // print(user.name);
+      // String userdata = jsonEncode(user);
+      // preferences.setString('profile', userdata);
     } catch (e) {
       MotionToast.error(
         description: Text("Error:${e.toString()}"),
@@ -97,6 +96,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    // accept arguments from the previous screen
+    final user = ModalRoute.of(context)!.settings.arguments as Map;
+    setState(() {
+      _nameController.text = user['name'];
+      _emailController.text = user['email'];
+    });
+
     Widget bottomSheet() {
       return Container(
         height: 100.0,

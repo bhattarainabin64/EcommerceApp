@@ -70,27 +70,26 @@ class _SignInFormState extends State<SignInForm> {
 
   final List<String> erros = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   autoLogin();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    autoLogin();
+  }
 
-  // void autoLogin() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   String? token = sharedPreferences.getString('token');
-  
+  void autoLogin() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString('token');
 
-  //   // convert userdate to string dynamic
+    // convert userdate to string dynamic
 
-  //   print("Token aaayena ta ke vo");
-  //   print(token);
-  //   if (token!.isNotEmpty) {
-  //     _navigateToScreen(true);
-  //   } else {
-  //     _navigateToScreen(false);
-  //   }
-  // }
+    print("Token aaayena ta ke vo");
+    print(token);
+    if (token!.isNotEmpty) {
+      _navigateToScreen(true);
+    } else {
+      _navigateToScreen(false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,9 @@ const registerUrl = "register/user";
 const loginUrl = "user/login";
 const productUrl = "product";
 const reviewUrl = "give/product/review";
+
+// profile urls
+const getuserUrl = "get/user/details";
 const updateprofileUrl = "user/update/profile";
 
 String? token;

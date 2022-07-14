@@ -3,6 +3,7 @@ class User {
   String? email;
   String? password;
   String? image;
+  
 
   User({this.name, this.email, this.password, this.image});
 
