@@ -10,6 +10,7 @@ import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
+import 'package:najikkopasal/screens/home/components/nav.dart';
 import 'package:najikkopasal/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -77,6 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       UserRepository userRepository = UserRepository();
       bool isUpdate = await userRepository.updateprofile(
           _nameController.text, _emailController.text, base64.toString());
+
       // SharedPreferences preferences = await SharedPreferences.getInstance();
       // preferences.remove('profile');
       // User user = User(
@@ -91,7 +93,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         description: Text("Error:${e.toString()}"),
       ).show(context);
     }
-    Navigator.pop(context);
+    Navigator.pushNamed(context, Navbar.routeName);
   }
 
   @override
@@ -101,6 +103,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     setState(() {
       _nameController.text = user['name'];
       _emailController.text = user['email'];
+      image = user['image'];
     });
 
     Widget bottomSheet() {
@@ -156,8 +159,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       img!,
                       fit: BoxFit.fill,
                     )
-                  : Image.asset(
-                      "assets/images/profile.jpg",
+                  : Image.network(
+                      image.toString(),
                       fit: BoxFit.fill,
                     ),
             ),

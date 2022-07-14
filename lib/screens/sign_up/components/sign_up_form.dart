@@ -58,10 +58,9 @@ class _SignUpFormState extends State<SignUpForm> {
   String? base64;
   String? nbase64;
 
-
-  Future _loadImage(ImageSource imageSource) async {
+  Future _loadImage(ImageSource imageSourc) async {
     try {
-      final image = await ImagePicker().pickImage(source: imageSource);
+      final image = await ImagePicker().pickImage(source: imageSourc);
       final bytes = File(image!.path).readAsBytesSync();
       String base64Image = "data:image/png;base64," + base64Encode(bytes);
 

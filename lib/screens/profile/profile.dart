@@ -41,20 +41,19 @@ class _ProfilePageState extends State<ProfilePage> {
   //   });
   // }
 
-  @override
-  void initState() {
-    super.initState();
-    UserRepository().getprofile();
+  // @override
+  // void initState()  {
+  //   super.initState();
+  //   UserRepository().getprofile();
 
-    // get data from user
-  }
+  //   // get data from user
+  // }
 
   @override
   Widget build(BuildContext context) {
     void logout() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove('token');
-      prefs.remove('profile');
       Navigator.pushNamed(context, SignInScreen.routeName);
     }
 
