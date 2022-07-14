@@ -7,6 +7,7 @@ import 'package:najikkopasal/model/profile_model.dart';
 // import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/response/profile_response.dart';
+import 'package:najikkopasal/screens/profile/change_password.dart';
 
 import 'package:najikkopasal/screens/profile/edit_profile.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
@@ -155,7 +156,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ProfileWidget(
                                   icon: Icons.settings,
                                   title: 'change password',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, ChangePassword.routeName);
+                                  },
                                 ),
                                 ProfileWidget(
                                   icon: Icons.history,

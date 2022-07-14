@@ -5,6 +5,7 @@ import 'package:najikkopasal/screens/home/components/nav.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 import 'package:najikkopasal/screens/product_details/product_details.dart';
+import 'package:najikkopasal/screens/profile/change_password.dart';
 import 'package:najikkopasal/screens/profile/edit_profile.dart';
 import 'package:najikkopasal/screens/profile/profile.dart';
 import 'package:najikkopasal/screens/profile/test.dart';
@@ -26,5 +27,7 @@ final Map<String, WidgetBuilder> routes = {
   ReviewUIScreen.routeName: (context) => const ReviewUIScreen(),
   ProfilePage.routeName: (context) => const ProfilePage(),
   EditProfilePage.routeName: (context) => EditProfilePage(),
-  TestScreen.routeName: (context) =>  TestScreen(),
+  TestScreen.routeName: (context) => TestScreen(),
+  ChangePassword.routeName: (context) => ChangePassword(),
+  
 };
