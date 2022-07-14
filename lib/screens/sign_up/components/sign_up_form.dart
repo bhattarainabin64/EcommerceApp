@@ -10,6 +10,7 @@ import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
+import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/size_config.dart';
 
 import '../../../components/custom_suffix-icon.dart';
@@ -38,6 +39,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   _displayMessage(msg) {
     if (msg) {
+      Navigator.pushNamed(context, SignInScreen.routeName);
       MotionToast.success(description: const Text('success register'))
           .show(context);
     } else {
@@ -58,10 +60,9 @@ class _SignUpFormState extends State<SignUpForm> {
   String? base64;
   String? nbase64;
 
-
-  Future _loadImage(ImageSource imageSource) async {
+  Future _loadImage(ImageSource imageSourc) async {
     try {
-      final image = await ImagePicker().pickImage(source: imageSource);
+      final image = await ImagePicker().pickImage(source: imageSourc);
       final bytes = File(image!.path).readAsBytesSync();
       String base64Image = "data:image/png;base64," + base64Encode(bytes);
 
@@ -197,16 +198,7 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
               text: "Sign Up",
               press: () {
-                if (_formKey.currentState!.validate() &&
-                    base64.toString() != null) {
-                  User user = User(
-                      name: _nameController.text,
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      image: base64);
-
-                  _registerUser(user);
-                } else {
+                if (_formKey.currentState!.validate() && base64 != null) {
                   User user = User(
                       name: _nameController.text,
                       email: _emailController.text,
@@ -226,29 +218,11 @@ class _SignUpFormState extends State<SignUpForm> {
       obscureText: true,
       controller: _passwordController,
       onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kPassNullError)) {
-          setState(() {
-            errors.remove(kPassNullError);
-          });
-        } else if (value.length >= 8 && errors.contains(kShortPassError)) {
-          setState(() {
-            errors.remove(kShortPassError);
-          });
-        }
-        return null;
-      },
       validator: (value) {
-        if (value!.isEmpty && !errors.contains(kPassNullError)) {
-          setState(() {
-            errors.add(kPassNullError);
-          });
-          return "";
-        } else if (value.length < 8 && !errors.contains(kShortPassError)) {
-          setState(() {
-            errors.add(kShortPassError);
-          });
-          return "";
+        if (value!.isEmpty) {
+          return "Password is required";
+        } else if (value.length <= 8) {
+          return "Password must be at least 8 characters";
         }
         return null;
       },
@@ -310,33 +284,14 @@ class _SignUpFormState extends State<SignUpForm> {
       controller: _emailController,
       onSaved: (newValue) => email = newValue,
       keyboardType: TextInputType.emailAddress,
-      onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.remove(kInvalidEmailError);
-          });
-        }
-        return null;
-      },
       validator: (value) {
-        if (value!.isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
-          return "";
-        } else if (!emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.add(kInvalidEmailError);
-          });
-          return "";
+        if (value!.isEmpty) {
+          return "Please enter your email";
+        } else if (!RegExp(
+                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+            .hasMatch(value)) {
+          return "Please enter a valid email";
         }
-        return null;
       },
       decoration: const InputDecoration(
         labelText: "Email",
@@ -351,22 +306,14 @@ class _SignUpFormState extends State<SignUpForm> {
     return TextFormField(
       controller: _nameController,
       onSaved: (newValue) => fullname = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kNameNullError)) {
-          setState(() {
-            errors.remove(kNameNullError);
-          });
-        }
-        return null;
-      },
       validator: (value) {
-        if (value!.isEmpty && !errors.contains(kNameNullError)) {
-          setState(() {
-            errors.add(kNameNullError);
-          });
-          return "";
+        if (value!.isEmpty) {
+          return "Please Enter Your Name";
+        } else if (value.length <= 5) {
+          return "Name should be at least 5 characters long";
+        } else {
+          return null;
         }
-        return null;
       },
       decoration: const InputDecoration(
         labelText: "First Name",

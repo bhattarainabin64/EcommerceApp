@@ -5,20 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/components/form_error.dart';
-import 'package:najikkopasal/model/user.dart';
+
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
-import 'package:najikkopasal/screens/home/home_screen.dart';
 
-import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
-import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/custom_suffix-icon.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import '../../home/components/botton-nav.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -31,6 +27,9 @@ class _SignInFormState extends State<SignInForm> {
   _navigateToScreen(bool isLogin) {
     if (isLogin) {
       Navigator.pushNamed(context, Navbar.routeName);
+      MotionToast.success(
+        description: const Text("Login Success"),
+      ).show(context);
     } else {
       MotionToast.error(
         description: const Text("Either username or password is not correct"),
@@ -79,14 +78,6 @@ class _SignInFormState extends State<SignInForm> {
   void autoLogin() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
-    String? userdate = sharedPreferences.getString('profile');
-    print(userdate);
-
-    // Map<String, dynamic> userdata =
-    //     jsonDecode(userdate.toString()) as Map<String, dynamic>;
-    // for (dynamic type in userdata.keys) {
-    //   print(type);
-    // }
 
     // convert userdate to string dynamic
 
@@ -142,11 +133,9 @@ class _SignInFormState extends State<SignInForm> {
           DefaultButton(
             text: "Login",
             press: () {
-              _login();
-              // if (_formKey.currentState!.validate()) {
-              //   _formKey.currentState!.save();
-
-              // }
+              if (_formKey.currentState!.validate()) {
+                _login();
+              }
             },
           )
         ],
@@ -158,32 +147,10 @@ class _SignInFormState extends State<SignInForm> {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty && erros.contains(kPassNullError)) {
-          setState(() {
-            erros.remove(kPassNullError);
-          });
-        } else if (value.length >= 8 && erros.contains(kShortPassError)) {
-          setState(() {
-            erros.remove(kShortPassError);
-          });
-        }
-        return null;
-      },
       validator: (value) {
-        if (value!.isEmpty && !erros.contains(kPassNullError)) {
-          setState(() {
-            erros.add(kPassNullError);
-          });
-          return "";
-        } else if (value.length < 8 && !erros.contains(kShortPassError)) {
-          setState(() {
-            erros.add(kShortPassError);
-          });
-          return "";
+        if (value!.isEmpty) {
+          return "Password is required";
         }
-        return null;
       },
       decoration: const InputDecoration(
         suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
@@ -197,33 +164,15 @@ class _SignInFormState extends State<SignInForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       controller: _emailController,
-      onSaved: (newValue) => email = newValue,
       keyboardType: TextInputType.emailAddress,
-      onChanged: (value) {
-        if (value.isNotEmpty && erros.contains(kEmailNullError)) {
-          setState(() {
-            erros.remove(kEmailNullError);
-          });
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            erros.contains(kInvalidEmailError)) {
-          setState(() {
-            erros.remove(kInvalidEmailError);
-          });
-        }
-        return null;
-      },
       validator: (value) {
-        if (value!.isEmpty && !erros.contains(kEmailNullError)) {
-          setState(() {
-            erros.add(kEmailNullError);
-          });
-          return "";
-        } else if (!emailValidatorRegExp.hasMatch(value) &&
-            !erros.contains(kInvalidEmailError)) {
-          setState(() {
-            erros.add(kInvalidEmailError);
-          });
-          return "";
+        if (value!.isEmpty) {
+          return "Email is required";
+        }
+        if (!RegExp(
+                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+            .hasMatch(value)) {
+          return "Please enter a valid email";
         }
         return null;
       },
