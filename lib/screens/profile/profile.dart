@@ -154,12 +154,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 ProfileWidget(
                                   icon: Icons.settings,
-                                  title: 'Settings',
+                                  title: 'change password',
                                   onPressed: () {},
                                 ),
                                 ProfileWidget(
                                   icon: Icons.history,
-                                  title: 'Share',
+                                  title: 'Order History',
                                   onPressed: () {},
                                 ),
                                 ProfileWidget(
