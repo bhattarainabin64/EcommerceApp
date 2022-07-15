@@ -189,9 +189,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
     );
   }
   // make autorefresh for the product data from api uisng future builder
-  
- 
-
 
   FutureBuilder<ProductResponse?> getproductfromapi(String? paramst) {
     return FutureBuilder<ProductResponse?>(
@@ -201,7 +198,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.done) {
               lstproducts = snapshot.data!.data!;
-              
+
               // print(lstproducts[0].reviews![0].name);
 
               return Container(
@@ -248,7 +245,11 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return const Center(child: CupertinoActivityIndicator());
+          return const Center(
+            child: CupertinoActivityIndicator(
+              radius: 20,
+            ),
+          );
         });
   }
 

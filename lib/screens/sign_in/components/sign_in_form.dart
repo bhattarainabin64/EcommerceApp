@@ -27,9 +27,6 @@ class _SignInFormState extends State<SignInForm> {
   _navigateToScreen(bool isLogin) {
     if (isLogin) {
       Navigator.pushNamed(context, Navbar.routeName);
-      MotionToast.success(
-        description: const Text("Login Success"),
-      ).show(context);
     } else {
       MotionToast.error(
         description: const Text("Either username or password is not correct"),

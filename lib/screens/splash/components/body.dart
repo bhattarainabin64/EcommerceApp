@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/constants.dart';
@@ -76,6 +77,12 @@ class _BodyState extends State<Body> {
                         text: "Continue",
                         press: () {
                           Navigator.pushNamed(context, SignInScreen.routeName);
+                          AwesomeNotifications().createNotification(
+                              content: NotificationContent(
+                                  channelKey: 'basic_channel',
+                                  title: 'Getstarted',
+                                  body: "Welcome to Najikkopasal",
+                                  id: 1));
                         },
                       ),
                       const Spacer(),

@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ProductAPI {
   Future<ProductResponse?> getproduct(
       {String? keywords, String? category}) async {
-    Future.delayed(const Duration(seconds: 2), () {});
     ProductResponse? productResponse;
     Response? response;
     try {

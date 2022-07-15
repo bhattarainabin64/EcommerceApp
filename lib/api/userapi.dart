@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/login.dart';
 import 'package:najikkopasal/response/profile_response.dart';
-// import 'package:najikkopasal/utils/sessionmanager.dart';
+import 'package:najikkopasal/utils/sessionmanager.dart';
 // import 'package:najikkopasal/utils/sessionmanager.dart';
 import 'package:najikkopasal/utils/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 
 class UserAPI {
+  
   Future<bool> registerUser(User user) async {
     try {
       var url = baseUrl + registerUrl;
@@ -124,7 +125,7 @@ class UserAPI {
 
       if (response.statusCode == 200) {
         print("Profile  update bhyaooooooooooooooooooooo");
-
+      
         isprofileUpdated = true;
       }
     } catch (e) {
