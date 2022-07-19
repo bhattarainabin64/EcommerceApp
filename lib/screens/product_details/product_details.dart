@@ -1,12 +1,17 @@
-import 'dart:ffi';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:najikkopasal/model/cart_model.dart';
+
 import 'package:najikkopasal/repository/productRepository.dart';
+import 'package:najikkopasal/screens/cart/db_helper.dart';
 
 import 'package:najikkopasal/screens/product_details/body.dart';
+import 'package:provider/provider.dart';
 
 import 'package:rating_dialog/rating_dialog.dart';
-import 'package:get/get.dart';
+
+import '../cart/cart_provider.dart';
 
 class ProductDetails extends StatefulWidget {
   static String routeName = '/product_details';
@@ -17,30 +22,18 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  DBHelper? dbHelper = DBHelper();
   String? productId = "";
   double? rating;
+  int? id2 = 0;
 
   //initiliaze above variables usinh getx
-  
-  
-
-
-
-
 
   String? commnet1 = "";
 
   @override
   Widget build(BuildContext context) {
-    // _review() async {
-    //   try {
-    //     ProductRepository review = ProductRepository();
-
-    //     bool isReview = await review.givereview(
-    //         productId!, "comment from hhhhh janu bho ta", 5);
-    //   } catch (e) {}
-    // }
-
+    final cart = Provider.of<CartProvider>(context);
     void showRating() {
       showDialog(
           context: context,
@@ -73,8 +66,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                 submitButtonText: 'Submit',
                 onCancelled: () => print('cancelled'),
                 onSubmitted: (response) async {
-                 
-                  
                   setState(() {
                     rating = response.rating;
                   });
@@ -82,7 +73,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                   bool isReview = await review.givereview(
                       productId!, response.comment, rating!.toInt());
-                   // product
+                  // product
                   print("sdaksjdhaksjdhskajdhjksadhkasdkjasdskajjkasdj");
                 });
           });
@@ -90,6 +81,17 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     final productData = ModalRoute.of(context)!.settings.arguments as Map;
     final id = productData['id'];
+    // generate random int
+
+    // BigInt bin = BigInt.parse(id, radix: 16);
+    // //convrt bin to small int
+    // int id3 = bin.toInt();
+    final random = Random();
+    int id3 = random.nextInt(1500);
+
+    // final id2 = random.nextInt(id3);
+    // print(id2);
+
     final name = productData['name'];
     final description = productData['description'];
     final price = productData['price'];
@@ -147,7 +149,38 @@ class _ProductDetailsState extends State<ProductDetails> {
                           style: TextStyle(
                             fontSize: 18.0,
                           )),
-                      onPressed: () {}),
+                      onPressed: () {
+                        dbHelper!
+                            .insert(Cart(
+                                id: id3,
+                                productId: id.toString(),
+                                productName: name.toString(),
+                                initialPrice: price,
+                                productPrice: price,
+                                quantity: 1,
+                                unitTag: "₹",
+                                image: image.toString()))
+                            .then((value) {
+                          cart.addTotalPrice(double.parse(price.toString()));
+                          cart.addCounter();
+
+                          final snackBar = SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text('Product is added to cart'),
+                            duration: Duration(seconds: 1),
+                          );
+
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }).onError((error, stackTrace) {
+                          print("error" + error.toString());
+                          final snackBar = SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('Product is already added in cart'),
+                              duration: Duration(seconds: 1));
+
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      }),
                 ),
               ),
             ],
