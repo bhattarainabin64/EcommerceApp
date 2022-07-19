@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:najikkopasal/constants.dart';
 
 import 'package:najikkopasal/repository/productRepository.dart';
 import 'package:najikkopasal/response/product_response.dart';
-import 'package:najikkopasal/screens/home/components/category_model.dart';
+
 import 'package:najikkopasal/screens/product_details/product_details.dart';
 import 'package:najikkopasal/widget/productCard.dart';
 
@@ -22,7 +23,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   int activePage = 0;
   int _current = 0;
 
-  String query = '';
+  var query = "".obs;
   String? category;
   List<Product> lstproducts = [];
   List categtegories = [];
@@ -35,9 +36,9 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
 
   static const List<Tab> _tabs = [
     Tab(text: 'All'),
-    Tab(text: 'Clothes'),
+    Tab(text: 'Sunglass'),
     Tab(text: 'Shoes'),
-    Tab(text: 'Men'),
+    Tab(text: 'Watch'),
   ];
 
   @override
@@ -102,7 +103,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                             ),
                             onChanged: (text) {
                               setState(() {
-                                query = text;
+                                query = text.obs;
                               });
                             },
                           ),
@@ -158,29 +159,10 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
             Expanded(
               child: TabBarView(controller: _tabController, children: [
                 // grod build method  start
-                getproductfromapi(''),
-                getproductfromapi("Man"),
-                getproductfromapi("Nike"),
-                getproductfromapi("Nike"),
-                // future builder end
-
-                // const Center(
-                //   child: Text(
-                //     "Welcome to the second Page",
-                //     textAlign: TextAlign.center,
-                //   ),
-                // ),
-                // const Text(
-                //   "Welcome to Third Page",
-                //   textAlign: TextAlign.center,
-                // ),
-                // const SizedBox(
-                //   height: 40,
-                //   child: Text(
-                //     "I am four",
-                //     textAlign: TextAlign.center,
-                //   ),
-                // )
+                getproductfromapi(""),
+                getproductfromapi("Sunglass"),
+                getproductfromapi("Shoes"),
+                getproductfromapi("Watch"),
               ]),
             )
           ],
@@ -189,19 +171,16 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
     );
   }
   // make autorefresh for the product data from api uisng future builder
-  
- 
-
 
   FutureBuilder<ProductResponse?> getproductfromapi(String? paramst) {
     return FutureBuilder<ProductResponse?>(
-        future:
-            ProductRepository().getproducts(keyword: query, category: paramst),
+        future: ProductRepository()
+            .getproducts(keyword: query.value, category: paramst),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.done) {
               lstproducts = snapshot.data!.data!;
-              
+
               // print(lstproducts[0].reviews![0].name);
 
               return Container(
@@ -248,7 +227,73 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return const Center(child: CupertinoActivityIndicator());
+          return const Center(
+            child: CupertinoActivityIndicator(
+              radius: 20,
+            ),
+          );
+        });
+  }
+
+  FutureBuilder<ProductResponse?> getproductfromapis() {
+    return FutureBuilder<ProductResponse?>(
+        future: ProductRepository().getproduct(keyword: query.value.toString()),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              lstproducts = snapshot.data!.data!;
+
+              // print(lstproducts[0].reviews![0].name);
+
+              return Container(
+                decoration: BoxDecoration(
+                  color: Color(0XFFEDECF2),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    primary: true,
+                    itemCount: lstproducts.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.7,
+                    ),
+                    itemBuilder: (context, index) {
+                      return SingleProductWidget(
+                        onPressed: () {
+                          Navigator.pushNamed(context, ProductDetails.routeName,
+                              arguments: {
+                                "id": lstproducts[index].id,
+                                "name": lstproducts[index].name,
+                                "image": lstproducts[index]
+                                    .images![0]
+                                    .url
+                                    .toString(),
+                                "ratings": lstproducts[index].ratings,
+                                "description": lstproducts[index].description,
+                                "price": lstproducts[index].price,
+                                "reviews": lstproducts[index].reviews,
+                              });
+                        },
+                        productImage:
+                            lstproducts[index].images![0].url.toString(),
+                        productRating: lstproducts[index].ratings!.toDouble(),
+                        productName: lstproducts[index].name.toString(),
+                        productOldPrice: lstproducts[index].price!.toString(),
+                        productPrice: lstproducts[index].price!.toString(),
+                      );
+                    }),
+              );
+            }
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return const Center(
+            child: CupertinoActivityIndicator(
+              radius: 20,
+            ),
+          );
         });
   }
 

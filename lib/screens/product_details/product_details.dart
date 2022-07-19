@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/repository/productRepository.dart';
 
 import 'package:najikkopasal/screens/product_details/body.dart';
-import 'package:najikkopasal/screens/review/reviewfrontend.dart';
+
 import 'package:rating_dialog/rating_dialog.dart';
+import 'package:get/get.dart';
 
 class ProductDetails extends StatefulWidget {
   static String routeName = '/product_details';
@@ -16,6 +19,14 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   String? productId = "";
   double? rating;
+
+  //initiliaze above variables usinh getx
+  
+  
+
+
+
+
 
   String? commnet1 = "";
 
@@ -62,6 +73,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 submitButtonText: 'Submit',
                 onCancelled: () => print('cancelled'),
                 onSubmitted: (response) async {
+                 
+                  
                   setState(() {
                     rating = response.rating;
                   });
