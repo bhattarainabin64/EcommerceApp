@@ -8,5 +8,6 @@ const reviewUrl = "give/product/review";
 // profile urls
 const getuserUrl = "get/user/details";
 const updateprofileUrl = "user/update/profile";
+const changePasswordUrl= "change/password";
 
 String? token;

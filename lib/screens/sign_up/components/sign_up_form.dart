@@ -79,22 +79,6 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
-  // void addError({String? error}) {
-  //   if (error!.contains(error)) {
-  //     setState(() {
-  //       errors.add(error);
-  //     });
-  //   }
-  // }
-
-  // void removeError({String? error}) {
-  //   if (error!.contains(error)) {
-  //     setState(() {
-  //       errors.remove(error);
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     Widget bottomSheet() {
@@ -114,7 +98,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
               TextButton.icon(
@@ -125,7 +109,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 },
               ),
               TextButton.icon(
-                icon: Icon(Icons.image),
+                icon: const Icon(Icons.image),
                 onPressed: () {
                   _loadImage(ImageSource.gallery);
                 },
@@ -184,17 +168,17 @@ class _SignUpFormState extends State<SignUpForm> {
           imageProfile(),
 
           SizedBox(
-            height: getProportionateScreenHeight(20),
+            height: getProportionateScreenHeight(10),
           ),
           buildNameFormFild(),
-          SizedBox(height: getProportionateScreenHeight(20)),
+          SizedBox(height: getProportionateScreenHeight(10)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(10)),
           // buildConfirmPasswordFormFiled(),
           FormError(erros: errors),
-          SizedBox(height: getProportionateScreenHeight(25)),
+          SizedBox(height: getProportionateScreenHeight(15)),
           DefaultButton(
               text: "Sign Up",
               press: () {
@@ -234,50 +218,6 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
-
-  // TextFormField buildConfirmPasswordFormFiled() {
-  //   return TextFormField(
-  //     obscureText: true,
-  //     // onSaved: (newValue) => confirmpassword = newValue,
-  //     onChanged: (value) {
-  //       if (value.isNotEmpty && errors.contains(kConfirmPassNullError)) {
-  //         setState(() {
-  //           errors.remove(kConfirmPassNullError);
-  //         });
-  //       } else if (password == confirmpassword &&
-  //           errors.contains(kMatchPassError)) {
-  //         setState(() {
-  //           errors.remove(kMatchPassError);
-  //         });
-  //       }
-  //       return null;
-  //     },
-  //     validator: (value) {
-  //       if (value!.isEmpty && !errors.contains(kConfirmPassNullError)) {
-  //         setState(() {
-  //           errors.add(kConfirmPassNullError);
-  //         });
-
-  //         confirmpassword = value;
-  //         print(value);
-
-  //         return "";
-  //       } else if (password != value && !errors.contains(kMatchPassError)) {
-  //         setState(() {
-  //           errors.add(kMatchPassError);
-  //         });
-  //         return "";
-  //       }
-  //       return null;
-  //     },
-  //     decoration: const InputDecoration(
-  //       suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
-  //       labelText: " Confirm Password",
-  //       hintText: "Re-Enter Your Password",
-  //       floatingLabelBehavior: FloatingLabelBehavior.always,
-  //     ),
-  //   );
-  // }
 
   TextFormField buildEmailFormField() {
     return TextFormField(

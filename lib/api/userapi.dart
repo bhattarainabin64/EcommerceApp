@@ -16,7 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 
 class UserAPI {
-  
   Future<bool> registerUser(User user) async {
     try {
       var url = baseUrl + registerUrl;
@@ -98,7 +97,7 @@ class UserAPI {
         profileResponse = ProfileResponse.fromJson(response.data);
       }
     } catch (e) {
-      throw Exception(e);
+      print(e.toString());
     }
     return profileResponse;
   }
@@ -125,11 +124,11 @@ class UserAPI {
 
       if (response.statusCode == 200) {
         print("Profile  update bhyaooooooooooooooooooooo");
-      
+
         isprofileUpdated = true;
       }
     } catch (e) {
-      debugPrint(e.toString());
+      print(e.toString());
     }
 
     return isprofileUpdated;

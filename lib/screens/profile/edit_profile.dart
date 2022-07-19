@@ -76,7 +76,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   _updateUser() async {
     try {
       UserRepository userRepository = UserRepository();
+      // if name is empty then send saved named
+      
       bool isUpdate = await userRepository.updateprofile(
+        
           _nameController.text, _emailController.text, base64.toString());
 
       // SharedPreferences preferences = await SharedPreferences.getInstance();
