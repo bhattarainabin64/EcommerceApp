@@ -99,10 +99,10 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Icon(
-                          Icons.shopping_cart_checkout,
-                          color: Color.fromARGB(255, 35, 90, 135),
-                        )
+                        // Icon(
+                        //   Icons.shopping_cart_checkout,
+                        //   color: Color.fromARGB(255, 35, 90, 135),
+                        // )
                       ],
                     ),
                   )

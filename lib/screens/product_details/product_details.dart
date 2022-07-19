@@ -158,7 +158,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 initialPrice: price,
                                 productPrice: price,
                                 quantity: 1,
-                                unitTag: "Rs",
+                                unitTag: "₹",
                                 image: image.toString()))
                             .then((value) {
                           cart.addTotalPrice(double.parse(price.toString()));
