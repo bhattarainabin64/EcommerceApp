@@ -2,8 +2,11 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/screens/home/home_screen.dart';
+import 'package:najikkopasal/screens/profile/product_list.dart';
 import 'package:najikkopasal/screens/profile/profile.dart';
 import 'package:najikkopasal/screens/profile/test.dart';
+
+import '../../cart/cart_screen.dart';
 
 class Navbar extends StatefulWidget {
   Navbar({Key? key}) : super(key: key);
@@ -17,8 +20,8 @@ class _NavbarState extends State<Navbar> {
   var _page = 0;
   final pages = [
     HomePage(),
-    TestScreen(),
-    Container(color: Colors.white),
+    ProductListScreen(),
+    CartScreen(),
     Container(color: Colors.white),
     ProfilePage(),
   ];

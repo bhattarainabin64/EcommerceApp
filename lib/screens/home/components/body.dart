@@ -103,7 +103,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                             ),
                             onChanged: (text) {
                               setState(() {
-                                query = text.obs;
+                                query.value = text;
                               });
                             },
                           ),
