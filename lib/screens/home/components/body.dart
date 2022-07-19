@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,10 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   String? category;
   List<Product> lstproducts = [];
   List categtegories = [];
+  // generate random number
+  
+
+
 
   final CarouselController _controller = CarouselController();
   final List<String> imgList = [
@@ -265,7 +271,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                           Navigator.pushNamed(context, ProductDetails.routeName,
                               arguments: {
                                 "id": lstproducts[index].id,
-                                "name": lstproducts[index].name,
+                               
                                 "image": lstproducts[index]
                                     .images![0]
                                     .url

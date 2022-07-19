@@ -2,9 +2,10 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 import 'package:najikkopasal/routes.dart';
-
+import 'package:najikkopasal/screens/cart/cart_provider.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
 import 'package:najikkopasal/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   AwesomeNotifications().initialize('resource://drawable/luncher', [
@@ -27,12 +28,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: theme(),
-        initialRoute: SplashScreen.routeName,
-        routes: routes);
+    return ChangeNotifierProvider(
+      create: (_) => CartProvider(),
+      child: Builder(builder: (BuildContext context) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: theme(),
+            initialRoute: SplashScreen.routeName,
+            routes: routes);
+      }),
+    );
   }
 }
 

@@ -55,6 +55,9 @@ class _ProfilePageState extends State<ProfilePage> {
     void logout() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove('token');
+      prefs.remove('cart_item');
+      prefs.remove('total_price');
+
       Navigator.pushNamed(context, SignInScreen.routeName);
     }
 
