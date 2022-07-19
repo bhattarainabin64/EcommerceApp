@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/custom_suffix-icon.dart';
 import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/constants.dart';
+import 'package:najikkopasal/repository/userRepository.dart';
+import 'package:najikkopasal/screens/home/components/nav.dart';
 
 class ChangePassword extends StatefulWidget {
   static String routeName = '/change_password';
@@ -22,11 +25,47 @@ class _ChangePasswordState extends State<ChangePassword> {
   final _passwordOldController = TextEditingController();
   final _passwordNewController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
+  _navigateToScreen(bool isUpdated) {
+    if (isUpdated) {
+      MotionToast.success(
+        description: const Text("Password updated successfully"),
+      ).show(context);
+      // MotionToast.success
+    } else if (mounted) {
+      MotionToast.error(
+        description: const Text("Error: old password doesnot match"),
+      ).show(context); // MotionToast.error
+    }
+  }
+
+  _chnagePassword() async {
+    try {
+      UserRepository userRepository = UserRepository();
+
+      bool isUpdated = await userRepository.userchangePassword(
+        _passwordOldController.text,
+        _passwordNewController.text,
+        _passwordConfirmController.text,
+      );
+
+      if (isUpdated) {
+        _navigateToScreen(true);
+      } else {
+        _navigateToScreen(false);
+      }
+    } catch (e) {
+      MotionToast.error(
+        description: Text("Error:${e.toString()}"),
+      ).show(context); // MotionToast.error
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Change Password',
           style: TextStyle(
               fontSize: 20,
@@ -53,7 +92,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   text: "Chnage password",
                   press: () {
                     if (_formKey.currentState!.validate()) {
-                      print("Change passwordppppppppppppppppppppppppppppppppp");
+                      _chnagePassword();
                     }
                   })
             ],

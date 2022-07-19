@@ -77,10 +77,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     try {
       UserRepository userRepository = UserRepository();
       // if name is empty then send saved named
-      
+
       bool isUpdate = await userRepository.updateprofile(
-        
           _nameController.text, _emailController.text, base64.toString());
+          
 
       // SharedPreferences preferences = await SharedPreferences.getInstance();
       // preferences.remove('profile');
@@ -96,7 +96,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
         description: Text("Error:${e.toString()}"),
       ).show(context);
     }
-    Navigator.pushNamed(context, Navbar.routeName);
   }
 
   @override

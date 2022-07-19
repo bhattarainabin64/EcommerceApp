@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/login.dart';
@@ -127,13 +128,65 @@ class UserAPI {
 
         isprofileUpdated = true;
       }
-    } catch (e) {
-      print(e.toString());
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        Fluttertoast.showToast(
+            msg: e.response!.data['message'],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP_LEFT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Color.fromARGB(255, 205, 22, 22),
+            fontSize: 30.0);
+      }
     }
 
     return isprofileUpdated;
   }
+
+  Future<bool> chnagePassword(
+      String? oldPassword, String? newPassword, String? confirmPassword) async {
+    bool chnagePassword = false;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? changeptoken = sharedPreferences.getString('token');
+
+    try {
+      var url = baseUrl + changePasswordUrl;
+
+      var dio = HttpServices().getDioInstance();
+
+      var response = await dio.put(url,
+          data: {
+            "oldPassword": oldPassword,
+            "newPassword": newPassword,
+            "confirmPassword": confirmPassword
+          },
+          options: Options(headers: {
+            HttpHeaders.authorizationHeader: "Bearer $changeptoken"
+          }));
+
+      if (response.statusCode == 200) {
+        chnagePassword = true;
+      }
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        Fluttertoast.showToast(
+            msg: e.response!.data['message'],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP_LEFT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Color.fromARGB(255, 205, 22, 22),
+            fontSize: 30.0);
+      }
+    }
+
+    return chnagePassword;
+  }
 }
+
+
+
 // create the class which take user object and convert to JsonEncoder
 
 
