@@ -19,6 +19,8 @@ class SessionManager {
   }
 }
 
+
+
 //  SessionManager().setAuthToken(token!);
 //         Future<String> data1 = SessionManager().getAuthToken();
        
