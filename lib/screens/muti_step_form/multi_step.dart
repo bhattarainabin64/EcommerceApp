@@ -49,14 +49,20 @@ class _MultiStepFormState extends State<MultiStepForm> {
   // }
 
   // get all sharepreferrnces data function
-  // Future<String> getAllData() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String? name = prefs.getString('name');
-  //   String? email = prefs.getString('email');
-  //   String? phone = prefs.getString('phone');
-  //   String? address = prefs.getString('address');
-  //   return '$name $email $phone $address';
-  // }
+  Future<String> getAllData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? name = prefs.getString('name');
+    String? email = prefs.getString('email');
+    String? phone = prefs.getString('phone');
+    String? address = prefs.getString('address');
+    return '$name $email $phone $address';
+  }
+
+  // print getAllData function single value
+  
+
+ 
+
 
   @override
   Widget build(BuildContext context) {

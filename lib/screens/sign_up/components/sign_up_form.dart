@@ -56,11 +56,11 @@ class _SignUpFormState extends State<SignUpForm> {
   final List<String> errors = [];
 
   final _formKey = GlobalKey<FormState>();
-  File? img;
-  String? base64;
+  File? imgs;
+  String? base63;
   String? nbase64;
 
-  Future _loadImage(ImageSource imageSourc) async {
+  Future _loadImages(ImageSource imageSourc) async {
     try {
       final image = await ImagePicker().pickImage(source: imageSourc);
       final bytes = File(image!.path).readAsBytesSync();
@@ -68,8 +68,8 @@ class _SignUpFormState extends State<SignUpForm> {
 
       if (base64Image != null) {
         setState(() {
-          img = File(image.path);
-          base64 = base64Image;
+          imgs = File(image.path);
+          base63 = base64Image;
         });
       } else {
         return;
@@ -105,13 +105,13 @@ class _SignUpFormState extends State<SignUpForm> {
                 icon: Icon(Icons.camera),
                 label: const Text("Camera"),
                 onPressed: () {
-                  _loadImage(ImageSource.camera);
+                  _loadImages(ImageSource.camera);
                 },
               ),
               TextButton.icon(
                 icon: const Icon(Icons.image),
                 onPressed: () {
-                  _loadImage(ImageSource.gallery);
+                  _loadImages(ImageSource.gallery);
                 },
                 label: const Text("Gallery"),
               ),
@@ -129,9 +129,9 @@ class _SignUpFormState extends State<SignUpForm> {
             child: SizedBox(
               width: 100.0,
               height: 100.0,
-              child: (img != null)
+              child: (imgs != null)
                   ? Image.file(
-                      img!,
+                      imgs!,
                       fit: BoxFit.fill,
                     )
                   : Image.asset(
@@ -171,14 +171,14 @@ class _SignUpFormState extends State<SignUpForm> {
             height: getProportionateScreenHeight(10),
           ),
           buildNameFormFild(),
-          SizedBox(height: getProportionateScreenHeight(10)),
+          SizedBox(height: getProportionateScreenHeight(20)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
           buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(10)),
+          SizedBox(height: getProportionateScreenHeight(20)),
           // buildConfirmPasswordFormFiled(),
-          FormError(erros: errors),
-          SizedBox(height: getProportionateScreenHeight(15)),
+
+          SizedBox(height: getProportionateScreenHeight(30)),
           DefaultButton(
               text: "Sign Up",
               press: () {
@@ -187,7 +187,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       name: _nameController.text,
                       email: _emailController.text,
                       password: _passwordController.text,
-                      image: base64);
+                      image: base63);
 
                   _registerUser(user);
                 }
