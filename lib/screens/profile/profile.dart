@@ -23,33 +23,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // String? name;
-  // String? email;
-  // String? image;
-  // Profile profile = Profile();
-
-  // Future preferences() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   var data = sharedPreferences.getString('profile');
-
-  //   Map<String, dynamic> encodedData =
-  //       jsonDecode(sharedPreferences.getString('profile')!);
-  //   User user = User.fromJson(encodedData);
-  //   setState(() {
-  //     name = user.name;
-  //     email = user.email;
-  //     image = user.image;
-  //   });
-  // }
-
-  // @override
-  // void initState()  {
-  //   super.initState();
-  //   UserRepository().getprofile();
-
-  //   // get data from user
-  // }
-
   @override
   Widget build(BuildContext context) {
     void logout() async {
@@ -108,8 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
             // use future builder to get data from server
 
             child: FutureBuilder<ProfileResponse?>(
-                future: UserRepository()
-                    .getprofile(), // a previously-obtained Future<String> or null, if the once-obtained Future is still active
+                future: UserRepository().getprofile(), // a previously-obtained Future<String> or null, if the once-obtained Future is still active
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.connectionState == ConnectionState.done) {

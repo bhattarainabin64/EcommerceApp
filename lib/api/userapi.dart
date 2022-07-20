@@ -33,8 +33,17 @@ class UserAPI {
       if (response.statusCode == 201) {
         return true;
       }
-    } catch (e) {
-      throw Exception(e);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        Fluttertoast.showToast(
+            msg: e.response!.data['message'],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP_LEFT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Color.fromARGB(255, 205, 22, 22),
+            fontSize: 30.0);
+      }
     }
 
     return false;
@@ -71,14 +80,22 @@ class UserAPI {
         sharedPreferences.setString('token', '$token');
         isLogin = true;
       }
-    } catch (e) {
-      debugPrint(e.toString());
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.response) {
+        Fluttertoast.showToast(
+            msg: e.response!.data['message'],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP_LEFT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Color.fromARGB(255, 205, 22, 22),
+            fontSize: 30.0);
+      }
     }
 
     return isLogin;
   }
 
-// get user profile
   Future<ProfileResponse?> getuser() async {
     Future.delayed(const Duration(seconds: 2), () {});
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -167,6 +184,8 @@ class UserAPI {
 
       if (response.statusCode == 200) {
         chnagePassword = true;
+        // get data from sessionmanager class
+
       }
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
