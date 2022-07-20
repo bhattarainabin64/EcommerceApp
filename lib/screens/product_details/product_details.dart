@@ -83,16 +83,9 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     final productData = ModalRoute.of(context)!.settings.arguments as Map;
     final id = productData['id'];
-    // generate random int
 
-    // BigInt bin = BigInt.parse(id, radix: 16);
-    // //convrt bin to small int
-    // int id3 = bin.toInt();
     final random = Random();
     int id3 = random.nextInt(1500);
-
-    // final id2 = random.nextInt(id3);
-    // print(id2);
 
     final name = productData['name'];
     final description = productData['description'];

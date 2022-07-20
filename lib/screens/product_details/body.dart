@@ -108,7 +108,23 @@ class _BodyState extends State<Body> {
                                 color: kPrimaryColor,
                               ),
                             ),
-                            const Text("In Stock: True")
+                            widget.stock! < 1
+                                ? Text(
+                                    "Out of Stock",
+                                    style: TextStyle(
+                                      fontSize: getProportionateScreenWidth(15),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  )
+                                : Text(
+                                    "In Stock",
+                                    style: TextStyle(
+                                      fontSize: getProportionateScreenWidth(15),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green,
+                                    ),
+                                  ),
                           ],
                         ),
                       ),
