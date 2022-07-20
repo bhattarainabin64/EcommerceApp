@@ -21,10 +21,10 @@ class _NavbarState extends State<Navbar> {
     HomePage(),
     // ProductListScreen(),
     Container(color: Colors.white),
-    CartScreen(),
+    const CartScreen(),
 
     Container(color: Colors.white),
-    ProfilePage(),
+    const ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {

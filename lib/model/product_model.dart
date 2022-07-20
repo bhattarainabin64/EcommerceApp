@@ -2,8 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:najikkopasal/model/image.dart';
 import 'package:najikkopasal/model/review.dart';
 
-
-
 part 'product_model.g.dart';
 
 @JsonSerializable()
@@ -13,6 +11,7 @@ class Product {
   String? name;
   String? description;
   int? price;
+  int? Stock;
   double? ratings;
   List<Image>? images;
   List<Review>? reviews;
@@ -23,6 +22,7 @@ class Product {
       this.ratings,
       this.images,
       this.reviews,
+      this.Stock,
       this.id});
   factory Product.fromJson(Map<String, dynamic> json) {
     return _$ProductFromJson(json);

@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/model/cart_model.dart';
 
 import 'package:najikkopasal/repository/productRepository.dart';
+import 'package:najikkopasal/screens/cart/cart_screen.dart';
 import 'package:najikkopasal/screens/cart/db_helper.dart';
 
 import 'package:najikkopasal/screens/product_details/body.dart';
@@ -81,16 +83,9 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     final productData = ModalRoute.of(context)!.settings.arguments as Map;
     final id = productData['id'];
-    // generate random int
 
-    // BigInt bin = BigInt.parse(id, radix: 16);
-    // //convrt bin to small int
-    // int id3 = bin.toInt();
     final random = Random();
     int id3 = random.nextInt(1500);
-
-    // final id2 = random.nextInt(id3);
-    // print(id2);
 
     final name = productData['name'];
     final description = productData['description'];
@@ -98,13 +93,14 @@ class _ProductDetailsState extends State<ProductDetails> {
     final ratings = productData['ratings'];
     final image = productData['image'];
     final reviews = productData['reviews'];
+    final stock = productData['stock'];
 
     print(productId);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(179, 255, 255, 255),
           title: Row(
-            children: const [
+            children: [
               Text(
                 "Product Details",
                 style: TextStyle(
@@ -113,7 +109,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               Spacer(),
-              Icon(Icons.favorite)
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CartScreen()));
+                },
+                child: Center(
+                  child: Badge(
+                    badgeContent: Consumer<CartProvider>(
+                      builder: (context, value, child) {
+                        return Text(value.getCounter().toString(),
+                            style: TextStyle(color: Colors.white));
+                      },
+                    ),
+                    animationDuration: const Duration(milliseconds: 300),
+                    animationType: BadgeAnimationType.slide,
+                    child: Icon(Icons.shopping_bag_outlined),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -193,6 +207,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             description: description,
             name: name,
             image: image,
+            stock: stock,
             reviews: reviews));
   }
 }

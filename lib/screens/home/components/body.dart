@@ -30,9 +30,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   List<Product> lstproducts = [];
   List categtegories = [];
   // generate random number
-  
-
-
 
   final CarouselController _controller = CarouselController();
   final List<String> imgList = [
@@ -187,7 +184,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
             if (snapshot.connectionState == ConnectionState.done) {
               lstproducts = snapshot.data!.data!;
 
-              // print(lstproducts[0].reviews![0].name);
+            
 
               return Container(
                 decoration: BoxDecoration(
@@ -218,6 +215,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                                 "description": lstproducts[index].description,
                                 "price": lstproducts[index].price,
                                 "reviews": lstproducts[index].reviews,
+                                "stock":lstproducts[index].Stock
                               });
                         },
                         productImage:
@@ -271,7 +269,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                           Navigator.pushNamed(context, ProductDetails.routeName,
                               arguments: {
                                 "id": lstproducts[index].id,
-                               
                                 "image": lstproducts[index]
                                     .images![0]
                                     .url

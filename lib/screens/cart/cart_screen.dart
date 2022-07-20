@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/model/cart_model.dart';
+import 'package:najikkopasal/screens/muti_step_form/multi_step.dart';
 import 'package:provider/provider.dart';
 
 import 'cart_provider.dart';
@@ -24,13 +25,12 @@ class _CartScreenState extends State<CartScreen> {
     final cart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shopping Cart',
+        title: const Text('Shopping Cart',
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 209, 48, 48))),
         centerTitle: true,
-        automaticallyImplyLeading: false,
         actions: [
           Center(
             child: Badge(
@@ -57,26 +57,35 @@ class _CartScreenState extends State<CartScreen> {
                 builder: (context, AsyncSnapshot<List<Cart>> snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data!.isEmpty) {
-                      return Align(
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            Image(
-                              image: AssetImage('assets/images/empty_cart.png'),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text('Your cart is empty 😌',
-                                style: Theme.of(context).textTheme.headline5),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                                'Explore products and shop your\nfavourite items',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.subtitle2)
-                          ],
+                      return Center(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            children: const [
+                              Image(
+                                image:
+                                    AssetImage('assets/images/empty_cart.png'),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text('Your cart is empty ',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 209, 48, 48))),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                  'Explore products and shop your\nfavourite items',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 93, 13, 173))),
+                            ],
+                          ),
                         ),
                       );
                     } else {
@@ -347,6 +356,7 @@ class _CartScreenState extends State<CartScreen> {
                     ? false
                     : true,
                 child: Container(
+                  padding: const EdgeInsets.all(5),
                   margin: EdgeInsets.only(bottom: 15),
                   child: Column(
                     children: [
@@ -360,7 +370,9 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                       DefaultButton(
                         text: "Checkout",
-                        press: () {},
+                        press: () {
+                          Navigator.pushNamed(context, MultiStepForm.routeName);
+                        },
                       )
                     ],
                   ),
@@ -387,11 +399,15 @@ class ReusableWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle2,
+            style: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           Text(
             value.toString(),
-            style: Theme.of(context).textTheme.subtitle2,
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 92, 2, 218)),
           )
         ],
       ),

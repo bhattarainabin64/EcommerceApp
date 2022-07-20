@@ -53,6 +53,7 @@ class ProductAPI {
       );
 
       if (response.statusCode == 200) {
+        
         productResponse = ProductResponse.fromJson(response.data);
       }
     } catch (e) {
