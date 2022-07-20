@@ -24,13 +24,13 @@ class _CartScreenState extends State<CartScreen> {
     final cart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shopping Cart',
+        title: const Text('Shopping Cart',
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 209, 48, 48))),
         centerTitle: true,
-        automaticallyImplyLeading: false,
+        
         actions: [
           Center(
             child: Badge(
@@ -57,26 +57,35 @@ class _CartScreenState extends State<CartScreen> {
                 builder: (context, AsyncSnapshot<List<Cart>> snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data!.isEmpty) {
-                      return Align(
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            Image(
-                              image: AssetImage('assets/images/empty_cart.png'),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text('Your cart is empty 😌',
-                                style: Theme.of(context).textTheme.headline5),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                                'Explore products and shop your\nfavourite items',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.subtitle2)
-                          ],
+                      return Center(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            children: const [
+                              Image(
+                                image:
+                                    AssetImage('assets/images/empty_cart.png'),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text('Your cart is empty ',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 209, 48, 48))),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                  'Explore products and shop your\nfavourite items',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 93, 13, 173))),
+                            ],
+                          ),
                         ),
                       );
                     } else {

@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/model/cart_model.dart';
 
 import 'package:najikkopasal/repository/productRepository.dart';
+import 'package:najikkopasal/screens/cart/cart_screen.dart';
 import 'package:najikkopasal/screens/cart/db_helper.dart';
 
 import 'package:najikkopasal/screens/product_details/body.dart';
@@ -104,7 +106,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         appBar: AppBar(
           backgroundColor: Color.fromARGB(179, 255, 255, 255),
           title: Row(
-            children: const [
+            children: [
               Text(
                 "Product Details",
                 style: TextStyle(
@@ -113,7 +115,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               Spacer(),
-              Icon(Icons.favorite)
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CartScreen()));
+                },
+                child: Center(
+                  child: Badge(
+                    badgeContent: Consumer<CartProvider>(
+                      builder: (context, value, child) {
+                        return Text(value.getCounter().toString(),
+                            style: TextStyle(color: Colors.white));
+                      },
+                    ),
+                    animationDuration: const Duration(milliseconds: 300),
+                    animationType: BadgeAnimationType.slide,
+                    child: Icon(Icons.shopping_bag_outlined),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

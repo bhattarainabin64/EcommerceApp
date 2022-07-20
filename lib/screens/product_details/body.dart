@@ -79,77 +79,20 @@ class _BodyState extends State<Body> {
                         padding: EdgeInsets.only(top: 40, bottom: 20),
                         child: Row(
                           children: [
-                            Text(
-                              "${widget.name}",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(20),
-                                  fontWeight: FontWeight.bold,
-                                  color: kPrimaryColor),
+                            Center(
+                              child: Text(
+                                "${widget.name}",
+                                style: TextStyle(
+                                    fontSize: getProportionateScreenWidth(20),
+                                    fontWeight: FontWeight.bold,
+                                    color: kPrimaryColor),
+                              ),
                             ),
                           ],
                         ),
                       ),
                       // Text("${widget.text}"),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SmoothStarRating(
-                              starCount: 5,
-                              rating: double.parse(widget.ratings.toString()),
-                              color: kPrimaryColor,
-                              borderColor: kPrimaryColor,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color:
-                                              Color.fromARGB(255, 175, 172, 172)
-                                                  .withOpacity(0.1),
-                                          offset: Offset(0, 3),
-                                          blurRadius: 10,
-                                        ),
-                                      ]),
-                                  child: Icon(
-                                    CupertinoIcons.minus,
-                                    size: 15,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 12),
-                                  child: Text("${widget.reviews!.length}"),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color:
-                                              Color.fromARGB(255, 175, 172, 172)
-                                                  .withOpacity(0.1),
-                                          offset: Offset(0, 3),
-                                          blurRadius: 10,
-                                        ),
-                                      ]),
-                                  child: Icon(
-                                    CupertinoIcons.plus,
-                                    size: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
@@ -163,7 +106,7 @@ class _BodyState extends State<Body> {
                                 color: kPrimaryColor,
                               ),
                             ),
-                            Text("In Stock: True")
+                            const Text("In Stock: True")
                           ],
                         ),
                       ),

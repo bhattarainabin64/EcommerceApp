@@ -55,15 +55,40 @@ class _ProfilePageState extends State<ProfilePage> {
     void logout() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove('token');
-      prefs.remove('cart_item');
-      prefs.remove('total_price');
 
       Navigator.pushNamed(context, SignInScreen.routeName);
+    }
+
+    void _showAlertDialog(BuildContext context) {
+      showCupertinoModalPopup<void>(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text('Alert'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('No'),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () async {
+                logout();
+              },
+              child: const Text('Yes'),
+            )
+          ],
+        ),
+      );
     }
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Profile',
           style: TextStyle(
@@ -173,7 +198,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   icon: Icons.logout,
                                   title: 'Log Out',
                                   onPressed: () {
-                                    logout();
+                                    _showAlertDialog(context);
+                                    // logout();
                                   },
                                 ),
                               ],
