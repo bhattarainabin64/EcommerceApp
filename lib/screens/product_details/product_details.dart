@@ -100,6 +100,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final ratings = productData['ratings'];
     final image = productData['image'];
     final reviews = productData['reviews'];
+    final stock = productData['stock'];
 
     print(productId);
     return Scaffold(
@@ -213,6 +214,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             description: description,
             name: name,
             image: image,
+            stock: stock,
             reviews: reviews));
   }
 }

@@ -22,6 +22,7 @@ class Body extends StatefulWidget {
   final String? image;
   final String? name;
   final String? date;
+  final int? stock;
   List<Review>? reviews;
 
   Body(
@@ -33,6 +34,7 @@ class Body extends StatefulWidget {
       this.reviews,
       this.image,
       this.name,
+      this.stock,
       this.date})
       : super(
           key: key,

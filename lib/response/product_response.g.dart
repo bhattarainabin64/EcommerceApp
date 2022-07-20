@@ -6,13 +6,14 @@ part of 'product_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
-    ProductResponse(
-      success: json['success'] as bool?,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) {
+  return ProductResponse(
+    success: json['success'] as bool?,
+    data: (json['data'] as List<dynamic>?)
+        ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
 
 Map<String, dynamic> _$ProductResponseToJson(ProductResponse instance) =>
     <String, dynamic>{
