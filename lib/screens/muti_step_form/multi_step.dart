@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:najikkopasal/components/custom_suffix-icon.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/model/cart_model.dart';
+import 'package:najikkopasal/model/shipping_model.dart';
 import 'package:najikkopasal/screens/cart/cart_provider.dart';
 import 'package:najikkopasal/size_config.dart';
 import 'package:provider/provider.dart';
@@ -19,29 +20,61 @@ class MultiStepForm extends StatefulWidget {
 class _MultiStepFormState extends State<MultiStepForm> {
   // the current step
   int _currentStep = 0;
-  String? name = "baba";
+  String? name;
+
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+  TextEditingController _stateController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _pincodeController = TextEditingController();
+  TextEditingController _countryController = TextEditingController();
 
   bool _isVerticalStepper = true;
+
   // make globel key
   final _formKey = GlobalKey<FormState>();
+  String? phone;
+  String? address;
 
   // This function will be triggered when a step is tapped
   _stepTapped(int step) {
     setState(() => _currentStep = step);
   }
 
-  // This function will be called when the continue button is tapped
   _continue() {
-    // Validate will return true if the form is valid, or false if
-    // the form is invalid.
-    // if (_formKey.currentState!.validate()) {
-    _currentStep < 2 ? setState(() => _currentStep += 1) : null;
-    // }
+    if (_formKey.currentState!.validate()) {
+      ShippingModel shipping = ShippingModel(
+        address: _addressController.text,
+        city: _cityController.text,
+        pincode: _pincodeController.text,
+        phone: _phoneController.text,
+        country: _countryController.text,
+        state: _stateController.text,
+      );
+      shipping.setAllData(shipping);
+      print("shipping data saved");
+
+      _currentStep < 2 ? setState(() => _currentStep += 1) : null;
+    }
   }
 
-  // This function will be called when the cancel button is tapped
   _stepCancel() {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
+  }
+
+  void getname() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name = prefs.getString('name');
+      print(name);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getname();
   }
 
   @override
@@ -81,7 +114,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
                           key: _formKey,
                           child: Column(
                             children: [
-                              buildNameFormFild(),
+                              buildAddressFormFild(),
                               SizedBox(height: SizeConfig.screenHeight * 0.02),
                               buildCityFormFild(),
                               SizedBox(height: SizeConfig.screenHeight * 0.02),
@@ -89,7 +122,11 @@ class _MultiStepFormState extends State<MultiStepForm> {
                               SizedBox(height: SizeConfig.screenHeight * 0.02),
                               buildPhoneFormFild(),
                               SizedBox(height: SizeConfig.screenHeight * 0.02),
-                              buildNameFormFild(),
+                              buildCountryFormFild(),
+                              SizedBox(height: SizeConfig.screenHeight * 0.02),
+                              buildStateFormFild(),
+
+                              // buildNameFormFild(),
                             ],
                           ),
                         ),
@@ -131,7 +168,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            "Phone : 9861922169",
+                            "Phone : ${_phoneController.text}",
                             style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -139,134 +176,120 @@ class _MultiStepFormState extends State<MultiStepForm> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            "Address :kalopul, kathmandu, Nepal",
+                            "Address :${_addressController.text}",
                             style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
                           SizedBox(height: 20),
-                          Text("Your Cart Items",
+                          const Text("Your Cart Items",
                               style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
-                          Container(
-                            child: FutureBuilder(
-                                future: cart.getData(),
-                                builder: (context,
-                                    AsyncSnapshot<List<Cart>> snapshot) {
-                                  if (snapshot.hasData) {
-                                    return ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: snapshot.data!.length,
-                                        itemBuilder: (context, index) {
-                                          return Card(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
+                          FutureBuilder(
+                              future: cart.getData(),
+                              builder: (context,
+                                  AsyncSnapshot<List<Cart>> snapshot) {
+                                if (snapshot.hasData) {
+                                  return ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                    MainAxisAlignment
+                                                        .spaceAround,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      CachedNetworkImage(
-                                                          height: 110,
-                                                          width: 110,
-                                                          fit: BoxFit.cover,
-                                                          imageUrl: snapshot
-                                                              .data![index]
-                                                              .image
-                                                              .toString()),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Expanded(
-                                                        child: Column(
+                                                  CachedNetworkImage(
+                                                      height: 110,
+                                                      width: 110,
+                                                      fit: BoxFit.cover,
+                                                      imageUrl: snapshot
+                                                          .data![index].image
+                                                          .toString()),
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Expanded(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  snapshot
-                                                                      .data![
-                                                                          index]
-                                                                      .productName
-                                                                      .toString(),
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          16,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
                                                             Text(
                                                               snapshot
-                                                                      .data![
-                                                                          index]
-                                                                      .unitTag
-                                                                      .toString() +
-                                                                  " " +
-                                                                  snapshot
-                                                                      .data![
-                                                                          index]
-                                                                      .productPrice
-                                                                      .toString(),
+                                                                  .data![index]
+                                                                  .productName
+                                                                  .toString(),
                                                               style: const TextStyle(
-                                                                  fontSize: 17,
-                                                                  color:
-                                                                      kPrimaryColor,
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold),
                                                             ),
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
                                                           ],
                                                         ),
-                                                      )
-                                                    ],
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Text(
+                                                          snapshot.data![index]
+                                                                  .unitTag
+                                                                  .toString() +
+                                                              " " +
+                                                              snapshot
+                                                                  .data![index]
+                                                                  .productPrice
+                                                                  .toString(),
+                                                          style: const TextStyle(
+                                                              fontSize: 17,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   )
                                                 ],
-                                              ),
-                                            ),
-                                          );
-                                        });
-                                  } else if (snapshot.hasError) {
-                                    return Text("${snapshot.error}");
-                                  }
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }),
-                                
-                          )
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      });
+                                } else if (snapshot.hasError) {
+                                  return Text("${snapshot.error}");
+                                }
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              })
                         ],
                       ),
                     ),
@@ -300,8 +323,9 @@ class _MultiStepFormState extends State<MultiStepForm> {
     );
   }
 
-  TextFormField buildNameFormFild() {
+  TextFormField buildAddressFormFild() {
     return TextFormField(
+      controller: _addressController,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter Address";
@@ -319,6 +343,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
 
   TextFormField buildCityFormFild() {
     return TextFormField(
+      controller: _cityController,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter City";
@@ -337,6 +362,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
   TextFormField buildPincodeFormFild() {
     return TextFormField(
       keyboardType: TextInputType.number,
+      controller: _pincodeController,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter Pincode";
@@ -356,6 +382,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
   TextFormField buildPhoneFormFild() {
     return TextFormField(
       keyboardType: TextInputType.number,
+      controller: _phoneController,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter PhoneNumber";
@@ -364,8 +391,44 @@ class _MultiStepFormState extends State<MultiStepForm> {
         }
       },
       decoration: const InputDecoration(
-        labelText: "Pincode",
+        labelText: "PhoneNumber",
         hintText: "Enter your PhoneNumber",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(Icons.phone),
+      ),
+    );
+  }
+
+  TextFormField buildCountryFormFild() {
+    return TextFormField(
+      controller: _countryController,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Please Enter Country";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        labelText: "Country",
+        hintText: "Enter your Country",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(Icons.phone),
+      ),
+    );
+  }
+
+  TextFormField buildStateFormFild() {
+    return TextFormField(
+      controller: _stateController,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Please Enter State";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        labelText: "State",
+        hintText: "Enter your State",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(Icons.phone),
       ),

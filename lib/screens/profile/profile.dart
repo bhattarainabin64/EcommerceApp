@@ -28,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
     void logout() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove('token');
+      prefs.remove('name');
 
       Navigator.pushNamed(context, SignInScreen.routeName);
     }
@@ -81,7 +82,8 @@ class _ProfilePageState extends State<ProfilePage> {
             // use future builder to get data from server
 
             child: FutureBuilder<ProfileResponse?>(
-                future: UserRepository().getprofile(), // a previously-obtained Future<String> or null, if the once-obtained Future is still active
+                future: UserRepository()
+                    .getprofile(), // a previously-obtained Future<String> or null, if the once-obtained Future is still active
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.connectionState == ConnectionState.done) {
