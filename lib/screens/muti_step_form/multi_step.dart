@@ -38,31 +38,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
   _stepCancel() {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
-  // make fuction to set alldata using model to sharepreferrnces
-  // void setAllData(String name, String email, String phone, String address) {
-  //   SharedPreferences.getInstance().then((prefs) {
-  //     prefs.setString("name", name);
-  //     prefs.setString("email", email);
-  //     prefs.setString("phone", phone);
-  //     prefs.setString("address", address);
-  //   });
-  // }
-
-  // get all sharepreferrnces data function
-  Future<String> getAllData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? name = prefs.getString('name');
-    String? email = prefs.getString('email');
-    String? phone = prefs.getString('phone');
-    String? address = prefs.getString('address');
-    return '$name $email $phone $address';
-  }
-
-  // print getAllData function single value
-  
-
- 
-
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +66,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
                 onStepContinue: _continue,
                 onStepCancel: _stepCancel,
                 steps: [
-                  // The first step: Name
                   Step(
-                    // give color in stepper index
-
                     title: const Text('Shipping'),
                     content: Container(
                       child: Padding(

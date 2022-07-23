@@ -58,7 +58,7 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   File? imgs;
   String? base63;
-  String? nbase64;
+  
 
   Future _loadImages(ImageSource imageSourc) async {
     try {
@@ -182,7 +182,7 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
               text: "Sign Up",
               press: () {
-                if (_formKey.currentState!.validate() && base64 != null) {
+                if (_formKey.currentState!.validate() && base63 != null) {
                   User user = User(
                       name: _nameController.text,
                       email: _emailController.text,

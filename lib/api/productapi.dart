@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio_http_cache/dio_http_cache.dart';
+
 import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/product_response.dart';
 import 'package:najikkopasal/utils/url.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductAPI {
@@ -13,21 +16,35 @@ class ProductAPI {
       {String? keywords = "", String? category}) async {
     ProductResponse? productResponse;
     Response? response;
+    Box box;
+    var dir = await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
+    box = await Hive.openBox('mybox');
+    var stored = box.get(1);
+
+    var encoded = jsonDecode(stored);
+
+    productResponse = ProductResponse.fromJson(encoded);
+
     try {
       var dio = HttpServices().getDioInstance();
-      dio.interceptors.add(DioCacheManager(
-              CacheConfig(baseUrl: "http://192.168.1.67:4000/api/v2/"))
-          .interceptor);
+
       var url = baseUrl + productUrl;
       if (category!.isNotEmpty) {
         response = await dio.get(url,
-            options: buildCacheOptions(const Duration(days: 7)),
             queryParameters: {'category': category, 'keyword': keywords});
+        String postdata = jsonEncode(response.data);
       } else {
         response = await dio.get(url, queryParameters: {'keyword': keywords});
       }
 
       if (response.statusCode == 200) {
+        String postdata = jsonEncode(response.data);
+
+        await box.clear();
+
+        box.put(1, postdata);
+
         productResponse = ProductResponse.fromJson(response.data);
       }
     } catch (e) {
@@ -39,21 +56,34 @@ class ProductAPI {
   Future<ProductResponse?> getproducts({String? keyword}) async {
     ProductResponse? productResponse;
     Response? response;
+    Box box;
+    var dir = await getApplicationDocumentsDirectory();
+
+    Hive.init(dir.path);
+    box = await Hive.openBox('mybox');
+    var stored = box.get(1);
+
+    var encoded = jsonDecode(stored);
+
+    productResponse = ProductResponse.fromJson(encoded);
     try {
       var dio = HttpServices().getDioInstance();
-      dio.interceptors.add(DioCacheManager(
-              CacheConfig(baseUrl: "http://192.168.1.67:4000/api/v2/"))
-          .interceptor);
+
       var url = baseUrl + productUrl;
 
       response = await dio.get(
         url,
         queryParameters: {'keyword': keyword},
-        options: buildCacheOptions(const Duration(days: 7)),
       );
+      String postdata = jsonEncode(response.data);
 
       if (response.statusCode == 200) {
-        
+        String postdata = jsonEncode(response.data);
+
+        await box.clear();
+
+        box.put(1, postdata);
+
         productResponse = ProductResponse.fromJson(response.data);
       }
     } catch (e) {

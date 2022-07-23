@@ -1,5 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clippy_flutter/arc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +60,8 @@ class _BodyState extends State<Body> {
             color: Color.fromARGB(255, 255, 255, 255),
             child: Padding(
               padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-              child: Image.network(
-                "${widget.image}",
+              child: CachedNetworkImage(
+                imageUrl: "${widget.image}",
                 height: getProportionateScreenHeight(250),
               ),
             ),

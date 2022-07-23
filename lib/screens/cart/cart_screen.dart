@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/components/default_button.dart';
@@ -119,14 +120,13 @@ class _CartScreenState extends State<CartScreen> {
                                               CrossAxisAlignment.center,
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
-                                            Image(
-                                              height: 110,
-                                              width: 110,
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(snapshot
-                                                  .data![index].image
-                                                  .toString()),
-                                            ),
+                                            CachedNetworkImage(
+                                                height: 110,
+                                                width: 110,
+                                                fit: BoxFit.cover,
+                                                imageUrl: snapshot
+                                                    .data![index].image
+                                                    .toString()),
                                             const SizedBox(
                                               width: 10,
                                             ),
