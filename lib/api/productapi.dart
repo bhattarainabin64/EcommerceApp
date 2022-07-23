@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductAPI {
   Future<ProductResponse?> getproduct(
-      {String? keywords = "", String? category}) async {
+      {String? keywords = "", String? category = ""}) async {
     ProductResponse? productResponse;
     Response? response;
     Box box;
@@ -30,10 +30,11 @@ class ProductAPI {
       var dio = HttpServices().getDioInstance();
 
       var url = baseUrl + productUrl;
+      
+
       if (category!.isNotEmpty) {
         response = await dio.get(url,
             queryParameters: {'category': category, 'keyword': keywords});
-        String postdata = jsonEncode(response.data);
       } else {
         response = await dio.get(url, queryParameters: {'keyword': keywords});
       }

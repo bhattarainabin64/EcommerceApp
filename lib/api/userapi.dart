@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/login.dart';
 import 'package:najikkopasal/response/profile_response.dart';
-import 'package:najikkopasal/utils/sessionmanager.dart';
+
 // import 'package:najikkopasal/utils/sessionmanager.dart';
 import 'package:najikkopasal/utils/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
