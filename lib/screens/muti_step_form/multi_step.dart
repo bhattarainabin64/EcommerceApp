@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
+
+import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:najikkopasal/components/custom_suffix-icon.dart';
+
+import 'package:get/get.dart';
+
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/model/cart_model.dart';
 import 'package:najikkopasal/model/shipping_model.dart';
@@ -8,6 +14,8 @@ import 'package:najikkopasal/screens/cart/cart_provider.dart';
 import 'package:najikkopasal/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:najikkopasal/api/payment_services.dart';
 
 class MultiStepForm extends StatefulWidget {
   static String routeName = '/multi_step_form';
@@ -21,6 +29,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
   // the current step
   int _currentStep = 0;
   String? name;
+  Map<String, dynamic>? paymentIntentData;
 
   TextEditingController _addressController = TextEditingController();
   TextEditingController _cityController = TextEditingController();
@@ -62,10 +71,14 @@ class _MultiStepFormState extends State<MultiStepForm> {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 
+  double? totalamount;
+
   void getname() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       name = prefs.getString('name');
+      totalamount = prefs.getDouble('total_price');
+      print(totalamount);
       print(name);
     });
   }
@@ -80,6 +93,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+    final PaymentController controller = Get.put(PaymentController());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -177,7 +191,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
                           SizedBox(height: 10),
                           Text(
                             "Address :${_addressController.text}",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
@@ -301,13 +315,28 @@ class _MultiStepFormState extends State<MultiStepForm> {
                   // The third step: Verify phone number
                   Step(
                     title: const Text('Payment'),
-                    content: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: const InputDecoration(
-                              labelText: 'Verification code'),
-                        ),
-                      ],
+                    content: InkWell(
+                      onTap: () async {
+                        await makePayment(
+                            totalamount!.toStringAsFixed(0).toString());
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: double.infinity,
+                            color: Colors.green,
+                            child: Center(
+                              child: Text(
+                                'Pay',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     isActive: _currentStep >= 0,
                     state: _currentStep >= 2
@@ -433,5 +462,92 @@ class _MultiStepFormState extends State<MultiStepForm> {
         suffixIcon: Icon(Icons.phone),
       ),
     );
+  }
+
+  Future<void> makePayment(String? total) async {
+    // paymnet instant method
+
+    try {
+      paymentIntentData = await createPaymentIntent(
+          total.toString(), 'INR'); //json.decode(response.body);
+      // print('Response body==>${response.body.toString()}');
+      await stripe.Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: stripe.SetupPaymentSheetParameters(
+            customerId: paymentIntentData!['customer'] ?? 'Customer',
+            paymentIntentClientSecret: paymentIntentData!['client_secret'],
+            style: ThemeMode.dark,
+            merchantDisplayName: 'ANNIE',
+          ))
+          .then((value) {});
+
+      ///now finally display payment sheeet
+      displayPaymentSheet();
+    } catch (e, s) {
+      print('exception:$e$s');
+    }
+  }
+
+  displayPaymentSheet() async {
+    try {
+      await stripe.Stripe.instance
+          .presentPaymentSheet(
+              parameters: stripe.PresentPaymentSheetParameters(
+        clientSecret: paymentIntentData!['client_secret'],
+        confirmPayment: true,
+      ))
+          .then((newValue) {
+        print('payment intent' + paymentIntentData!['id'].toString());
+        print(
+            'payment intent' + paymentIntentData!['client_secret'].toString());
+        print('payment intent' + paymentIntentData!['amount'].toString());
+        print('payment intent' + paymentIntentData.toString());
+        //orderPlaceApi(paymentIntentData!['id'].toString());
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("paid successfully")));
+
+        paymentIntentData = null;
+      }).onError((error, stackTrace) {
+        print('Exception/DISPLAYPAYMENTSHEET==> $error $stackTrace');
+      });
+    } on stripe.StripeException catch (e) {
+      print('Exception/DISPLAYPAYMENTSHEET==> $e');
+      showDialog(
+          context: context,
+          builder: (_) => const AlertDialog(
+                content: Text("Cancelled "),
+              ));
+    } catch (e) {
+      print('$e');
+    }
+  }
+
+  //  Future<Map<String, dynamic>>
+  createPaymentIntent(String amount, String currency) async {
+    try {
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card',
+      };
+      print(body);
+      var response = await http.post(
+          Uri.parse('https://api.stripe.com/v1/payment_intents'),
+          body: body,
+          headers: {
+            'Authorization':
+                'Bearer sk_test_51LH2CxSE7FPWZ2J85BHiduxE4RW7A3X8xl29NcLNBh8JIPxuFu22Hs7sVa2XcHF8l6Dw2AuChHPdLkaOW83dlsIn00ahPuluMB',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
+      print('Create Intent reponse ===> ${response.body.toString()}');
+      return jsonDecode(response.body);
+    } catch (err) {
+      print('err charging user: ${err.toString()}');
+    }
+  }
+
+  calculateAmount(String amount) {
+    final a = (int.parse(amount)) * 100;
+    return a.toString();
   }
 }
