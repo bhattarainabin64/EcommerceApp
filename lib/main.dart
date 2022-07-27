@@ -1,19 +1,17 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:najikkopasal/routes.dart';
 import 'package:najikkopasal/screens/cart/cart_provider.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
+import 'package:najikkopasal/screens/ware/wareogin.dart';
 import 'package:najikkopasal/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey =
-      'pk_test_51LH2CxSE7FPWZ2J8NCZFFp5jga3sr8vAqe8Kkfm6ZsK4RjGC3WotLEpmpb846y299MQ1ZvjQ41RHp1hMmwyY3r7V00mSHqoGQS';
+  Stripe.publishableKey ='pk_test_51LH2CxSE7FPWZ2J8NCZFFp5jga3sr8vAqe8Kkfm6ZsK4RjGC3WotLEpmpb846y299MQ1ZvjQ41RHp1hMmwyY3r7V00mSHqoGQS';
   await Hive.initFlutter();
 
   AwesomeNotifications().initialize('resource://drawable/luncher', [
@@ -44,7 +42,8 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: theme(),
             initialRoute: SplashScreen.routeName,
-            routes: routes);
+            routes: routes
+            );
       }),
     );
   }

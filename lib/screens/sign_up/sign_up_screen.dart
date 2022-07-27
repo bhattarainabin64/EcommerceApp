@@ -9,8 +9,6 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Sign UP"), centerTitle: true),
-        body: const Body(
-          
-        ));
+        body: Body());
   }
 }

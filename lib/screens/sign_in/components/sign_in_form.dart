@@ -123,7 +123,7 @@ class _SignInFormState extends State<SignInForm> {
               )
             ],
           ),
-          FormError(erros: erros),
+   
           SizedBox(
             height: getProportionateScreenHeight(26),
           ),
@@ -144,6 +144,7 @@ class _SignInFormState extends State<SignInForm> {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
+      key: ValueKey("password"),
       validator: (value) {
         if (value!.isEmpty) {
           return "Password is required";

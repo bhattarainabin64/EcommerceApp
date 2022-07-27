@@ -11,6 +11,7 @@ import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/model/cart_model.dart';
 import 'package:najikkopasal/model/shipping_model.dart';
 import 'package:najikkopasal/screens/cart/cart_provider.dart';
+import 'package:najikkopasal/screens/home/components/nav.dart';
 import 'package:najikkopasal/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,14 +73,13 @@ class _MultiStepFormState extends State<MultiStepForm> {
   }
 
   double? totalamount;
+  late Future<List<Cart>> cartitems;
 
   void getname() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       name = prefs.getString('name');
       totalamount = prefs.getDouble('total_price');
-      print(totalamount);
-      print(name);
     });
   }
 
@@ -88,11 +88,31 @@ class _MultiStepFormState extends State<MultiStepForm> {
     // TODO: implement initState
     super.initState();
     getname();
+    // print(cartitems!.getData());
   }
 
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+    setState(() {
+      cartitems = cart.getData();
+      // convert cartitem to json object
+
+      cartitems.then((value) => value.forEach((element) {
+            // add all lemt in cart model
+
+            Cart cart = Cart(
+              productId: element.productId,
+              productName: element.productName,
+              productPrice: element.productPrice,
+              quantity: element.quantity,
+              image: element.image,
+            );
+          
+           
+          }));
+    });
+
     final PaymentController controller = Get.put(PaymentController());
     return Scaffold(
       appBar: AppBar(
@@ -290,9 +310,9 @@ class _MultiStepFormState extends State<MultiStepForm> {
                                                         ),
                                                       ],
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
-                                              )
+                                              ),
                                             ],
                                           ),
                                         );
@@ -303,7 +323,28 @@ class _MultiStepFormState extends State<MultiStepForm> {
                                 return const Center(
                                   child: CircularProgressIndicator(),
                                 );
-                              })
+                              }),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                "$totalamount",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -363,6 +404,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
       },
       decoration: const InputDecoration(
         labelText: "Address",
+        border: OutlineInputBorder(),
         hintText: "Enter your Address",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(Icons.location_city),
@@ -380,6 +422,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
         return null;
       },
       decoration: const InputDecoration(
+        border: OutlineInputBorder(),
         labelText: "City",
         hintText: "Enter your City",
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -400,6 +443,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
         }
       },
       decoration: const InputDecoration(
+        border: OutlineInputBorder(),
         labelText: "Pincode",
         hintText: "Enter your Pincode",
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -420,6 +464,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
         }
       },
       decoration: const InputDecoration(
+        border: OutlineInputBorder(),
         labelText: "PhoneNumber",
         hintText: "Enter your PhoneNumber",
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -440,6 +485,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
       decoration: const InputDecoration(
         labelText: "Country",
         hintText: "Enter your Country",
+        border: OutlineInputBorder(),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(Icons.phone),
       ),
@@ -458,6 +504,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
       decoration: const InputDecoration(
         labelText: "State",
         hintText: "Enter your State",
+        border: OutlineInputBorder(),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(Icons.phone),
       ),
@@ -497,14 +544,16 @@ class _MultiStepFormState extends State<MultiStepForm> {
         confirmPayment: true,
       ))
           .then((newValue) {
-        print('payment intent' + paymentIntentData!['id'].toString());
         print(
-            'payment intent' + paymentIntentData!['client_secret'].toString());
-        print('payment intent' + paymentIntentData!['amount'].toString());
-        print('payment intent' + paymentIntentData.toString());
+            'payment intent iddddddddd' + paymentIntentData!['id'].toString());
+        print('Statussssssssssssssssssss' +
+            paymentIntentData!['status'].toString());
+        // print('payment intent' + paymentIntentData!['amount'].toString());
+        // print('payment intent' + paymentIntentData.toString());
         //orderPlaceApi(paymentIntentData!['id'].toString());
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("paid successfully")));
+        // Navigator.pushNamed(context, Navbar.routeName);
 
         paymentIntentData = null;
       }).onError((error, stackTrace) {

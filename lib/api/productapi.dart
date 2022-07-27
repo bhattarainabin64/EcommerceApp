@@ -20,7 +20,7 @@ class ProductAPI {
     var dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
     box = await Hive.openBox('mybox');
-    var stored = box.get(1);
+    var stored = box.get("data");
 
     var encoded = jsonDecode(stored);
 
@@ -30,9 +30,8 @@ class ProductAPI {
       var dio = HttpServices().getDioInstance();
 
       var url = baseUrl + productUrl;
-      
 
-      if (category!.isNotEmpty) {
+      if (category != "") {
         response = await dio.get(url,
             queryParameters: {'category': category, 'keyword': keywords});
       } else {
@@ -42,9 +41,7 @@ class ProductAPI {
       if (response.statusCode == 200) {
         String postdata = jsonEncode(response.data);
 
-        await box.clear();
-
-        box.put(1, postdata);
+        box.put("data", postdata);
 
         productResponse = ProductResponse.fromJson(response.data);
       }
@@ -57,16 +54,16 @@ class ProductAPI {
   Future<ProductResponse?> getproducts({String? keyword}) async {
     ProductResponse? productResponse;
     Response? response;
-    Box box;
-    var dir = await getApplicationDocumentsDirectory();
+    // Box box;
+    // var dir = await getApplicationDocumentsDirectory();
 
-    Hive.init(dir.path);
-    box = await Hive.openBox('mybox');
-    var stored = box.get(1);
+    // Hive.init(dir.path);
+    // box = await Hive.openBox('mybox');
+    // var stored = box.get("data");
 
-    var encoded = jsonDecode(stored);
+    // var encoded = jsonDecode(stored);
 
-    productResponse = ProductResponse.fromJson(encoded);
+    // productResponse = ProductResponse.fromJson(encoded);
     try {
       var dio = HttpServices().getDioInstance();
 
@@ -79,11 +76,9 @@ class ProductAPI {
       String postdata = jsonEncode(response.data);
 
       if (response.statusCode == 200) {
-        String postdata = jsonEncode(response.data);
+        // String postdata = jsonEncode(response.data);
 
-        await box.clear();
-
-        box.put(1, postdata);
+        // box.put("data", postdata);
 
         productResponse = ProductResponse.fromJson(response.data);
       }

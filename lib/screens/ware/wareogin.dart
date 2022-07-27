@@ -3,8 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wear/wear.dart';
 
 class WareosHome extends StatefulWidget {
+  static String routeName = '/wareos';
 
-  WareosHome({Key? key}) : super(key: key);
+  const WareosHome({Key? key}) : super(key: key);
 
   @override
   State<WareosHome> createState() => _WareosHomeState();
@@ -34,28 +35,40 @@ class _WareosHomeState extends State<WareosHome> {
             child: Center(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(7.0),
                   child: Column(
                     children: [
-                      TextFormField(
-                        controller: _firstController,
-                        decoration: const InputDecoration(
-                          hintText: 'Username',
-                          labelText: 'username',
+                      SizedBox(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _firstController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'username',
+                            hintStyle: TextStyle(fontSize: 10),
+                            labelText: 'Username',
+                            labelStyle: TextStyle(fontSize: 10),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      SizedBox(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _secondController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Password',
+                            hintStyle: TextStyle(fontSize: 10),
+                            labelText: ' Password',
+                            labelStyle: TextStyle(fontSize: 10),
+                          ),
                         ),
                       ),
                       SizedBox(
-                        height: 5,
-                      ),
-                      TextFormField(
-                        controller: _secondController,
-                        decoration: const InputDecoration(
-                          hintText: 'Password',
-                          labelText: 'password',
-                        ),
-                      ),
-                      SizedBox(
-                        width: 90,
+                        width: double.infinity,
                         child: ElevatedButton(
                             onPressed: () {
                               _add();
@@ -66,7 +79,7 @@ class _WareosHomeState extends State<WareosHome> {
                                   backgroundColor: Colors.transparent,
                                   textColor: Colors.black);
                             },
-                            child: const Text("add")),
+                            child: const Text("login")),
                       )
                     ],
                   ),

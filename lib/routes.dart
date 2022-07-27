@@ -14,6 +14,7 @@ import 'package:najikkopasal/screens/review/reviewfrontend.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/screens/sign_up/sign_up_screen.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
+import 'package:najikkopasal/screens/ware/wareogin.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
@@ -31,5 +32,6 @@ final Map<String, WidgetBuilder> routes = {
   // TestScreen.routeName: (context) => TestScreen(),
   ChangePassword.routeName: (context) => ChangePassword(),
   MultiStepForm.routeName: (context) => const MultiStepForm(),
+  WareosHome.routeName: (context) => const WareosHome(),
   
 };

@@ -95,7 +95,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     final reviews = productData['reviews'];
     final stock = productData['stock'];
 
-    print(productId);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(179, 255, 255, 255),
