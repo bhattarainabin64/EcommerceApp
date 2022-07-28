@@ -69,7 +69,7 @@ class _AllProductState extends State<AllProduct> {
                       }
                       return const Center(
                         child: CupertinoActivityIndicator(
-                          radius: 20,
+                          radius: 10,
                         ),
                       );
                     })
