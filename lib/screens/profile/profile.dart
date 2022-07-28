@@ -64,7 +64,9 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
+          
           'Profile',
+          key: ValueKey('Profile'),
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

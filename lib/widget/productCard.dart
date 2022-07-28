@@ -8,7 +8,6 @@ import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.da
 class SingleProductWidget extends StatefulWidget {
   final String? productImage;
   final String? productName;
-
   final String? productPrice;
   final String? productOldPrice;
   final double? productRating;

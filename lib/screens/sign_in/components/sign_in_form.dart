@@ -9,6 +9,7 @@ import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
+import 'package:najikkopasal/screens/profile/profile.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -123,12 +124,12 @@ class _SignInFormState extends State<SignInForm> {
               )
             ],
           ),
-   
           SizedBox(
             height: getProportionateScreenHeight(26),
           ),
           DefaultButton(
             text: "Login",
+            key: const Key("Login"),
             press: () {
               if (_formKey.currentState!.validate()) {
                 _login();
@@ -144,7 +145,7 @@ class _SignInFormState extends State<SignInForm> {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
-      key: ValueKey("password"),
+      key: const ValueKey("password"),
       validator: (value) {
         if (value!.isEmpty) {
           return "Password is required";
@@ -162,6 +163,7 @@ class _SignInFormState extends State<SignInForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       controller: _emailController,
+      key: const ValueKey("email"),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {

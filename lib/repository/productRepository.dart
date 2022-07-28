@@ -7,9 +7,9 @@ class ProductRepository {
     return ProductAPI().getproduct(keywords: keyword, category: category);
   }
 
-  Future<ProductResponse?> getproduct({String ? keyword}
+  Future<ProductResponse?> getproduct(
      ) async {
-    return ProductAPI().getproducts(keyword: keyword);
+    return ProductAPI().getproducts();
   }
 
   Future<bool> givereview(String productId, String comment, int rating) {

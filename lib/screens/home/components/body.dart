@@ -230,7 +230,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
 
   FutureBuilder<ProductResponse?> getproductfromapis() {
     return FutureBuilder<ProductResponse?>(
-        future: ProductRepository().getproduct(keyword: query.value.toString()),
+        future: ProductRepository().getproduct(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.done) {

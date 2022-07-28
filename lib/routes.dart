@@ -11,9 +11,12 @@ import 'package:najikkopasal/screens/profile/edit_profile.dart';
 import 'package:najikkopasal/screens/profile/profile.dart';
 import 'package:najikkopasal/screens/profile/test.dart';
 import 'package:najikkopasal/screens/review/reviewfrontend.dart';
+import 'package:najikkopasal/screens/sign_in/components/sign_in_form.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/screens/sign_up/sign_up_screen.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
+import 'package:najikkopasal/screens/ware/adminproduct.dart';
+import 'package:najikkopasal/screens/ware/dashbaord.dart';
 import 'package:najikkopasal/screens/ware/wareogin.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -33,5 +36,7 @@ final Map<String, WidgetBuilder> routes = {
   ChangePassword.routeName: (context) => ChangePassword(),
   MultiStepForm.routeName: (context) => const MultiStepForm(),
   WareosHome.routeName: (context) => const WareosHome(),
-  
+  WareDashboard.routeName: (context) => const WareDashboard(),
+
+
 };
