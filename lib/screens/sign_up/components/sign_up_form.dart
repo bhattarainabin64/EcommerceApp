@@ -1,20 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
-import 'package:najikkopasal/constants.dart';
+
 import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/size_config.dart';
 
 import '../../../components/custom_suffix-icon.dart';
-import '../../../components/form_error.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -58,7 +56,6 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   File? imgs;
   String? base63;
-  
 
   Future _loadImages(ImageSource imageSourc) async {
     try {

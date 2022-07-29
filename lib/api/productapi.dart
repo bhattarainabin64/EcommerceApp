@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/model/create_order_model.dart';
+import 'package:najikkopasal/response/order_response.dart';
 import 'package:najikkopasal/response/product_response.dart';
 import 'package:najikkopasal/utils/url.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,15 +18,15 @@ class ProductAPI {
       {String? keywords = "", String? category = ""}) async {
     ProductResponse? productResponse;
     Response? response;
-    Box box;
-    var dir = await getApplicationDocumentsDirectory();
-    Hive.init(dir.path);
-    box = await Hive.openBox('mybox');
-    var stored = box.get("data");
+    // Box box;
+    // var dir = await getApplicationDocumentsDirectory();
+    // Hive.init(dir.path);
+    // box = await Hive.openBox('mybox');
+    // var stored = box.get("data");
 
-    var encoded = jsonDecode(stored);
+    // var encoded = jsonDecode(stored);
 
-    productResponse = ProductResponse.fromJson(encoded);
+    // productResponse = ProductResponse.fromJson(encoded);
 
     try {
       var dio = HttpServices().getDioInstance();
@@ -40,9 +41,10 @@ class ProductAPI {
       }
 
       if (response.statusCode == 200) {
-        String postdata = jsonEncode(response.data);
+        // String postdata = jsonEncode(response.data);
 
-        box.put("data", postdata);
+        // // box.clear();
+        // box.put("data", postdata);
 
         productResponse = ProductResponse.fromJson(response.data);
       }
@@ -142,5 +144,26 @@ class ProductAPI {
     }
 
     return isReview;
+  }
+
+
+  Future<OrderResponse ?> getOrderHistory() async {
+    OrderResponse? orderResponse;
+    try {
+      var url = baseUrl + myOrderUrl;
+      var dio = HttpServices().getDioInstance();
+      SharedPreferences preferences;
+      preferences = await SharedPreferences.getInstance();
+      var token = preferences.getString('token');
+      var response = await dio.get(url,
+          options: Options(
+              headers: {HttpHeaders.authorizationHeader: "Bearer $token"}));
+      if (response.statusCode == 200) {
+        orderResponse = OrderResponse.fromJson(response.data);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return orderResponse!;
   }
 }

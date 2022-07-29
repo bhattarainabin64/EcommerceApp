@@ -1,4 +1,5 @@
 import 'package:najikkopasal/api/productapi.dart';
+import 'package:najikkopasal/response/order_response.dart';
 import 'package:najikkopasal/response/product_response.dart';
 
 class ProductRepository {
@@ -15,4 +16,10 @@ class ProductRepository {
   Future<bool> givereview(String productId, String comment, int rating) {
     return ProductAPI().giveproductreview(productId, comment, rating);
   }
+
+  Future<OrderResponse?> getOrderHistory() async {
+    return ProductAPI().getOrderHistory();
+  }
+
+
 }

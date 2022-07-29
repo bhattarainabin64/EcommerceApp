@@ -193,8 +193,6 @@ class UserAPI {
 
     return chnagePassword;
   }
-
-  
 }
 
 
