@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:najikkopasal/api/httpServices.dart';
 import 'package:najikkopasal/response/login.dart';
 import 'package:najikkopasal/response/profile_response.dart';
-import 'package:najikkopasal/utils/sessionmanager.dart';
+
 // import 'package:najikkopasal/utils/sessionmanager.dart';
 import 'package:najikkopasal/utils/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,21 +60,15 @@ class UserAPI {
           await dio.post(url, data: {"email": email, "password": password});
 
       if (response.statusCode == 200) {
-        String userdata = jsonEncode(response.data['user']);
-        Map<String, dynamic> userdat = jsonDecode(userdata.toString());
-        User user = User(
-          name: userdat['name'],
-          email: userdat['email'],
-          image: userdat['image']['url'],
-        );
-        String profile = jsonEncode(user);
-        sharedPreferences.setString('profile', profile);
-
+        String name = jsonEncode(response.data['user']['name']);
+        String name1 = jsonDecode(name);
+        sharedPreferences.setString("name", name1);
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
 
         token = loginResponse.token;
 
         sharedPreferences.setString('token', '$token');
+
         isLogin = true;
       }
     } on DioError catch (e) {

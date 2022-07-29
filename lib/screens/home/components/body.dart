@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,15 +54,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
     TabController _tabController =
         TabController(length: _tabs.length, vsync: this);
 
-    // _tabController.addListener(() {
-    //   setState(() {
-    //     if (_tabController.index == 1) {
-    //       // switch tabs to second tab and setstate the category
-    //       category = 'Man';
-    //     }
-    //   });
-    // });
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -98,7 +90,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                           height: 60,
                           width: 250,
                           child: TextField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               enabledBorder: InputBorder.none,
                               focusedBorder: InputBorder.none,
@@ -183,9 +175,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.done) {
               lstproducts = snapshot.data!.data!;
-
-            
-
               return Container(
                 decoration: BoxDecoration(
                   color: Color(0XFFEDECF2),
@@ -215,7 +204,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                                 "description": lstproducts[index].description,
                                 "price": lstproducts[index].price,
                                 "reviews": lstproducts[index].reviews,
-                                "stock":lstproducts[index].Stock
+                                "stock": lstproducts[index].Stock
                               });
                         },
                         productImage:
@@ -241,7 +230,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
 
   FutureBuilder<ProductResponse?> getproductfromapis() {
     return FutureBuilder<ProductResponse?>(
-        future: ProductRepository().getproduct(keyword: query.value.toString()),
+        future: ProductRepository().getproduct(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -323,8 +312,11 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                             const BorderRadius.all(Radius.circular(9.0)),
                         child: Stack(
                           children: <Widget>[
-                            Image.network(item,
-                                fit: BoxFit.fitWidth, width: 500.0),
+                            CachedNetworkImage(
+                              fit: BoxFit.fitWidth,
+                              width: 500.0,
+                              imageUrl: item,
+                            ),
                             Positioned(
                               bottom: 0.0,
                               left: 0.0,

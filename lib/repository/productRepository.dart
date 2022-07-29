@@ -1,4 +1,5 @@
 import 'package:najikkopasal/api/productapi.dart';
+import 'package:najikkopasal/response/order_response.dart';
 import 'package:najikkopasal/response/product_response.dart';
 
 class ProductRepository {
@@ -7,12 +8,18 @@ class ProductRepository {
     return ProductAPI().getproduct(keywords: keyword, category: category);
   }
 
-  Future<ProductResponse?> getproduct({String ? keyword}
+  Future<ProductResponse?> getproduct(
      ) async {
-    return ProductAPI().getproducts(keyword: keyword);
+    return ProductAPI().getproducts();
   }
 
   Future<bool> givereview(String productId, String comment, int rating) {
     return ProductAPI().giveproductreview(productId, comment, rating);
   }
+
+  Future<OrderResponse?> getOrderHistory() async {
+    return ProductAPI().getOrderHistory();
+  }
+
+
 }

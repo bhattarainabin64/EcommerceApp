@@ -5,15 +5,21 @@ import 'package:najikkopasal/screens/home/components/nav.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 import 'package:najikkopasal/screens/muti_step_form/multi_step.dart';
+import 'package:najikkopasal/screens/order/order_history.dart';
+import 'package:najikkopasal/widget/widget_order_items.dart';
 import 'package:najikkopasal/screens/product_details/product_details.dart';
 import 'package:najikkopasal/screens/profile/change_password.dart';
 import 'package:najikkopasal/screens/profile/edit_profile.dart';
 import 'package:najikkopasal/screens/profile/profile.dart';
 import 'package:najikkopasal/screens/profile/test.dart';
 import 'package:najikkopasal/screens/review/reviewfrontend.dart';
+import 'package:najikkopasal/screens/sign_in/components/sign_in_form.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/screens/sign_up/sign_up_screen.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
+import 'package:najikkopasal/screens/ware/adminproduct.dart';
+import 'package:najikkopasal/screens/ware/dashbaord.dart';
+import 'package:najikkopasal/screens/ware/wareogin.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
@@ -31,5 +37,8 @@ final Map<String, WidgetBuilder> routes = {
   // TestScreen.routeName: (context) => TestScreen(),
   ChangePassword.routeName: (context) => ChangePassword(),
   MultiStepForm.routeName: (context) => const MultiStepForm(),
-  
+  WareosHome.routeName: (context) => const WareosHome(),
+  WareDashboard.routeName: (context) => const WareDashboard(),
+  OrderHistory.routeName: (context) => const OrderHistory(),
+  WidgetOrderItems.routeName: (context) => WidgetOrderItems(),
 };

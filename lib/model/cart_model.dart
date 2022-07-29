@@ -9,14 +9,14 @@ class Cart {
   final String? image;
 
   Cart(
-      {required this.id,
-      required this.productId,
-      required this.productName,
-      required this.initialPrice,
-      required this.productPrice,
-      required this.quantity,
-      required this.unitTag,
-      required this.image});
+      {this.id,
+      this.productId,
+      this.productName,
+      this.initialPrice,
+      this.productPrice,
+      this.quantity,
+      this.unitTag,
+      this.image});
 
   Cart.fromMap(Map<dynamic, dynamic> res)
       : id = res['id'],

@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:najikkopasal/model/user.dart';
+import 'package:najikkopasal/repository/productRepository.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
+import 'package:najikkopasal/response/product_response.dart';
 
 void main() {
   UserRepository? userRepository;
@@ -38,8 +40,35 @@ void main() {
       expect(actial, expectedResult);
     });
 
-    
-   
+    test("user product review test", () async {
+      bool expectedResult = true;
+
+      String productId = "62d506544b36b2f220bebc70";
+      String comment = "baba@gmail.com";
+      int rating = 2;
+
+      bool actial =
+          await ProductRepository().givereview(productId, comment, rating);
+
+      expect(actial, expectedResult);
+    });
+
+    test("user change password", () async {
+      bool expectedResult = true;
+
+      String oldPassword = "baba1412914@";
+      String newPassword = "baba1412914@";
+      String confirmPassword="baba1412914@";
+      
+      bool actial =await UserRepository().userchangePassword(oldPassword, newPassword, confirmPassword);
+      expect(actial, expectedResult);
+    });
+
+     test("get all product", () async {
+      ProductResponse ? actial = await ProductRepository().getproduct();
+      expect(actial, isNotNull);
+        
+    });
 
   });
 

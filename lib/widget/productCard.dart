@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,6 @@ import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.da
 class SingleProductWidget extends StatefulWidget {
   final String? productImage;
   final String? productName;
-
   final String? productPrice;
   final String? productOldPrice;
   final double? productRating;
@@ -43,17 +43,17 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
           children: [
             Expanded(
               child: Container(
-                margin: EdgeInsets.fromLTRB(0, 10, 17, 2),
-                alignment: Alignment.topRight,
-                width: double.infinity,
+                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 219, 219, 219),
-                  borderRadius: BorderRadius.circular(7),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
                   image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      widget.productImage!,
+                    image: CachedNetworkImageProvider(
+                      widget.productImage.toString(),
                     ),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

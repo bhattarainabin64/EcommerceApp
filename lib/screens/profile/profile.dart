@@ -7,11 +7,14 @@ import 'package:najikkopasal/model/profile_model.dart';
 // import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/response/profile_response.dart';
+import 'package:najikkopasal/screens/order/order_history.dart';
+import 'package:najikkopasal/widget/widget_order_items.dart';
 import 'package:najikkopasal/screens/profile/change_password.dart';
 
 import 'package:najikkopasal/screens/profile/edit_profile.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/widget/profile_widget.dart';
+import 'package:shake/shake.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -23,47 +26,71 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late ShakeDetector detector;
+
+  @override
+  void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    prefs.remove('name');
+
+    Navigator.pushNamed(context, SignInScreen.routeName);
+  }
+
+  void _showAlertDialog(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Alert'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('No'),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () async {
+              logout();
+            },
+            child: const Text('Yes'),
+          )
+        ],
+      ),
+    );
+  }
+
+  void initState() {
+    detector = ShakeDetector.autoStart(
+      onPhoneShake: () {
+        setState(() {
+          _showAlertDialog(context);
+          // Navigator.pushNamed(context, "/");
+        });
+      },
+    );
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    detector.stopListening();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    void logout() async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.remove('token');
-
-      Navigator.pushNamed(context, SignInScreen.routeName);
-    }
-
-    void _showAlertDialog(BuildContext context) {
-      showCupertinoModalPopup<void>(
-        context: context,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: const Text('Alert'),
-          content: const Text('Are you sure you want to logout?'),
-          actions: <CupertinoDialogAction>[
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('No'),
-            ),
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              onPressed: () async {
-                logout();
-              },
-              child: const Text('Yes'),
-            )
-          ],
-        ),
-      );
-    }
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
           'Profile',
+          key: ValueKey('Profile'),
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -81,7 +108,8 @@ class _ProfilePageState extends State<ProfilePage> {
             // use future builder to get data from server
 
             child: FutureBuilder<ProfileResponse?>(
-                future: UserRepository().getprofile(), // a previously-obtained Future<String> or null, if the once-obtained Future is still active
+                future: UserRepository()
+                    .getprofile(), // a previously-obtained Future<String> or null, if the once-obtained Future is still active
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.connectionState == ConnectionState.done) {
@@ -164,7 +192,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ProfileWidget(
                                   icon: Icons.history,
                                   title: 'Order History',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, OrderHistory.routeName);
+                                  },
                                 ),
                                 ProfileWidget(
                                   icon: Icons.logout,

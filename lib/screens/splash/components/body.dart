@@ -77,12 +77,7 @@ class _BodyState extends State<Body> {
                         text: "Continue",
                         press: () {
                           Navigator.pushNamed(context, SignInScreen.routeName);
-                          AwesomeNotifications().createNotification(
-                              content: NotificationContent(
-                                  channelKey: 'basic_channel',
-                                  title: 'Getstarted',
-                                  body: "Welcome to Najikkopasal",
-                                  id: 1));
+                         
                         },
                       ),
                       const Spacer(),

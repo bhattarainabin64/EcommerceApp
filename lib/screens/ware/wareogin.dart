@@ -1,26 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:najikkopasal/constants.dart';
+import 'package:najikkopasal/repository/userRepository.dart';
+import 'package:najikkopasal/screens/ware/adminproduct.dart';
+import 'package:najikkopasal/screens/ware/dashbaord.dart';
 import 'package:wear/wear.dart';
 
 class WareosHome extends StatefulWidget {
+  static String routeName = '/wareos';
 
-  WareosHome({Key? key}) : super(key: key);
+  const WareosHome({Key? key}) : super(key: key);
 
   @override
   State<WareosHome> createState() => _WareosHomeState();
 }
 
 class _WareosHomeState extends State<WareosHome> {
-  final _firstController = TextEditingController();
-  final _secondController = TextEditingController();
-  int result = 0;
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  _navigateToScreen(bool isLogin) {
+    if (isLogin) {
+      Navigator.pushNamed(context, AllProduct.routeName);
+    }
+  }
 
-  _add() {
-    int first = int.parse(_firstController.text);
-    int second = int.parse(_secondController.text);
-    setState(() {
-      result = first + second;
-    });
+  _login() async {
+    try {
+      UserRepository userRepository = UserRepository();
+
+      bool isLogin = await userRepository.login(
+        _emailController.text,
+        _passwordController.text,
+      );
+
+      if (isLogin) {
+        _navigateToScreen(true);
+      } else {
+        _navigateToScreen(false);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -33,40 +54,90 @@ class _WareosHomeState extends State<WareosHome> {
               body: SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                child: Form(
+                  key: _formKey,
                   child: Column(
                     children: [
-                      TextFormField(
-                        controller: _firstController,
-                        decoration: const InputDecoration(
-                          hintText: 'Username',
-                          labelText: 'username',
-                        ),
+                      // add text  with name najikkopasal
+
+                      const SizedBox(
+                        height: 15,
                       ),
+
                       SizedBox(
-                        height: 5,
-                      ),
-                      TextFormField(
-                        controller: _secondController,
-                        decoration: const InputDecoration(
-                          hintText: 'Password',
-                          labelText: 'password',
-                        ),
-                      ),
-                      SizedBox(
-                        width: 90,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              _add();
-                              Fluttertoast.showToast(
-                                  msg: 'Sum is $result',
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.BOTTOM,
-                                  backgroundColor: Colors.transparent,
-                                  textColor: Colors.black);
+                        height: 45,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: TextFormField(
+                            controller: _emailController,
+                            decoration: const InputDecoration(
+                              hintText: 'Email',
+                              hintStyle: TextStyle(fontSize: 10),
+                            ),
+                            style: TextStyle(fontSize: 10),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter email';
+                              }
+                              // validate email
+                              if (!RegExp(
+                                      r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                  .hasMatch(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
                             },
-                            child: const Text("add")),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: TextFormField(
+                            controller: _passwordController,
+                            decoration: const InputDecoration(
+                              hintText: 'Password',
+                              hintStyle: TextStyle(fontSize: 10),
+                            ),
+                            style: const TextStyle(fontSize: 10),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 30,
+                          child: ElevatedButton(
+                              // add color in button
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                primary: kPrimaryColor,
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _login();
+                                  // add code to login
+
+                                }
+                              },
+                              child: const Text("Login")),
+                        ),
                       )
                     ],
                   ),

@@ -1,20 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
-import 'package:najikkopasal/constants.dart';
+
 import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/size_config.dart';
 
 import '../../../components/custom_suffix-icon.dart';
-import '../../../components/form_error.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -58,136 +56,135 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   File? imgs;
   String? base63;
-  String? nbase64;
 
-  Future _loadImages(ImageSource imageSourc) async {
-    try {
-      final image = await ImagePicker().pickImage(source: imageSourc);
-      final bytes = File(image!.path).readAsBytesSync();
-      String base64Image = "data:image/png;base64," + base64Encode(bytes);
+  // Future _loadImages(ImageSource imageSourc) async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: imageSourc);
+  //     final bytes = File(image!.path).readAsBytesSync();
+  //     String base64Image = "data:image/png;base64," + base64Encode(bytes);
 
-      if (base64Image != null) {
-        setState(() {
-          imgs = File(image.path);
-          base63 = base64Image;
-        });
-      } else {
-        return;
-      }
-    } catch (e) {
-      debugPrint('Failed to pick Image $e');
-    }
-  }
+  //     if (base64Image != null) {
+  //       setState(() {
+  //         imgs = File(image.path);
+  //         base63 = base64Image;
+  //       });
+  //     } else {
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Failed to pick Image $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    Widget bottomSheet() {
-      return Container(
-        height: 100.0,
-        width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 20,
-        ),
-        child: Column(
-          children: <Widget>[
-            const Text(
-              "Choose Register Account photo",
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-              TextButton.icon(
-                icon: Icon(Icons.camera),
-                label: const Text("Camera"),
-                onPressed: () {
-                  _loadImages(ImageSource.camera);
-                },
-              ),
-              TextButton.icon(
-                icon: const Icon(Icons.image),
-                onPressed: () {
-                  _loadImages(ImageSource.gallery);
-                },
-                label: const Text("Gallery"),
-              ),
-            ])
-          ],
-        ),
-      );
-    }
+    // Widget bottomSheet() {
+    //   return Container(
+    //     height: 100.0,
+    //     width: MediaQuery.of(context).size.width,
+    //     margin: const EdgeInsets.symmetric(
+    //       horizontal: 20,
+    //       vertical: 20,
+    //     ),
+    //     child: Column(
+    //       children: <Widget>[
+    //         const Text(
+    //           "Choose Register Account photo",
+    //           style: TextStyle(
+    //             fontSize: 20.0,
+    //           ),
+    //         ),
+    //         const SizedBox(
+    //           height: 10,
+    //         ),
+    //         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+    //           TextButton.icon(
+    //             icon: Icon(Icons.camera),
+    //             label: const Text("Camera"),
+    //             onPressed: () {
+    //               _loadImages(ImageSource.camera);
+    //             },
+    //           ),
+    //           TextButton.icon(
+    //             icon: const Icon(Icons.image),
+    //             onPressed: () {
+    //               _loadImages(ImageSource.gallery);
+    //             },
+    //             label: const Text("Gallery"),
+    //           ),
+    //         ])
+    //       ],
+    //     ),
+    //   );
+    // }
 
-    Widget imageProfile() {
-      return Stack(children: [
-        CircleAvatar(
-          radius: 50,
-          child: ClipOval(
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-              child: (imgs != null)
-                  ? Image.file(
-                      imgs!,
-                      fit: BoxFit.fill,
-                    )
-                  : Image.asset(
-                      "assets/images/profile.jpg",
-                      fit: BoxFit.fill,
-                    ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 20.0,
-          right: 10.0,
-          child: InkWell(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: ((builder) => bottomSheet()),
-              );
-            },
-            child: const Icon(
-              Icons.camera_alt,
-              size: 25.0,
-              color: Color.fromARGB(255, 215, 22, 22),
-            ),
-          ),
-        ),
-      ]);
-    }
+    // Widget imageProfile() {
+    //   return Stack(children: [
+    //     CircleAvatar(
+    //       radius: 50,
+    //       child: ClipOval(
+    //         child: SizedBox(
+    //           width: 100.0,
+    //           height: 100.0,
+    //           child: (imgs != null)
+    //               ? Image.file(
+    //                   imgs!,
+    //                   fit: BoxFit.fill,
+    //                 )
+    //               : Image.asset(
+    //                   "assets/images/profile.jpg",
+    //                   fit: BoxFit.fill,
+    //                 ),
+    //         ),
+    //       ),
+    //     ),
+    //     Positioned(
+    //       bottom: 20.0,
+    //       right: 10.0,
+    //       child: InkWell(
+    //         onTap: () {
+    //           // showModalBottomSheet(
+    //           //   context: context,
+    //           //   builder: ((builder) => bottomSheet()),
+    //           // );
+    //         },
+    //         child: const Icon(
+    //           Icons.camera_alt,
+    //           size: 25.0,
+    //           color: Color.fromARGB(255, 215, 22, 22),
+    //         ),
+    //       ),
+    //     ),
+    //   ]);
+    // }
 
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          imageProfile(),
+          // imageProfile(),
 
           SizedBox(
             height: getProportionateScreenHeight(10),
           ),
           buildNameFormFild(),
-          SizedBox(height: getProportionateScreenHeight(20)),
+          SizedBox(height: getProportionateScreenHeight(30)),
           buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(20)),
+          SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(20)),
+          SizedBox(height: getProportionateScreenHeight(30)),
           // buildConfirmPasswordFormFiled(),
 
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
               text: "Sign Up",
               press: () {
-                if (_formKey.currentState!.validate() && base64 != null) {
+                if (_formKey.currentState!.validate()) {
                   User user = User(
-                      name: _nameController.text,
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      image: base63);
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
 
                   _registerUser(user);
                 }

@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
-import 'package:najikkopasal/components/form_error.dart';
 
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
@@ -26,6 +25,12 @@ class SignInForm extends StatefulWidget {
 class _SignInFormState extends State<SignInForm> {
   _navigateToScreen(bool isLogin) {
     if (isLogin) {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              channelKey: 'basic_channel',
+              title: 'Login',
+              body: "Login Succesfully",
+              id: 1));
       Navigator.pushNamed(context, Navbar.routeName);
     } else {
       MotionToast.error(
@@ -123,12 +128,12 @@ class _SignInFormState extends State<SignInForm> {
               )
             ],
           ),
-          FormError(erros: erros),
           SizedBox(
             height: getProportionateScreenHeight(26),
           ),
           DefaultButton(
             text: "Login",
+            key: const Key("Login"),
             press: () {
               if (_formKey.currentState!.validate()) {
                 _login();
@@ -144,6 +149,7 @@ class _SignInFormState extends State<SignInForm> {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
+      key: const ValueKey("password"),
       validator: (value) {
         if (value!.isEmpty) {
           return "Password is required";
@@ -161,6 +167,7 @@ class _SignInFormState extends State<SignInForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       controller: _emailController,
+      key: const ValueKey("email"),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
