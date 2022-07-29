@@ -5,6 +5,8 @@ import 'package:najikkopasal/screens/home/components/nav.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 import 'package:najikkopasal/screens/muti_step_form/multi_step.dart';
+import 'package:najikkopasal/screens/order/order_history.dart';
+import 'package:najikkopasal/widget/widget_order_items.dart';
 import 'package:najikkopasal/screens/product_details/product_details.dart';
 import 'package:najikkopasal/screens/profile/change_password.dart';
 import 'package:najikkopasal/screens/profile/edit_profile.dart';
@@ -37,6 +39,6 @@ final Map<String, WidgetBuilder> routes = {
   MultiStepForm.routeName: (context) => const MultiStepForm(),
   WareosHome.routeName: (context) => const WareosHome(),
   WareDashboard.routeName: (context) => const WareDashboard(),
-
-
+  OrderHistory.routeName: (context) => const OrderHistory(),
+  WidgetOrderItems.routeName: (context) => WidgetOrderItems(),
 };

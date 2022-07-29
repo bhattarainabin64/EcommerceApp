@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
             //     ), //Text
             //   ), //,
             // ),
-            SizedBox(height: SizeConfig.screenHeight * 0.019),
+            SizedBox(height: SizeConfig.screenHeight * 0.04),
             const SignUpForm(),
             SizedBox(height: SizeConfig.screenHeight * 0.04),
             Row(

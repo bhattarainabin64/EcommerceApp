@@ -56,7 +56,7 @@ void main() {
     test("user change password", () async {
       bool expectedResult = true;
 
-      String oldPassword = "Baba1412914@";
+      String oldPassword = "baba1412914@";
       String newPassword = "baba1412914@";
       String confirmPassword="baba1412914@";
       
@@ -65,7 +65,6 @@ void main() {
     });
 
      test("get all product", () async {
-     
       ProductResponse ? actial = await ProductRepository().getproduct();
       expect(actial, isNotNull);
         

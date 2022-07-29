@@ -10,7 +10,6 @@ const getuserUrl = "get/user/details";
 const updateprofileUrl = "user/update/profile";
 const changePasswordUrl = "change/password";
 
-const getallUser = "/admin/getall/user";
 const myOrderUrl = "/orders/me/user";
-
+ 
 String? token;

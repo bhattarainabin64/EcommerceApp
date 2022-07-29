@@ -142,7 +142,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   border: Border.all(color: Colors.white, width: 2.0),
                 ),
                 child: IconButton(
-                    icon: Icon(Icons.chat, color: Colors.black),
+                    icon: const Icon(Icons.chat, color: Colors.black),
                     onPressed: () {
                       setState(() {
                         showRating();
@@ -177,7 +177,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           cart.addTotalPrice(double.parse(price.toString()));
                           cart.addCounter();
 
-                          final snackBar = SnackBar(
+                          final snackBar = const SnackBar(
                             backgroundColor: Colors.green,
                             content: Text('Product is added to cart'),
                             duration: Duration(seconds: 1),
@@ -186,7 +186,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }).onError((error, stackTrace) {
                           print("error" + error.toString());
-                          final snackBar = SnackBar(
+                          final snackBar = const SnackBar(
                               backgroundColor: Colors.red,
                               content: Text('Product is already added in cart'),
                               duration: Duration(seconds: 1));

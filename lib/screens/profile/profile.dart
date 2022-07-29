@@ -7,6 +7,8 @@ import 'package:najikkopasal/model/profile_model.dart';
 // import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/response/profile_response.dart';
+import 'package:najikkopasal/screens/order/order_history.dart';
+import 'package:najikkopasal/widget/widget_order_items.dart';
 import 'package:najikkopasal/screens/profile/change_password.dart';
 
 import 'package:najikkopasal/screens/profile/edit_profile.dart';
@@ -190,7 +192,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ProfileWidget(
                                   icon: Icons.history,
                                   title: 'Order History',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, OrderHistory.routeName);
+                                  },
                                 ),
                                 ProfileWidget(
                                   icon: Icons.logout,
