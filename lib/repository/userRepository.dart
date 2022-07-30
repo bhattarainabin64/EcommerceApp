@@ -11,16 +11,12 @@ class UserRepository {
     return UserAPI().login(email, password);
   }
 
-  Future<ProfileResponse?> getprofile() async {
-    return UserAPI().getuser();
-  }
-
-
   Future<bool> updateprofile(String? name, String? email, String? image) {
     return UserAPI().updateprofile(name, email, image);
   }
 
-  Future<bool> userchangePassword(String? oldPassword, String? newPassword, String? confirmPassword) {
+  Future<bool> userchangePassword(
+      String? oldPassword, String? newPassword, String? confirmPassword) {
     return UserAPI().chnagePassword(oldPassword, newPassword, confirmPassword);
   }
 }

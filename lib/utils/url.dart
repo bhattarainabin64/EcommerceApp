@@ -6,10 +6,12 @@ const productUrl = "product";
 const reviewUrl = "give/product/review";
 
 // profile urls
-const getuserUrl = "get/user/details";
+
 const updateprofileUrl = "user/update/profile";
 const changePasswordUrl = "change/password";
 
 const myOrderUrl = "/orders/me/user";
- 
+
 String? token;
+
+const fetchfromapiUrl = "get/user/detail";

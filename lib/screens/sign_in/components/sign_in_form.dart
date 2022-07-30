@@ -57,8 +57,7 @@ class _SignInFormState extends State<SignInForm> {
     } catch (e) {
       MotionToast.error(
         description: Text("Error:${e.toString()}"),
-      ).show(context); // MotionToast.error
-
+      ).show(context);
     }
   }
 
@@ -69,12 +68,10 @@ class _SignInFormState extends State<SignInForm> {
   String? password;
   bool? remember = false;
 
-  final List<String> erros = [];
-
   @override
   void initState() {
     super.initState();
-    autoLogin();
+    // autoLogin();
   }
 
   void autoLogin() async {

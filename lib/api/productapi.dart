@@ -57,10 +57,10 @@ class ProductAPI {
   Future<ProductResponse?> getproducts() async {
     ProductResponse? productResponse;
     Response? response;
-    // Box box;
-    // var dir = await getApplicationDocumentsDirectory();
+    Box box;
+    var dir = await getApplicationDocumentsDirectory();
 
-    // Hive.init(dir.path);
+    Hive.init(dir.path);
     // box = await Hive.openBox('mybox');
     // var stored = box.get("data");
 
@@ -146,8 +146,7 @@ class ProductAPI {
     return isReview;
   }
 
-
-  Future<OrderResponse ?> getOrderHistory() async {
+  Future<OrderResponse?> getOrderHistory() async {
     OrderResponse? orderResponse;
     try {
       var url = baseUrl + myOrderUrl;

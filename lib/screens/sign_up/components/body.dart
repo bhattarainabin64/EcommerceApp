@@ -1,13 +1,9 @@
-import 'package:path/path.dart';
-
 import 'package:flutter/material.dart';
-import 'package:najikkopasal/components/form_error.dart';
+
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/screens/sign_up/components/sign_up_form.dart';
 import 'package:najikkopasal/size_config.dart';
 
-import '../../../components/custom_suffix-icon.dart';
-import '../../../components/default_button.dart';
 import '../../../components/social_card_icon.dart';
 
 class Body extends StatelessWidget {

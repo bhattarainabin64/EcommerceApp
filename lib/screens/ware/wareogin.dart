@@ -21,7 +21,7 @@ class _WareosHomeState extends State<WareosHome> {
   final _passwordController = TextEditingController();
   _navigateToScreen(bool isLogin) {
     if (isLogin) {
-      Navigator.pushNamed(context, AllProduct.routeName);
+      Navigator.pushNamed(context, WareDashboard.routeName);
     }
   }
 
@@ -59,9 +59,17 @@ class _WareosHomeState extends State<WareosHome> {
                   child: Column(
                     children: [
                       // add text  with name najikkopasal
+                      Text(
+                        'Najikkopasal',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                        ),
+                      ),
 
                       const SizedBox(
-                        height: 15,
+                        height: 10,
                       ),
 
                       SizedBox(
@@ -91,7 +99,7 @@ class _WareosHomeState extends State<WareosHome> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 10,
                       ),
                       SizedBox(
                         height: 45,
@@ -114,7 +122,7 @@ class _WareosHomeState extends State<WareosHome> {
                         ),
                       ),
                       const SizedBox(
-                        height: 12,
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 5, right: 5),
@@ -130,11 +138,8 @@ class _WareosHomeState extends State<WareosHome> {
                                 primary: kPrimaryColor,
                               ),
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _login();
-                                  // add code to login
-
-                                }
+                                _login();
+                                // add code to login
                               },
                               child: const Text("Login")),
                         ),

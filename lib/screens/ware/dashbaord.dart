@@ -1,8 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:najikkopasal/constants.dart';
+import 'package:najikkopasal/screens/ware/adminproduct.dart';
+import 'package:najikkopasal/screens/ware/wareoshistroy.dart';
 import 'package:wear/wear.dart';
 
 class WareDashboard extends StatefulWidget {
@@ -24,63 +24,89 @@ class _WareDashboardState extends State<WareDashboard> {
           return Scaffold(
               body: SafeArea(
                   child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "Admin",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               Expanded(
                 child: GridView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2),
+                      crossAxisCount: 1,
+                      crossAxisSpacing: 1,
+                      mainAxisSpacing: 1),
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, WareOshostory.routeName);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          decoration: new BoxDecoration(
+                              borderRadius: new BorderRadius.circular(20.0),
+                              gradient: const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color.fromARGB(255, 67, 221, 154),
+                                  Color.fromARGB(255, 14, 16, 123)
+                                ],
+                              )),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.history,
+                                size: 40,
+                                color: Color.fromARGB(255, 40, 212, 13),
+                              ),
+                              Text(
+                                "Order History",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: kPrimaryColor),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromARGB(255, 181, 15, 46),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.person,
-                              color: Color.fromARGB(255, 15, 25, 220),
-                            )
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromARGB(255, 25, 176, 11),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromARGB(255, 169, 196, 14),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AllProduct.routeName);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          decoration: new BoxDecoration(
+                              borderRadius: new BorderRadius.circular(20.0),
+                              gradient: new LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color.fromARGB(255, 67, 221, 154),
+                                  Color.fromARGB(255, 14, 16, 123)
+                                ],
+                              )),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.production_quantity_limits,
+                                size: 40,
+                                color: Color.fromARGB(255, 1, 1, 1),
+                              ),
+                              Text(
+                                "All Product",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

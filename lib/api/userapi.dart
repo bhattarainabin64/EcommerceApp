@@ -87,15 +87,14 @@ class UserAPI {
     return isLogin;
   }
 
-  Future<ProfileResponse?> getuser() async {
-    Future.delayed(const Duration(seconds: 2), () {});
+  Future<ProfileResponse?> fetchUserfromapi() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? userlogintoken = sharedPreferences.getString('token');
     ProfileResponse? profileResponse;
     Response? response;
     try {
       var dio = HttpServices().getDioInstance();
-      var url = baseUrl + getuserUrl;
+      var url = baseUrl + fetchfromapiUrl;
 
       response = await dio.get(url,
           options: Options(headers: {
