@@ -65,6 +65,7 @@ dependencies:
   smooth_star_rating_null_safety: ^1.0.4+2
   sqflite: ^2.0.3
   wear: ^1.1.0
+  all_sensors2: ^1.0.1
 
 dev_dependencies:
   flutter_test:

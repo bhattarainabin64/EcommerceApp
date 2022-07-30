@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,6 +33,12 @@ class _SignUpFormState extends State<SignUpForm> {
   _registerUser(User user) async {
     bool isLogin = await UserRepository().registerUser(user);
     if (isLogin) {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              channelKey: 'basic_channel',
+              title: 'Login',
+              body: "Register Succesfully",
+              id: 1));
       _displayMessage(true);
     } else {
       _displayMessage(false);

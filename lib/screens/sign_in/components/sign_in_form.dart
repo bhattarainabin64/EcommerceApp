@@ -74,7 +74,7 @@ class _SignInFormState extends State<SignInForm> {
   @override
   void initState() {
     super.initState();
-    // autoLogin();
+    autoLogin();
   }
 
   void autoLogin() async {

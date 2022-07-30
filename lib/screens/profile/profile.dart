@@ -217,6 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                   return const Center(
                       child: CupertinoActivityIndicator(
+                    radius: 20,
                     animating: true,
                   ));
                 })),

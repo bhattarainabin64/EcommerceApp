@@ -18,7 +18,7 @@ void main() {
     Finder first_number = find.byKey(const ValueKey("email"));
     await tester.enterText(first_number, "baba@gmail.com");
     Finder second_number = find.byKey(const ValueKey("password"));
-    await tester.enterText(second_number, "baba1412914@");
+    await tester.enterText(second_number, "Nabin1412914@");
     Finder btnAdd = find.byKey(const ValueKey("Login"));
     await tester.dragUntilVisible(
       btnAdd,

@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:math';
+
 // import 'package:flutter/foundation.dart' as foundation;
+import 'package:all_sensors2/all_sensors2.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +15,7 @@ import 'package:najikkopasal/repository/productRepository.dart';
 import 'package:najikkopasal/response/product_response.dart';
 
 import 'package:najikkopasal/screens/product_details/product_details.dart';
+import 'package:najikkopasal/screens/profile/profile.dart';
 import 'package:najikkopasal/widget/productCard.dart';
 // import 'package:proximity_sensor/proximity_sensor.dart';
 
@@ -26,9 +30,13 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> with TickerProviderStateMixin {
+  List<StreamSubscription<dynamic>> _streamSubscriptions =
+      <StreamSubscription<dynamic>>[];
+
   int selectId = 0;
   int activePage = 0;
   int _current = 0;
+  double _proximityValues = 0;
 
   var query = "".obs;
   String? category;
@@ -49,35 +57,22 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
     Tab(text: 'Watch'),
   ];
 
-  // // proximity sensor
-  // late StreamSubscription<dynamic> _streamSubscription;
   // @override
   // void initState() {
+  //   // TODO: implement initState
   //   super.initState();
-  //   listenSensor();
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _streamSubscription.cancel();
-  // }
-
-  // Future<void> listenSensor() async {
-  //   FlutterError.onError = (FlutterErrorDetails details) {
-  //     if (foundation.kDebugMode) {
-  //       FlutterError.dumpErrorToConsole(details);
-  //     }
-  //   };
-  //   _streamSubscription = ProximitySensor.events.listen((int event) {
+  //   _streamSubscriptions.add(proximityEvents!.listen((ProximityEvent event) {
   //     setState(() {
-  //       IncallManager().turnScreenOff();
-  //       // primaryColor = (event > 0) ? Colors.green : Colors.grey;
+  //       _proximityValues = event.proximity;
+  //       if (_proximityValues > 5) {
+  //         // Navigator.pushNamed(context, ProfilePage.routeName);
+  //       } else {
+  //         print("Proximity is close");
+  //       }
   //     });
-  //   });
+  //   }));
   // }
 
-// end of scode
   @override
   Widget build(BuildContext context) {
     Widget caresoel() {

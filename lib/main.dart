@@ -7,6 +7,7 @@ import 'package:najikkopasal/screens/cart/cart_provider.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
 import 'package:najikkopasal/screens/ware/wareogin.dart';
 import 'package:najikkopasal/theme.dart';
+import 'package:najikkopasal/widget/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -35,16 +36,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => CartProvider(),
-      child: Builder(builder: (BuildContext context) {
-        return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            theme: theme(),
-            initialRoute: SplashScreen.routeName,
-            routes: routes);
-      }),
+    // final themeProvider = Provider.of<ThemeProvider>(context);
+    // add multiple ChnagesNotifierProvider to the root of the widget tree
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Najikkopasal',
+        theme: theme(),
+        // themeMode: themeProvider.themeMode,
+        darkTheme: MyThemes.darkTheme,
+        initialRoute: SplashScreen.routeName,
+        routes: routes,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
