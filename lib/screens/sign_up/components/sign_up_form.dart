@@ -43,7 +43,9 @@ class _SignUpFormState extends State<SignUpForm> {
       Navigator.pushNamed(context, SignInScreen.routeName);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.transparent,
-        content: Successbar(),
+        content: Successbar(
+          message: "User registered successfully",
+        ),
         behavior: SnackBarBehavior.floating,
         elevation: 3,
       ));

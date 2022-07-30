@@ -12,6 +12,7 @@ import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
 import 'package:najikkopasal/size_config.dart';
+import 'package:najikkopasal/widget/successbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -80,17 +81,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       bool isUpdate = await userRepository.updateprofile(
           _nameController.text, _emailController.text, base64.toString());
-          
-
-      // SharedPreferences preferences = await SharedPreferences.getInstance();
-      // preferences.remove('profile');
-      // User user = User(
-      //     name: _nameController.text,
-      //     email: _emailController.text,
-      //     image: base64!.toString());
-      // print(user.name);
-      // String userdata = jsonEncode(user);
-      // preferences.setString('profile', userdata);
+      if (isUpdate) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.transparent,
+          content: Successbar(
+            message: "Profile Updated Successfully",
+          ),
+          behavior: SnackBarBehavior.floating,
+          elevation: 3,
+        ));
+      }
     } catch (e) {
       MotionToast.error(
         description: Text("Error:${e.toString()}"),

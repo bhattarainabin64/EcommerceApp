@@ -14,4 +14,4 @@ const myOrderUrl = "/orders/me/user";
 
 String? token;
 
-const fetchfromapiUrl = "get/user/detail";
+const fetchfromapiUrl = "get/user/details";

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ErrorSnakbar extends StatelessWidget {
+  final String? message;
   const ErrorSnakbar({
     Key? key,
+    this.message,
   }) : super(key: key);
 
   @override
@@ -12,25 +14,25 @@ class ErrorSnakbar extends StatelessWidget {
       height: 90,
       child: Row(
         children: <Widget>[
-          const Icon(
+          Icon(
             Icons.error_outline,
             color: Colors.white,
             size: 30,
           ),
-          const SizedBox(
+          SizedBox(
             width: 10,
           ),
           Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "Success",
+                "Error",
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
               SizedBox(height: 7),
               Text(
-                "Your account has been created",
+                '$message',
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],

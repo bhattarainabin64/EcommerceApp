@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Successbar extends StatelessWidget {
+  final String? message;
   const Successbar({
     Key? key,
+    this.message,
   }) : super(key: key);
 
   @override
@@ -23,14 +25,14 @@ class Successbar extends StatelessWidget {
           Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 "Success",
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
               SizedBox(height: 7),
               Text(
-                "Your account has been created",
+                "$message",
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],

@@ -8,6 +8,7 @@ import 'package:najikkopasal/components/default_button.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/forget_password/forget_password_screen.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
+import 'package:najikkopasal/widget/error_snakbar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,9 +34,15 @@ class _SignInFormState extends State<SignInForm> {
               id: 1));
       Navigator.pushNamed(context, Navbar.routeName);
     } else {
-      MotionToast.error(
-        description: const Text("Either username or password is not correct"),
-      ).show(context); // MotionToast.error
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.transparent,
+        duration: Duration(seconds: 1),
+        content: ErrorSnakbar(
+          message: "Either Email or Password is incorrect",
+        ),
+        behavior: SnackBarBehavior.floating,
+        elevation: 3,
+      )); // MotionToast.error
 
     }
   }
@@ -54,11 +61,7 @@ class _SignInFormState extends State<SignInForm> {
       } else {
         _navigateToScreen(false);
       }
-    } catch (e) {
-      MotionToast.error(
-        description: Text("Error:${e.toString()}"),
-      ).show(context);
-    }
+    } catch (e) {}
   }
 
   final _emailController = TextEditingController();
