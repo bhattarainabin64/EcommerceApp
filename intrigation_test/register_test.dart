@@ -18,7 +18,7 @@ void main() {
     Finder name = find.byKey(const ValueKey("name"));
     await tester.enterText(name, "Malaika");
     Finder email = find.byKey(const ValueKey("email"));
-    await tester.enterText(email, "malihghggfhbha@gmail.com");
+    await tester.enterText(email, "mahatohbha@gmail.com");
     Finder password = find.byKey(const ValueKey("password"));
     await tester.enterText(password, "baba1412914@");
     Finder signup = find.byKey(const ValueKey("SignUp"));

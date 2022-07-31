@@ -5,6 +5,7 @@ import 'package:najikkopasal/screens/home/components/nav.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 import 'package:najikkopasal/screens/muti_step_form/multi_step.dart';
+import 'package:najikkopasal/screens/order/order_detail.dart';
 import 'package:najikkopasal/screens/order/order_history.dart';
 import 'package:najikkopasal/screens/ware/wareoshistroy.dart';
 import 'package:najikkopasal/widget/ware_order-history_widget.dart';
@@ -47,4 +48,6 @@ final Map<String, WidgetBuilder> routes = {
   WareOshostory.routeName: (context) => const WareOshostory(),
   WareOSOrderGistoryWidget.routeName: (context) =>
       const WareOSOrderGistoryWidget(),
+
+  OrderDetails.routeName: (context) => const OrderDetails(),
 };

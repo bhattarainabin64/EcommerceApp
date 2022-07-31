@@ -39,6 +39,7 @@ class _SignUpFormState extends State<SignUpForm> {
               title: 'Login',
               body: "Register Succesfully",
               id: 1));
+
       _displayMessage(true);
     } else {
       _displayMessage(false);
@@ -48,14 +49,14 @@ class _SignUpFormState extends State<SignUpForm> {
   _displayMessage(msg) {
     if (msg) {
       Navigator.pushNamed(context, SignInScreen.routeName);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.transparent,
-        content: Successbar(
-          message: "User registered successfully",
-        ),
-        behavior: SnackBarBehavior.floating,
-        elevation: 3,
-      ));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   backgroundColor: Colors.transparent,
+      //   content: Successbar(
+      //     message: "User registered successfully",
+      //   ),
+      //   behavior: SnackBarBehavior.floating,
+      //   elevation: 3,
+      // ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.transparent,

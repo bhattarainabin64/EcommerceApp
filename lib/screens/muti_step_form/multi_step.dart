@@ -14,6 +14,8 @@ import 'package:najikkopasal/model/shipping_model.dart';
 import 'package:najikkopasal/screens/cart/cart_provider.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
 import 'package:najikkopasal/size_config.dart';
+import 'package:najikkopasal/widget/error_snakbar.dart';
+import 'package:najikkopasal/widget/successbar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -446,7 +448,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
         border: OutlineInputBorder(),
         hintText: "Enter your Address",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.location_city),
       ),
     );
   }
@@ -465,7 +466,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
         labelText: "City",
         hintText: "Enter your City",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.location_city),
       ),
     );
   }
@@ -486,7 +486,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
         labelText: "Pincode",
         hintText: "Enter your Pincode",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.location_city),
       ),
     );
   }
@@ -507,7 +506,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
         labelText: "PhoneNumber",
         hintText: "Enter your PhoneNumber",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.phone),
       ),
     );
   }
@@ -526,7 +524,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
         hintText: "Enter your Country",
         border: OutlineInputBorder(),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.phone),
       ),
     );
   }
@@ -545,7 +542,6 @@ class _MultiStepFormState extends State<MultiStepForm> {
         hintText: "Enter your State",
         border: OutlineInputBorder(),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.phone),
       ),
     );
   }
@@ -588,9 +584,17 @@ class _MultiStepFormState extends State<MultiStepForm> {
         // print('Statussssssssssssssssssss' +
         //     paymentIntentData!['status'].toString());
 
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("paid successfully")));
-        // Navigator.pushNamed(context, Navbar.routeName);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.transparent,
+          duration: Duration(seconds: 1),
+          content: Successbar(
+            message: "Paymnet Successfully Received",
+          ),
+          behavior: SnackBarBehavior.floating,
+          elevation: 3,
+        )); //
+
+        Navigator.pushNamed(context, Navbar.routeName);
 
         paymentIntentData = null;
       }).onError((error, stackTrace) {

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/model/order.dart';
 import 'package:najikkopasal/repository/productRepository.dart';
 import 'package:najikkopasal/response/order_response.dart';
+import 'package:najikkopasal/screens/order/order_detail.dart';
 import 'package:najikkopasal/widget/widget_order_items.dart';
 
 class OrderHistory extends StatefulWidget {
@@ -44,6 +46,12 @@ class _OrderHistoryState extends State<OrderHistory> {
                             id: lstOrder[index].id,
                             totalPrice: lstOrder[index].totalPrice.toString(),
                             orderStatus: lstOrder[index].orderStatus,
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, OrderDetails.routeName, arguments: {
+                                "OrderItems": lstOrder[index].orderItems
+                              });
+                            },
                           );
                         },
                       ),
@@ -52,7 +60,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CupertinoActivityIndicator(
+                      radius: 20,
+                    ),
                   );
                 }
                 return const Text("Error");
