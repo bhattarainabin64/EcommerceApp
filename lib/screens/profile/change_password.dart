@@ -6,6 +6,7 @@ import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
+import 'package:najikkopasal/screens/profile/profile.dart';
 import 'package:najikkopasal/widget/error_snakbar.dart';
 import 'package:najikkopasal/widget/successbar.dart';
 
@@ -29,6 +30,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   final _passwordConfirmController = TextEditingController();
   _navigateToScreen(bool isUpdated) {
     if (isUpdated) {
+      Navigator.pushNamed(context, Navbar.routeName);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         backgroundColor: Colors.transparent,
         content: Successbar(

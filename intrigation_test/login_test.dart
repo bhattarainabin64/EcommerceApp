@@ -13,7 +13,7 @@ void main() {
       routes: {
         '/signUp': (context) => const SignUpScreen(),
       },
-      home: SignInScreen(),
+      home: const SignInScreen(),
     ));
     Finder first_number = find.byKey(const ValueKey("email"));
     await tester.enterText(first_number, "baba@gmail.com");

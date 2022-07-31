@@ -2,8 +2,7 @@
     
     package="com.example.najikkopasal">
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
    <application
         
