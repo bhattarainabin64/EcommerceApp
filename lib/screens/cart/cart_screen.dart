@@ -360,13 +360,25 @@ class _CartScreenState extends State<CartScreen> {
                   margin: EdgeInsets.only(bottom: 15),
                   child: Column(
                     children: [
+                      Divider(
+                        thickness: 2,
+                        color: Color.fromARGB(255, 173, 164, 164),
+                      ),
                       ReusableWidget(
                         title: 'Sub Total',
                         value: r'₹' + value.getTotalPrice().toStringAsFixed(2),
                       ),
                       ReusableWidget(
+                        title: 'Delivery Charge',
+                        value: r'₹' + 0.toString(),
+                      ),
+                      ReusableWidget(
                         title: 'Total',
                         value: r'₹' + value.getTotalPrice().toStringAsFixed(2),
+                      ),
+                      Divider(
+                        thickness: 2,
+                        color: Color.fromARGB(255, 173, 164, 164),
                       ),
                       DefaultButton(
                         text: "Checkout",

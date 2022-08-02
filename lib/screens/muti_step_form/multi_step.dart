@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 
 import 'package:http/http.dart' as http;
@@ -587,12 +588,19 @@ class _MultiStepFormState extends State<MultiStepForm> {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.transparent,
           duration: Duration(seconds: 1),
-          content: Successbar(
-            message: "Paymnet Successfully Received",
+          content: Text(
+            'Payment Successful',
+            style: TextStyle(color: Colors.green),
           ),
           behavior: SnackBarBehavior.floating,
           elevation: 3,
-        )); //
+        ));
+        AwesomeNotifications().createNotification(
+            content: NotificationContent(
+                channelKey: 'basic_channel',
+                title: 'Payment',
+                body: "Paymnet Succesfully",
+                id: 1)); //
 
         Navigator.pushNamed(context, Navbar.routeName);
 

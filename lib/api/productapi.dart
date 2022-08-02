@@ -56,12 +56,12 @@ class ProductAPI {
     var dir = await getApplicationDocumentsDirectory();
 
     Hive.init(dir.path);
-    // box = await Hive.openBox('mybox');
-    // var stored = box.get("data");
+    box = await Hive.openBox('mybox');
+    var stored = box.get("data");
 
-    // var encoded = jsonDecode(stored);
+    var encoded = jsonDecode(stored);
 
-    // productResponse = ProductResponse.fromJson(encoded);
+    productResponse = ProductResponse.fromJson(encoded);
     try {
       var dio = HttpServices().getDioInstance();
 
@@ -73,9 +73,9 @@ class ProductAPI {
       String postdata = jsonEncode(response.data);
 
       if (response.statusCode == 200) {
-        // String postdata = jsonEncode(response.data);
+        String postdata = jsonEncode(response.data);
 
-        // box.put("data", postdata);
+        box.put("data", postdata);
 
         productResponse = ProductResponse.fromJson(response.data);
       }

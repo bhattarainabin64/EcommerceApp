@@ -36,7 +36,7 @@ class _SignUpFormState extends State<SignUpForm> {
       AwesomeNotifications().createNotification(
           content: NotificationContent(
               channelKey: 'basic_channel',
-              title: 'Login',
+              title: 'Register',
               body: "Register Succesfully",
               id: 1));
 
@@ -49,14 +49,14 @@ class _SignUpFormState extends State<SignUpForm> {
   _displayMessage(msg) {
     if (msg) {
       Navigator.pushNamed(context, SignInScreen.routeName);
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      //   backgroundColor: Colors.transparent,
-      //   content: Successbar(
-      //     message: "User registered successfully",
-      //   ),
-      //   behavior: SnackBarBehavior.floating,
-      //   elevation: 3,
-      // ));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.transparent,
+        content: Successbar(
+          message: "User registered successfully",
+        ),
+        behavior: SnackBarBehavior.floating,
+        elevation: 3,
+      ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.transparent,

@@ -35,7 +35,8 @@ class _ProfilePageState extends State<ProfilePage> {
     prefs.remove('token');
     prefs.remove('name');
 
-    Navigator.pushNamed(context, SignInScreen.routeName);
+    Navigator.pop(context, true);
+    Navigator.pushReplacementNamed(context, SignInScreen.routeName);
   }
 
   void _showAlertDialog(BuildContext context) {
