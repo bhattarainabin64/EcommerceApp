@@ -26,6 +26,7 @@ class _NavbarState extends State<Navbar> {
     Container(color: Colors.white),
     const ProfilePage(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

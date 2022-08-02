@@ -11,21 +11,23 @@ void main() {
   testWidgets("testing the widgets", (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
       routes: {
-        '/signUp': (context) => const SignUpScreen(),
+        '/sign_in': (context) => const SignInScreen(),
       },
-      home: const SignInScreen(),
+      home: const SignUpScreen(),
     ));
-    Finder first_number = find.byKey(const ValueKey("email"));
-    await tester.enterText(first_number, "baba@gmail.com");
-    Finder second_number = find.byKey(const ValueKey("password"));
-    await tester.enterText(second_number, "Baba1412914@");
-    Finder btnAdd = find.byKey(const ValueKey("Login"));
+    Finder name = find.byKey(const ValueKey("name"));
+    await tester.enterText(name, "Malaika");
+    Finder email = find.byKey(const ValueKey("email"));
+    await tester.enterText(email, "mahatohbha@gmail.com");
+    Finder password = find.byKey(const ValueKey("password"));
+    await tester.enterText(password, "baba1412914@");
+    Finder signup = find.byKey(const ValueKey("SignUp"));
     await tester.dragUntilVisible(
-      btnAdd,
+      signup,
       find.byType(Scaffold),
       const Offset(0, 70),
     );
-    await tester.tap(btnAdd);
+    await tester.tap(signup);
     await tester.pumpAndSettle();
     expect(find.byType(Scaffold), findsOneWidget);
   });

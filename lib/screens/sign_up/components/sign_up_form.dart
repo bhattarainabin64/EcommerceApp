@@ -1,16 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:najikkopasal/components/default_button.dart';
+import 'package:najikkopasal/constants.dart';
 
 import 'package:najikkopasal/model/user.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
 import 'package:najikkopasal/size_config.dart';
+import 'package:najikkopasal/widget/error_snakbar.dart';
+import 'package:najikkopasal/widget/successbar.dart';
 
 import '../../../components/custom_suffix-icon.dart';
 
@@ -29,6 +33,13 @@ class _SignUpFormState extends State<SignUpForm> {
   _registerUser(User user) async {
     bool isLogin = await UserRepository().registerUser(user);
     if (isLogin) {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              channelKey: 'basic_channel',
+              title: 'Register',
+              body: "Register Succesfully",
+              id: 1));
+
       _displayMessage(true);
     } else {
       _displayMessage(false);
@@ -38,11 +49,21 @@ class _SignUpFormState extends State<SignUpForm> {
   _displayMessage(msg) {
     if (msg) {
       Navigator.pushNamed(context, SignInScreen.routeName);
-      MotionToast.success(description: const Text('success register'))
-          .show(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.transparent,
+        content: Successbar(
+          message: "User registered successfully",
+        ),
+        behavior: SnackBarBehavior.floating,
+        elevation: 3,
+      ));
     } else {
-      MotionToast.warning(description: const Text('error rergister'))
-          .show(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.transparent,
+        content: ErrorSnakbar(),
+        behavior: SnackBarBehavior.floating,
+        elevation: 3,
+      ));
     }
   }
 
@@ -178,6 +199,7 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
               text: "Sign Up",
+              key: const Key("SignUp"),
               press: () {
                 if (_formKey.currentState!.validate()) {
                   User user = User(
@@ -198,6 +220,7 @@ class _SignUpFormState extends State<SignUpForm> {
     return TextFormField(
       obscureText: true,
       controller: _passwordController,
+      key: const ValueKey("password"),
       onSaved: (newValue) => password = newValue,
       validator: (value) {
         if (value!.isEmpty) {
@@ -219,6 +242,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       controller: _emailController,
+      key: const ValueKey("email"),
       onSaved: (newValue) => email = newValue,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
@@ -242,6 +266,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildNameFormFild() {
     return TextFormField(
       controller: _nameController,
+      key: const ValueKey("name"),
       onSaved: (newValue) => fullname = newValue,
       validator: (value) {
         if (value!.isEmpty) {

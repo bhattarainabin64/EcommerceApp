@@ -5,13 +5,16 @@ import 'package:najikkopasal/screens/home/components/nav.dart';
 
 import 'package:najikkopasal/screens/login_success/login_success_screen.dart';
 import 'package:najikkopasal/screens/muti_step_form/multi_step.dart';
+import 'package:najikkopasal/screens/order/order_detail.dart';
 import 'package:najikkopasal/screens/order/order_history.dart';
+import 'package:najikkopasal/screens/ware/wareoshistroy.dart';
+import 'package:najikkopasal/widget/ware_order-history_widget.dart';
 import 'package:najikkopasal/widget/widget_order_items.dart';
 import 'package:najikkopasal/screens/product_details/product_details.dart';
 import 'package:najikkopasal/screens/profile/change_password.dart';
 import 'package:najikkopasal/screens/profile/edit_profile.dart';
 import 'package:najikkopasal/screens/profile/profile.dart';
-import 'package:najikkopasal/screens/profile/test.dart';
+
 import 'package:najikkopasal/screens/review/reviewfrontend.dart';
 import 'package:najikkopasal/screens/sign_in/components/sign_in_form.dart';
 import 'package:najikkopasal/screens/sign_in/sign_in_screen.dart';
@@ -28,7 +31,7 @@ final Map<String, WidgetBuilder> routes = {
   // LoginSuccessScreen.routeName: (context) => const LoginSuccessScreen(),
   SignUpScreen.routeName: (context) => const SignUpScreen(),
   // HomePage.routeName: (context) => const HomePage(),
-  BottomNavBar.routeName: (context) => const BottomNavBar(),
+
   Navbar.routeName: (context) => Navbar(),
   ProductDetails.routeName: (context) => const ProductDetails(),
   ReviewUIScreen.routeName: (context) => const ReviewUIScreen(),
@@ -40,5 +43,11 @@ final Map<String, WidgetBuilder> routes = {
   WareosHome.routeName: (context) => const WareosHome(),
   WareDashboard.routeName: (context) => const WareDashboard(),
   OrderHistory.routeName: (context) => const OrderHistory(),
-  WidgetOrderItems.routeName: (context) => WidgetOrderItems(),
+  WidgetOrderItems.routeName: (context) => const WidgetOrderItems(),
+  AllProduct.routeName: (context) => const AllProduct(),
+  WareOshostory.routeName: (context) => const WareOshostory(),
+  WareOSOrderGistoryWidget.routeName: (context) =>
+      const WareOSOrderGistoryWidget(),
+
+  OrderDetails.routeName: (context) => const OrderDetails(),
 };

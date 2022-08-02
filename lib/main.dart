@@ -7,10 +7,11 @@ import 'package:najikkopasal/screens/cart/cart_provider.dart';
 import 'package:najikkopasal/screens/splash/splash_screen.dart';
 import 'package:najikkopasal/screens/ware/wareogin.dart';
 import 'package:najikkopasal/theme.dart';
+import 'package:najikkopasal/widget/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey =
       'pk_test_51LH2CxSE7FPWZ2J8NCZFFp5jga3sr8vAqe8Kkfm6ZsK4RjGC3WotLEpmpb846y299MQ1ZvjQ41RHp1hMmwyY3r7V00mSHqoGQS';
   await Hive.initFlutter();

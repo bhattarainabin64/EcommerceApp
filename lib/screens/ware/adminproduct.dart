@@ -56,7 +56,7 @@ class _AllProductState extends State<AllProduct> {
                                       style: TextStyle(fontSize: 10),
                                     ),
                                     subtitle: Text(
-                                      lstproducts[i].price.toString(),
+                                      '₹${lstproducts[i].price.toString()}',
                                       style: TextStyle(fontSize: 10),
                                     ),
                                   ),
@@ -65,7 +65,7 @@ class _AllProductState extends State<AllProduct> {
                           );
                         }
                       } else if (snapshot.hasError) {
-                        return Text("dgasg");
+                        return const Text("dgasg");
                       }
                       return const Center(
                         child: CupertinoActivityIndicator(

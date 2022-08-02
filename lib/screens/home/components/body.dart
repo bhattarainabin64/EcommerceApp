@@ -1,9 +1,12 @@
-import 'dart:math';
+import 'dart:async';
+
+// import 'package:flutter/foundation.dart' as foundation;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_incall/flutter_incall.dart';
 import 'package:get/get.dart';
 import 'package:najikkopasal/constants.dart';
 
@@ -12,8 +15,11 @@ import 'package:najikkopasal/response/product_response.dart';
 
 import 'package:najikkopasal/screens/product_details/product_details.dart';
 import 'package:najikkopasal/widget/productCard.dart';
+// import 'package:proximity_sensor/proximity_sensor.dart';
 
 import '../../../model/product_model.dart';
+
+Color primaryColor = const Color(0xFF6200EE);
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -22,9 +28,13 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> with TickerProviderStateMixin {
+  List<StreamSubscription<dynamic>> _streamSubscriptions =
+      <StreamSubscription<dynamic>>[];
+
   int selectId = 0;
   int activePage = 0;
   int _current = 0;
+  bool _proximityValues = false;
 
   var query = "".obs;
   String? category;
@@ -62,6 +72,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
@@ -314,7 +325,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
                           children: <Widget>[
                             CachedNetworkImage(
                               fit: BoxFit.fitWidth,
-                              width: 500.0,
+                              width: double.infinity,
                               imageUrl: item,
                             ),
                             Positioned(

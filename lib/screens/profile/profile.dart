@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:najikkopasal/model/profile_model.dart';
+import 'package:najikkopasal/repository/profileRepository.dart';
 
 // import 'package:najikkopasal/model/user.dart';
-import 'package:najikkopasal/repository/userRepository.dart';
+
 import 'package:najikkopasal/response/profile_response.dart';
 import 'package:najikkopasal/screens/order/order_history.dart';
 import 'package:najikkopasal/widget/widget_order_items.dart';
@@ -34,7 +35,8 @@ class _ProfilePageState extends State<ProfilePage> {
     prefs.remove('token');
     prefs.remove('name');
 
-    Navigator.pushNamed(context, SignInScreen.routeName);
+    Navigator.pop(context, true);
+    Navigator.pushReplacementNamed(context, SignInScreen.routeName);
   }
 
   void _showAlertDialog(BuildContext context) {
@@ -108,8 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
             // use future builder to get data from server
 
             child: FutureBuilder<ProfileResponse?>(
-                future: UserRepository()
-                    .getprofile(), // a previously-obtained Future<String> or null, if the once-obtained Future is still active
+                future: ProfileRepository().getuserprofilefromapi(),
+                // a previously-obtained Future<String> or null, if the once-obtained Future is still active
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.connectionState == ConnectionState.done) {
@@ -216,6 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                   return const Center(
                       child: CupertinoActivityIndicator(
+                    radius: 20,
                     animating: true,
                   ));
                 })),

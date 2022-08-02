@@ -6,6 +6,9 @@ import 'package:najikkopasal/components/form_error.dart';
 import 'package:najikkopasal/constants.dart';
 import 'package:najikkopasal/repository/userRepository.dart';
 import 'package:najikkopasal/screens/home/components/nav.dart';
+import 'package:najikkopasal/screens/profile/profile.dart';
+import 'package:najikkopasal/widget/error_snakbar.dart';
+import 'package:najikkopasal/widget/successbar.dart';
 
 class ChangePassword extends StatefulWidget {
   static String routeName = '/change_password';
@@ -27,14 +30,25 @@ class _ChangePasswordState extends State<ChangePassword> {
   final _passwordConfirmController = TextEditingController();
   _navigateToScreen(bool isUpdated) {
     if (isUpdated) {
-      MotionToast.success(
-        description: const Text("Password updated successfully"),
-      ).show(context);
+      Navigator.pushNamed(context, Navbar.routeName);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.transparent,
+        content: Successbar(
+          message: "Password updated successfully",
+        ),
+        behavior: SnackBarBehavior.floating,
+        elevation: 3,
+      ));
       // MotionToast.success
     } else if (mounted) {
-      MotionToast.error(
-        description: const Text("Error: old password doesnot match"),
-      ).show(context); // MotionToast.error
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.transparent,
+        content: ErrorSnakbar(
+          message: "Password not updated",
+        ),
+        behavior: SnackBarBehavior.floating,
+        elevation: 3,
+      )); // M // MotionToast.error
     }
   }
 
@@ -54,9 +68,14 @@ class _ChangePasswordState extends State<ChangePassword> {
         _navigateToScreen(false);
       }
     } catch (e) {
-      MotionToast.error(
-        description: Text("Error:${e.toString()}"),
-      ).show(context); // MotionToast.error
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.transparent,
+        content: ErrorSnakbar(
+          message: "$e.toString()",
+        ),
+        behavior: SnackBarBehavior.floating,
+        elevation: 3,
+      )); // MotionToast.error
 
     }
   }

@@ -72,30 +72,20 @@ class UserAPI {
         isLogin = true;
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.response) {
-        Fluttertoast.showToast(
-            msg: e.response!.data['message'],
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP_LEFT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Color.fromARGB(255, 205, 22, 22),
-            fontSize: 30.0);
-      }
+      print(e.toString());
     }
 
     return isLogin;
   }
 
-  Future<ProfileResponse?> getuser() async {
-    Future.delayed(const Duration(seconds: 2), () {});
+  Future<ProfileResponse?> fetchUserfromapi() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? userlogintoken = sharedPreferences.getString('token');
     ProfileResponse? profileResponse;
     Response? response;
     try {
       var dio = HttpServices().getDioInstance();
-      var url = baseUrl + getuserUrl;
+      var url = baseUrl + fetchfromapiUrl;
 
       response = await dio.get(url,
           options: Options(headers: {
@@ -180,14 +170,7 @@ class UserAPI {
       }
     } on DioError catch (e) {
       if (e.type == DioErrorType.response) {
-        Fluttertoast.showToast(
-            msg: e.response!.data['message'],
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP_LEFT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Color.fromARGB(255, 205, 22, 22),
-            fontSize: 30.0);
+        print(e.toString());
       }
     }
 

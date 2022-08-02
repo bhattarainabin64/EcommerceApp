@@ -18,15 +18,15 @@ class ProductAPI {
       {String? keywords = "", String? category = ""}) async {
     ProductResponse? productResponse;
     Response? response;
-    // Box box;
-    // var dir = await getApplicationDocumentsDirectory();
-    // Hive.init(dir.path);
-    // box = await Hive.openBox('mybox');
-    // var stored = box.get("data");
+    Box box;
+    var dir = await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
+    box = await Hive.openBox('mybox');
+    var stored = box.get("data");
 
-    // var encoded = jsonDecode(stored);
+    var encoded = jsonDecode(stored);
 
-    // productResponse = ProductResponse.fromJson(encoded);
+    productResponse = ProductResponse.fromJson(encoded);
 
     try {
       var dio = HttpServices().getDioInstance();
@@ -41,11 +41,6 @@ class ProductAPI {
       }
 
       if (response.statusCode == 200) {
-        // String postdata = jsonEncode(response.data);
-
-        // // box.clear();
-        // box.put("data", postdata);
-
         productResponse = ProductResponse.fromJson(response.data);
       }
     } catch (e) {
@@ -57,16 +52,16 @@ class ProductAPI {
   Future<ProductResponse?> getproducts() async {
     ProductResponse? productResponse;
     Response? response;
-    // Box box;
-    // var dir = await getApplicationDocumentsDirectory();
+    Box box;
+    var dir = await getApplicationDocumentsDirectory();
 
-    // Hive.init(dir.path);
-    // box = await Hive.openBox('mybox');
-    // var stored = box.get("data");
+    Hive.init(dir.path);
+    box = await Hive.openBox('mybox');
+    var stored = box.get("data");
 
-    // var encoded = jsonDecode(stored);
+    var encoded = jsonDecode(stored);
 
-    // productResponse = ProductResponse.fromJson(encoded);
+    productResponse = ProductResponse.fromJson(encoded);
     try {
       var dio = HttpServices().getDioInstance();
 
@@ -78,9 +73,9 @@ class ProductAPI {
       String postdata = jsonEncode(response.data);
 
       if (response.statusCode == 200) {
-        // String postdata = jsonEncode(response.data);
+        String postdata = jsonEncode(response.data);
 
-        // box.put("data", postdata);
+        box.put("data", postdata);
 
         productResponse = ProductResponse.fromJson(response.data);
       }
@@ -146,8 +141,7 @@ class ProductAPI {
     return isReview;
   }
 
-
-  Future<OrderResponse ?> getOrderHistory() async {
+  Future<OrderResponse?> getOrderHistory() async {
     OrderResponse? orderResponse;
     try {
       var url = baseUrl + myOrderUrl;

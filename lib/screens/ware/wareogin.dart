@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 import 'package:najikkopasal/constants.dart';
@@ -21,7 +22,14 @@ class _WareosHomeState extends State<WareosHome> {
   final _passwordController = TextEditingController();
   _navigateToScreen(bool isLogin) {
     if (isLogin) {
-      Navigator.pushNamed(context, AllProduct.routeName);
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              channelKey: 'basic_channel',
+              title: 'Login',
+              body: "Login Succesfully",
+              id: 1));
+
+      Navigator.pushNamed(context, WareDashboard.routeName);
     }
   }
 
@@ -58,12 +66,19 @@ class _WareosHomeState extends State<WareosHome> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      // add text  with name najikkopasal
-
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
-
+                      Container(
+                        height: 30,
+                        child: Image.asset(
+                          'assets/images/nologo.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       SizedBox(
                         height: 45,
                         child: Padding(
@@ -91,7 +106,7 @@ class _WareosHomeState extends State<WareosHome> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 10,
                       ),
                       SizedBox(
                         height: 45,
@@ -114,13 +129,13 @@ class _WareosHomeState extends State<WareosHome> {
                         ),
                       ),
                       const SizedBox(
-                        height: 12,
+                        height: 5,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 5, right: 5),
                         child: SizedBox(
                           width: double.infinity,
-                          height: 30,
+                          height: 25,
                           child: ElevatedButton(
                               // add color in button
                               style: ElevatedButton.styleFrom(
@@ -130,11 +145,8 @@ class _WareosHomeState extends State<WareosHome> {
                                 primary: kPrimaryColor,
                               ),
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _login();
-                                  // add code to login
-
-                                }
+                                _login();
+                                // add code to login
                               },
                               child: const Text("Login")),
                         ),
